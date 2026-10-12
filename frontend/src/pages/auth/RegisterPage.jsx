@@ -2,7 +2,7 @@ import React from 'react'
 
 const RegisterPage = () => {
   return (
-    <div>RegisterPage</div>
+    <div className='bg-red-500'>RegisterPage</div>
   )
 }
 

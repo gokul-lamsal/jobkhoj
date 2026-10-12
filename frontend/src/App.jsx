@@ -3,6 +3,7 @@ import HomeLayout from "./components/layout/HomeLayout";
 import HomePage from "./pages/public/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPage";
+import AuthLayout from "./components/layout/AuthLayout";
 
 function App() {
   const route = createBrowserRouter([
@@ -21,12 +22,17 @@ function App() {
       ],
     },
     {
-      path:"/register",
-      element:<RegisterPage/>,
-    },
-    {
-      path:"/login",
-      element:<LoginPage/>,
+      element: <AuthLayout />,
+      children: [
+        {
+          path: "/login",
+          element: <LoginPage />,
+        },
+        {
+          path: "/register",
+          element: <RegisterPage />,
+        },
+      ],
     },
   ]);
   return (
