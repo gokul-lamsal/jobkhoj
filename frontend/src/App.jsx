@@ -4,6 +4,7 @@ import HomePage from "./pages/public/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPage";
 import AuthLayout from "./components/layout/AuthLayout";
+import ConfirmPage from "./pages/auth/ConfirmPage";
 
 function App() {
   const route = createBrowserRouter([
@@ -31,7 +32,12 @@ function App() {
         {
           path: "/register",
           element: <RegisterPage />,
+
         },
+        {
+          path:"/confirm",
+          element: <ConfirmPage />
+        }
       ],
     },
   ]);
