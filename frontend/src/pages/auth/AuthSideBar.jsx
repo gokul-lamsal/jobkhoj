@@ -4,20 +4,20 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 const AuthSideBar = () => {
   return (
     <div className="bg-indigo-700 flex flex-col justify-between pl-[4rem] pt-[2rem] w-[50%]">
-      <div className="flex gap-2">
-        <h1 className="font-bold text-xl w-8 h-8 rounded-lg text-center bg-amber-50">
-          L
-        </h1>
+      <div className="flex items-center gap-2">
+        <div className="font-bold flex items-center justify-center rounded-lg text-xl w-8 h-8 text-center bg-amber-50">
+          <span>L</span>
+        </div>
         <h1 className="text-xl font-bold text-white">Lunar portal</h1>
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex  flex-col gap-3">
         <div>
-          <h1 className="text-3xl text-white font-extrabold">
+          <h1 className="text-3xl  text-white font-extrabold">
             Your next opportunity
           </h1>
           <h1 className="text-3xl text-white font-extrabold">starts here.</h1>
         </div>
-        <div className="rounded-2xl p-2 w-[70%] bg-white/20 border-white/20 backdrop-blur-xl">
+        <div className="rounded-2xl  w-[70%] p-4 bg-white/20 border-white/20 backdrop-blur-xl">
           <div className="flex gap-2 ">
             <div>
               <h1 className="font-bold text-xl w-13 h-13 rounded-2xl text-white flex justify-center items-center bg-[#1687E8]">
@@ -28,14 +28,14 @@ const AuthSideBar = () => {
               <h1 className="text-xl font-bold text-white">
                 Full Stack Engineer
               </h1>
-              <h1 className="text-sm text-gray-200 font-bold">
-                InnoLabs-Kathmandu
+              <h1 className="text-sm text-gray-400 font-bold">
+                InnoLabs • Kathmandu
               </h1>
             </div>
           </div>
-            <div className="flex p-2 gap-4">
-              <p className="text-sm text-white bg-white/10  border-white/20 rounded-xl p-1">Full time</p>
-              <p className="text-sm  text-white bg-white/10  border-white/20 rounded-xl p-1">NPR 80k-120k</p>
+            <div className="flex p-2 gap-2">
+              <p className="text-sm text-white bg-white/10 px-4 border-white/20 rounded-xl p-1">Full time</p>
+              <p className="text-sm  text-white bg-white/10 px-4  border-white/20 rounded-xl p-1">NPR 80k-120k</p>
             </div>
         </div>
         <div>

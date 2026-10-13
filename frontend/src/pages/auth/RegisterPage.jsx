@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FiUser } from "react-icons/fi";
@@ -7,9 +7,21 @@ import { LuBuilding } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 
 const RegisterPage = () => {
+  const formInit = {
+    role: "seeker",
+    email: "",
+    password: "",
+  };
+  const [form, setForm] = useState(formInit);
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
   return (
     <div className="w-[50%] flex flex-col justify-center items-center">
-      <div className="rounded-lg pl-6 pt-10 pb-6 pr-6 flex flex-col gap-4 shadow-xl shadow-gray-400">
+      <div className="rounded-lg pl-6 pt-10 pb-6 pr-6  flex flex-col border-2 border-gray-400 gap-4 shadow-xl shadow-gray-400">
         <div>
           <h1 className="text-2xl font-bold">Create your account</h1>
           <p className="text-gray-700 text-[14px]">
@@ -17,9 +29,19 @@ const RegisterPage = () => {
           </p>
         </div>
         <div className="flex justify-center items-center gap-2">
-          <div className="border p-2 rounded-xl flex gap-4 items-center cursor-pointer">
+          <div
+            onClick={() =>
+              setForm((prev) => ({
+                ...prev,
+                role: "seeker",
+              }))
+            }
+            className={`border-2 ${form.role === "seeker" ? "border-purple-900" : "border-gray-400"} p-2 rounded-xl flex gap-4 items-center cursor-pointer`}
+          >
             <div>
-              <h1 className="w-13 h-13 rounded-2xl text-white flex justify-center items-center bg-purple-900">
+              <h1
+                className={`w-13 h-13 rounded-2xl text-white flex justify-center items-center ${form.role === "seeker" ? "bg-purple-900" : "bg-gray-400"} `}
+              >
                 <FiUser color="white" size={30} />
               </h1>
             </div>
@@ -30,15 +52,27 @@ const RegisterPage = () => {
             <div>
               <input
                 type="radio"
-                name="CheckBox"
-                value=""
-                className="cursor-pointer"
-              ></input>
+                name="role"
+                value="seeker"
+                checked={form.role === "seeker"}
+                onChange={handleChange}
+                className="cursor-pointer size-5 outline-none accent-purple-900"
+              />
             </div>
           </div>
-          <div className="border p-2 rounded-xl flex gap-4 items-center cursor-pointer">
+          <div
+            onClick={() =>
+              setForm((prev) => ({
+                ...prev,
+                role: "company",
+              }))
+            }
+            className={`border-2 ${form.role === "company" ? "border-purple-900" : "border-gray-400"} p-2 rounded-xl flex gap-4 items-center cursor-pointer`}
+          >
             <div>
-              <h1 className="font-bold text-xl w-13 h-13 rounded-2xl text-white flex justify-center items-center bg-purple-900">
+              <h1
+                className={`w-13 h-13 rounded-2xl text-white flex justify-center items-center ${form.role === "company" ? "bg-purple-900" : "bg-gray-400"} `}
+              >
                 <LuBuilding color="white" size={30} />
               </h1>
             </div>
@@ -49,10 +83,12 @@ const RegisterPage = () => {
             <div>
               <input
                 type="radio"
-                name="CheckBox"
-                value=""
-                className="cursor-pointer"
-              ></input>
+                name="role"
+                value="company"
+                className="cursor-pointer size-5 outline-none accent-purple-900 "
+                onChange={handleChange}
+                checked={form.role === "company"}
+              />
             </div>
           </div>
         </div>
@@ -81,6 +117,8 @@ const RegisterPage = () => {
               type="email"
               name="email"
               id="email"
+              onChange={handleChange}
+              value={form.email}
               placeholder="john@example.com"
               className="text-sm outline-none"
             />
@@ -96,22 +134,33 @@ const RegisterPage = () => {
             <input
               type="password"
               name="password"
+              onChange={handleChange}
+              value={form.password}
               id="password"
-              placeholder="........."
+              placeholder="●●●●●●●●"
               className="text-sm outline-none "
             />
-             <span className="absolute right-4 text-gray-400 cursor-pointer">
-              <FaRegEye  color="gray" />
+            <span className="absolute right-4 text-gray-400 cursor-pointer">
+              <FaRegEye color="gray" />
             </span>
           </div>
           <p className="text-[12px] text-gray-500 ">At least 8 characters</p>
-          <div className="bg-indigo-800 rounded-md p-2 flex justify-center items-center">
-            <button className="text-white text-md font-bold">Create account</button>
+          <div className="bg-primary hover:bg-primary-hover cursor-pointer rounded-md p-2 flex justify-center items-center">
+            <button className="text-white text-md font-bold">
+              Create account
+            </button>
           </div>
         </form>
         <div className="flex flex-col justify-center items-center gap-6">
-        <p className="text-[12px] text-gray-500">We will email you a 6 digit code to verify your address.</p>
-         <p className="text-[12px] text-gray-500">Already have an account? <span className="text-purple-800 text-[13px] font-bold cursor-pointer">Log in</span></p>
+          <p className="text-[12px] text-gray-500">
+            We will email you a 6 digit code to verify your address.
+          </p>
+          <p className="text-[12px] text-gray-500">
+            Already have an account?{" "}
+            <span className="text-purple-800 text-[13px] font-bold cursor-pointer">
+              Log in
+            </span>
+          </p>
         </div>
       </div>
     </div>
