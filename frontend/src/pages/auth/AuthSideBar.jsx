@@ -3,7 +3,7 @@ import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 const AuthSideBar = () => {
   return (
-    <div className="bg-indigo-700 flex flex-col justify-between pl-[4rem] pt-[2rem] w-[50%]">
+    <div className="bg-indigo-700 flex flex-col justify-between pl-[4rem] pt-[2rem] ">
       <div className="flex items-center gap-2">
         <div className="font-bold flex items-center justify-center rounded-lg text-xl w-8 h-8 text-center bg-amber-50">
           <span>L</span>

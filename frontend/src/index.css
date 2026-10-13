@@ -1,8 +1,10 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
   /* Font */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", sans-serif;
 
   /* Primary — Indigo */
   --color-primary: #4f46e5;
@@ -11,12 +13,13 @@
   --color-danger: #e11d48;
 
   /* Background */
-
   --color-page: #f8fafc;
 
-  /* Input border focused: */
+  /* Input border focused */
   --color-border: #e2e8f0;
 }
+
 body {
-  @apply bg-page font-sans;
+  @apply bg-page;
+  font-family: "DM Sans", sans-serif;
 }
