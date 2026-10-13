@@ -71,8 +71,8 @@ const handleChange = (e) =>{
             </span>
           </div>
           <div className="flex items-center gap-2 pt-3">
-            <input type="checkbox" name="Checkbox" className="size-4" />
-            <label htmlFor="Checkbox" className="text-[14px] cursor-pointer text-gray-500"> Remember me</label>
+            <input type="checkbox" name="Checkbox" className="size-4  cursor-pointer" />
+            <label htmlFor="Checkbox" className="text-[14px] text-gray-500"> Remember me</label>
           </div>
           <div className="bg-primary hover:bg-primary-hover rounded-lg p-2 mt-4 flex justify-center items-center cursor-pointer">
             <button className="text-white text-md font-bold ">
