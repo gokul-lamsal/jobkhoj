@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { CiMail } from "react-icons/ci";
+import { Link } from "react-router-dom";
+import Button from "../../components/global/Button";
 
 const ConfirmPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-
+  const otpInput = useRef([]);
+  const handleChange = (otpBox, index) => {
+    setOtp((prev) =>
+      prev.map((e, i) => {
+        if (i === index) return otpBox.target.value;
+        return e;
+      }),
+    );
+    otpInput.current[index + 1]?.focus();
+  };
+  const checkOtp = (e) => {
+    e.preventDefault();
+    console.log(parseInt(otp.join("")));
+  };
   return (
     <>
       <div className="flex justify-center items-center">
@@ -17,29 +32,28 @@ const ConfirmPage = () => {
         <p className="font-bold">john@student.com</p>
       </div>
       <div>
-        <form
-          action=""
-          className="flex justify-center items-center gap-2 mb-3 mt-2"
-        >
-          {otp.map((item, index) => {
-            return (
-              <input
-                type="text"
-                maxLength={1}
-                name="otp"
-                id={"otp" + index}
-                key={index}
-                className="border-2 rounded-xl border-gray-400 w-12 h-15 text-center px-3 py-2 text-2xl"
-              />
-            );
-          })}
+        <form className="flex flex-col  gap-2 mb-3 mt-2" onSubmit={checkOtp}>
+          <div className="flex justify-center items-center gap-2 mb-3 mt-2">
+            {otp.map((item, index) => {
+              return (
+                <input
+                  type="text"
+                  maxLength={1}
+                  name="otp"
+                  id={"otp" + index}
+                  key={index}
+                  ref={(e) => (otpInput.current[index] = e)}
+                  value={item}
+                  onChange={(e) => handleChange(e, index)}
+                  className="border-2 rounded-xl border-gray-400 w-12 h-15 text-center px-3 py-2 text-2xl"
+                />
+              );
+            })}
+          </div>
+          <Button text={"Verify Email"} />
         </form>
       </div>
-      <div className="flex justify-center items-center mb-2">
-        <button className="bg-primary hover:bg-primary-hover rounded-xl w-[30rem] py-3 shadow-xl hover:cursor-pointer">
-          <span className="text-xl text-white">Verify Email</span>
-        </button>
-      </div>
+
       <div className="flex justify-center items-center">
         <p className="text-gray-400">
           Didn't get the code?{" "}
@@ -49,9 +63,11 @@ const ConfirmPage = () => {
         </p>
       </div>
       <div className="flex justify-center items-center mb-4">
-        <button className="hover:cursor-pointer">
-          <span className="text-gray-400">&#60; Back to sign up</span>
-        </button>
+        <Link to={"/register"} className="hover:cursor-pointer ">
+          <span className="text-gray-400 hover:text-blue-600 hover:underline">
+            &#60; Back to sign up
+          </span>
+        </Link>
       </div>
     </>
   );
