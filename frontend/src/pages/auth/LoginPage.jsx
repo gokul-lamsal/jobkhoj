@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Button from "../../components/global/Button";
 
 const LoginPage = () => {
   const [form, setForm] = useState([]);
@@ -16,7 +17,7 @@ const LoginPage = () => {
     <>
       <div className="flex flex-col justify-center items-center ">
         <h1 className="text-3xl font-bold">Welcome back</h1>
-        <p className="text-gray-600 text-[12px]">Log in to your account</p>
+        <p className="text-gray-600 text-sm">Log in to your account</p>
       </div>
       <div className="border border-gray-400 rounded-lg p-1 cursor-pointer w-full">
         <p className="flex items-center justify-center text-md text-gray-700 gap-2 ">
@@ -29,7 +30,7 @@ const LoginPage = () => {
         <p className="text-[13px] text-gray-600">or</p>
         <div className="w-[45%] border text-gray-400"></div>
       </div>
-      <form action="" className="flex flex-col gap-2 w-full">
+      <form  className="flex flex-col gap-2 w-full">
         <label htmlFor="Email" className="text-[12px] font-bold">
           {" "}
           Email address
@@ -80,16 +81,14 @@ const LoginPage = () => {
             Remember me
           </label>
         </div>
-        <div className="bg-primary hover:bg-primary-hover rounded-lg p-2 mt-4 flex justify-center items-center cursor-pointer">
-          <button className="text-white text-md font-bold ">Log in</button>
-        </div>
+        <Button text={"Login"} />
       </form>
       <div className="text-center">
-        <p className="text-[12px] text-gray-500">
+        <p className=" text-gray-500">
           New here?{" "}
           <Link
             to={"/register"}
-            className="text-purple-800 hover:underline text-[13px] font-bold cursor-pointer"
+            className="text-purple-800 hover:underline font-bold cursor-pointer"
           >
             Create an account
           </Link>

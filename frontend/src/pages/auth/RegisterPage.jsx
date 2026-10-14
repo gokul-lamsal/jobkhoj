@@ -6,6 +6,7 @@ import { IoLockClosedOutline } from "react-icons/io5";
 import { LuBuilding } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
+import Button from "../../components/global/Button";
 
 const RegisterPage = () => {
   const formInit = {
@@ -145,19 +146,18 @@ const RegisterPage = () => {
           </span>
         </div>
         <p className="text-[12px] text-gray-500 mt-1 ">At least 8 characters</p>
-        <div className="bg-primary hover:bg-primary-hover cursor-pointer rounded-md p-2 flex justify-center items-center">
-          <button className="text-white text-md font-bold">
-            Create account
-          </button>
-        </div>
+        <Button text={"Register"} />
       </form>
       <div className="flex flex-col justify-center items-center gap-6">
-        <p className="text-[12px] text-gray-500">
+        <p className=" text-gray-500">
           We will email you a 6 digit code to verify your address.
         </p>
-        <p className="text-[12px] text-gray-500">
+        <p className=" text-gray-500">
           Already have an account?{" "}
-          <Link to={"/login"} className="text-purple-800 hover:underline text-[13px] font-bold cursor-pointer">
+          <Link
+            to={"/login"}
+            className="text-purple-800 hover:underline font-bold cursor-pointer"
+          >
             Log in
           </Link>
         </p>

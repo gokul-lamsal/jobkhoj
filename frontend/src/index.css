@@ -23,3 +23,35 @@ body {
   @apply bg-page;
   font-family: "DM Sans", sans-serif;
 }
+ .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold;
+  }
+
+  /* purple: Internship, Company */
+  .badge-primary {
+    @apply bg-violet-100 text-violet-700;
+  }
+
+  /* blue: Full time, Seeker */
+  .badge-info {
+    @apply bg-sky-100 text-sky-700;
+  }
+
+  /* amber: Part time, Pending, Admin */
+  .badge-warning {
+    @apply bg-amber-100 text-amber-700;
+  }
+
+  /* green: Contract, Accepted */
+  .badge-success {
+    @apply bg-emerald-100 text-emerald-700;
+  }
+
+  /* red: Rejected */
+  .badge-danger {
+    @apply bg-rose-100 text-rose-700;
+  }
+  /* grey badge */
+  .badge-neutral {
+    @apply bg-white/20 text-white;
+  }
