@@ -44,7 +44,7 @@ const SeekerProfile = () => {
           <div className='p-2 w-10 h-full text-white font-bold bg-linear-to-r from-fuchsia-600 to-purple-600 rounded-full flex justify-center items-center tracking-wider'>JD</div>
           <div className='w-30 flex items-center text-center justify-center gap-4'>
             <span className='text-lg tracking-wide capitalize'>jhon Doe</span>
-            <span ><FaChevronDown size={14}/></span>
+            <span ><FaChevronDown size={14} /></span>
           </div>
         </div>
       </Link>
@@ -94,7 +94,10 @@ const SeekerNavBar = ({ navLinks = [] }) => {
       </div>
       {/* login buttons or profile */}
       <div className='flex items-center gap-3 h-10'>
-        <LoginBtns />
+        {
+          token ? <SeekerProfile /> :
+            <LoginBtns />
+        }
       </div>
     </nav>
   )
