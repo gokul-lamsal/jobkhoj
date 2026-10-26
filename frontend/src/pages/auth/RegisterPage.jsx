@@ -15,6 +15,20 @@ const RegisterPage = () => {
     password: "",
   };
   const [form, setForm] = useState(formInit);
+  const chooseRole = [
+    {
+      title: "Job Seeker",
+      description: "Find and apply to jobs",
+      role: "seeker",
+      icon: FiUser,
+    },
+    {
+      title: "Company",
+      description: "Post jobs and hire",
+      role: "company",
+      icon: LuBuilding,
+    },
+  ];
   const handleChange = (e) => {
     setForm((prev) => ({
       ...prev,
@@ -29,71 +43,48 @@ const RegisterPage = () => {
           Choose how you want to use Lunar Portal.
         </p>
       </div>
-      <div className="flex justify-center items-center gap-2">
-        <div
-          onClick={() =>
-            setForm((prev) => ({
-              ...prev,
-              role: "seeker",
-            }))
-          }
-          className={`border-2 ${form.role === "seeker" ? "border-purple-900" : "border-gray-400"} p-2 rounded-xl flex gap-4 items-center cursor-pointer`}
-        >
-          <div>
-            <h1
-              className={`w-13 h-13 rounded-2xl text-white flex justify-center items-center ${form.role === "seeker" ? "bg-purple-900" : "bg-gray-400"} `}
+      <div className="flex justify-center items-center gap-3 ">
+        {chooseRole.map((e, i) => {
+          return (
+            <div
+              key={e.role}
+              onClick={() =>
+                setForm((prev) => ({
+                  ...prev,
+                  role: e.role,
+                }))
+              }
+              className={`border-2 transition-all duration-500 ease-out  ${form.role === e.role ? "border-indigo-600 ring-indigo-100 ring-4 bg-indigo-400/10" : "border-gray-200"} p-2 rounded-xl flex gap-4 items-center cursor-pointer`}
             >
-              <FiUser color="white" size={30} />
-            </h1>
-          </div>
-          <div className="flex flex-col">
-            <h1 className="text-xl font-bold ">Job Seeker</h1>
-            <p className="text-sm text-gray-700">Find and apply to jobs</p>
-          </div>
-          <div>
-            <input
-              type="radio"
-              name="role"
-              value="seeker"
-              checked={form.role === "seeker"}
-              onChange={handleChange}
-              className="cursor-pointer size-5 outline-none accent-purple-900"
-            />
-          </div>
-        </div>
-        <div
-          onClick={() =>
-            setForm((prev) => ({
-              ...prev,
-              role: "company",
-            }))
-          }
-          className={`border-2 ${form.role === "company" ? "border-purple-900" : "border-gray-400"} p-2 rounded-xl flex gap-4 items-center cursor-pointer`}
-        >
-          <div>
-            <h1
-              className={`w-13 h-13 rounded-2xl text-white flex justify-center items-center ${form.role === "company" ? "bg-purple-900" : "bg-gray-400"} `}
-            >
-              <LuBuilding color="white" size={30} />
-            </h1>
-          </div>
-          <div className="flex flex-col">
-            <h1 className="text-xl font-bold ">Company</h1>
-            <p className="text-sm text-gray-700">Post jobs and hire</p>
-          </div>
-          <div>
-            <input
-              type="radio"
-              name="role"
-              value="company"
-              className="cursor-pointer size-5 outline-none accent-purple-900 "
-              onChange={handleChange}
-              checked={form.role === "company"}
-            />
-          </div>
-        </div>
+              <div>
+                <h1
+                  className={`w-13 h-13 rounded-2xl text-white flex justify-center items-center ${form.role === e.role ? "bg-indigo-600" : "bg-indigo-100/70"} `}
+                >
+                  <e.icon
+                    color={form.role === e.role ? "white" : "grey"}
+                    size={30}
+                  />
+                </h1>
+              </div>
+              <div className="flex flex-col">
+                <h1 className="text-xl font-bold ">{e.title}</h1>
+                <p className="text-sm text-gray-700">{e.description}</p>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="role"
+                  value={e.role}
+                  className="cursor-pointer size-5 outline-none accent-indigo-700 "
+                  onChange={handleChange}
+                  checked={form.role === e.role}
+                />
+              </div>
+            </div>
+          );
+        })}
       </div>
-      <div className="border border-gray-400 rounded-lg p-1 cursor-pointer">
+      <div className="border border-gray-400 rounded-lg p-2.5 cursor-pointer">
         <p className="flex items-center justify-center text-md text-gray-700 gap-2">
           <FcGoogle size={25} />
           Continue with Google

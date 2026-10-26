@@ -7,13 +7,19 @@ const ConfirmPage = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const otpInput = useRef([]);
   const handleChange = (otpBox, index) => {
+
     setOtp((prev) =>
       prev.map((e, i) => {
         if (i === index) return otpBox.target.value;
         return e;
       }),
     );
-    otpInput.current[index + 1]?.focus();
+    if (otp[index].length > 0) {
+      otpInput.current[index - 1]?.focus();
+    } else {
+      otpInput.current[index + 1]?.focus();
+    }
+
   };
   const checkOtp = (e) => {
     e.preventDefault();

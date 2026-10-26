@@ -19,7 +19,7 @@ const LoginPage = () => {
         <h1 className="text-3xl font-bold">Welcome back</h1>
         <p className="text-gray-600 text-sm">Log in to your account</p>
       </div>
-      <div className="border border-gray-400 rounded-lg p-1 cursor-pointer w-full">
+      <div className="border border-gray-400 rounded-lg p-2.5 cursor-pointer w-full">
         <p className="flex items-center justify-center text-md text-gray-700 gap-2 ">
           <FcGoogle size={25} />
           Continue with Google
