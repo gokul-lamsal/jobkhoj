@@ -69,12 +69,9 @@ const Home = () => {
   return (
     <main>
       <section className="flex flex-col justify-center items-center gap-3 px-10 py-8 bg-linear-to-b from-indigo-50 via-indigo-50/40 to-white">
-        <span className="text-[12px] text-indigo-500 shadow-sm bg-indigo-300/10 font-bold px-4 py-1 rounded-2xl flex justify-center items-center gap-1 ">
-          <AiOutlineThunderbolt color="blue" size={12} /> New roles added every
-          day
-        </span>
+       
 
-        <div className="flex flex-col gap-4 items-center text-center">
+        <div className="flex flex-col mt-6 gap-4 items-center text-center">
           <h1 className="text-5xl font-extrabold">
             Find the internship or job
             <br />
