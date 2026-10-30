@@ -9,7 +9,6 @@ import { FiSend } from "react-icons/fi";
 import Button from "../../components/global/Button";
 import { Link } from "react-router-dom";
 import PostedJobCard from "./PostedJobCard";
-// import Button from "../components/Button"; // <- keep your own import path
 
 const popularTags = ["internship", "remote", "react", "python", "design"];
 
