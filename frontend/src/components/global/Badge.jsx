@@ -1,6 +1,6 @@
 
 const Badge = ({ type = "neutral",text }) => {
-  return <span className={`badge badge-${type}`}>{text}</span>;
+  return <span className={`badge  text-[14px]  badge-${type}`}>{text}</span>;
 };
 
 export default Badge;
