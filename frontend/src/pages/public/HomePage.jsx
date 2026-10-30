@@ -7,6 +7,7 @@ import { LuUser } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import { FiSend } from "react-icons/fi";
 import Button from "../../components/global/Button";
+import { Link } from "react-router-dom";
 // import Button from "../components/Button"; // <- keep your own import path
 
 const popularTags = ["internship", "remote", "react", "python", "design"];
@@ -210,9 +211,11 @@ const Home = () => {
               can post, so job seekers can trust what they see.
             </p>
           </div>
-          <button className="px-4 py-2  text-[16px] border-2 font-bold text-indigo-700 bg-white rounded-xl">
+          <Link to={"/register?type=company"}>
+          <button className="px-4 py-2  text-[16px] border-2 font-bold cursor-pointer text-indigo-700 bg-white rounded-xl">
             Register your company
           </button>
+          </Link>
         </div>
       </section>
     </main>
