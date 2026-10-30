@@ -7,6 +7,8 @@ import { LuUser } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import { FiSend } from "react-icons/fi";
 import Button from "../../components/global/Button";
+import { Link } from "react-router-dom";
+import PostedJobCard from "./PostedJobCard";
 // import Button from "../components/Button"; // <- keep your own import path
 
 const popularTags = ["internship", "remote", "react", "python", "design"];
@@ -23,14 +25,14 @@ const jobTypes = [
     desc: "Start your career",
     icon: AiOutlineThunderbolt,
     color: "purple",
-       color: "bg-purple-100 text-purple-700",
+    color: "bg-purple-100 text-purple-700",
 
   },
   {
     title: "Full time",
     desc: "Stable, long term roles",
     icon: PiBag,
-       color: "bg-blue-100 text-blue-700",
+    color: "bg-blue-100 text-blue-700",
 
   },
   {
@@ -64,13 +66,91 @@ const steps = [
     icon: FiSend,
   },
 ];
+const postedJobs = [
+  {
+    id: 1,
+    title: "Frontend Developer",
+    company: "TechCorp Pvt Ltd",
+    companyInitials: "TC",
+    logoColor: "indigo",
+    location: "Lalitpur, Nepal",
+    salary: "NPR 50k-70k",
+    type: "Full time",
+    skills: ["React", "Tailwind", "REST"],
+    postedAgo: "2d ago",
+    bookmarked: false,
+  },
+  {
+    id: 2,
+    title: "Backend Intern",
+    company: "TechCorp Pvt Ltd",
+    companyInitials: "TC",
+    logoColor: "purple",
+    location: "Lalitpur, Nepal",
+    salary: "NPR 15k-20k",
+    type: "Internship",
+    skills: ["Node.js", "MySQL", "Express"],
+    postedAgo: "3d ago",
+    bookmarked: false,
+  },
+  {
+    id: 3,
+    title: "Full Stack Engineer",
+    company: "InnoLabs",
+    companyInitials: "IL",
+    logoColor: "blue",
+    location: "Kathmandu, Nepal",
+    salary: "NPR 80k-120k",
+    type: "Full time",
+    skills: ["React", "Node.js", "Prisma"],
+    postedAgo: "4d ago",
+    bookmarked: false,
+  },
+  {
+    id: 4,
+    title: "UI/UX Designer",
+    company: "InnoLabs",
+    companyInitials: "IL",
+    logoColor: "blue",
+    location: "Kathmandu, Nepal",
+    salary: "NPR 40k",
+    type: "Contract",
+    skills: ["Figma", "Prototyping"],
+    postedAgo: "5d ago",
+    bookmarked: false,
+  },
+  {
+    id: 5,
+    title: "DevOps Intern",
+    company: "Global Solutions",
+    companyInitials: "GS",
+    logoColor: "emerald",
+    location: "Remote",
+    salary: "NPR 20k",
+    type: "Internship",
+    skills: ["Docker", "Linux", "CI/CD"],
+    postedAgo: "1w ago",
+    bookmarked: false,
+  },
+  {
+    id: 6,
+    title: "Python Developer",
+    company: "Global Solutions",
+    companyInitials: "GS",
+    logoColor: "emerald",
+    location: "Remote",
+    salary: "USD 2k-3k",
+    type: "Full time",
+    skills: ["Python", "Django", "AWS"],
+    postedAgo: "1w ago",
+    bookmarked: false,
+  },
+];
 
 const Home = () => {
   return (
     <main>
       <section className="flex flex-col justify-center items-center gap-3 px-10 py-8 bg-linear-to-b from-indigo-50 via-indigo-50/40 to-white">
-       
-
         <div className="flex flex-col mt-6 gap-4 items-center text-center">
           <h1 className="text-5xl font-extrabold">
             Find the internship or job
@@ -82,7 +162,7 @@ const Home = () => {
             follow every application from one place.
           </p>
         </div>
-             {/* Search bar */}
+        {/* Search bar */}
         <div className=" max-w-280 bg-white border gap-4 border-gray-200 shadow-lg shadow-indigo-100 p-2 rounded-xl flex items-center ">
           <div className="flex w-[22rem]  items-center gap-2 px-4">
             <CiSearch color="gray" size={20} className="shrink-0" />
@@ -147,12 +227,27 @@ const Home = () => {
           ))}
         </div>
       </section>
-
+      {/* Latest openings */}
+      <section className="flex flex-col gap-4 px-10 pt-8 mb-8">
+        <div >
+          <h2 className="text-xl font-bold">Latest openings</h2>
+          <p className="text-gray-400 text-sm">Fresh roles from approved companies.</p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-5">
+          {
+            postedJobs.map((job, i) => {
+              return (
+                <PostedJobCard title={job.title} company={job.company} companyInitials={job.companyInitials} logoColor={job.logoColor} location={job.location} salary={job.salary} type={job.type} skills={job.skills} postedAgo={job.postedAgo} bookmarked={job.bookmarked} />
+              )
+            })
+          }
+        </div>
+      </section>
       {/* Browse by job type */}
       <section className="flex flex-col gap-4 px-10 pt-8 mb-8">
         <h2 className="text-xl font-bold">Browse by job type</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {jobTypes.map((job,i) => (
+          {jobTypes.map((job, i) => (
             <div
               key={i}
               className="flex group gap-3 items-center border-2 transition-all duration-200 cursor-pointer bg-white border-gray-300 hover:shadow-md shadow-gray-300 p-6 rounded-xl"
@@ -182,7 +277,7 @@ const Home = () => {
           </p>
         </div>
         <div className="grid grid-cols-3 gap-10">
-          {steps.map((s,i) => (
+          {steps.map((s, i) => (
             <div
               key={i}
               className="flex flex-col gap-2 items-center text-center p-6"
@@ -210,9 +305,11 @@ const Home = () => {
               can post, so job seekers can trust what they see.
             </p>
           </div>
-          <button className="px-4 py-2  text-[16px] border-2 font-bold text-indigo-700 bg-white rounded-xl">
-            Register your company
-          </button>
+          <Link to="/register?type=company" >
+            <button className="px-4 py-2  text-[16px] border-2 cursor-pointer font-bold text-indigo-700 bg-white rounded-xl">
+              Register your company
+            </button>
+          </Link>
         </div>
       </section>
     </main>
