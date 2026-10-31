@@ -23,6 +23,9 @@ body {
   @apply bg-page;
   font-family: "DM Sans", sans-serif;
 }
+section{
+  @apply px-10
+}
 .seekerNav{
   @apply px-10 py-4  border-b-2 border-slate-200/70 bg-white/90 
 }

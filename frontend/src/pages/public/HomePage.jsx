@@ -8,7 +8,7 @@ import { MdOutlineMail } from "react-icons/md";
 import { FiSend } from "react-icons/fi";
 import Button from "../../components/global/Button";
 import { Link } from "react-router-dom";
-import PostedJobCard from "./PostedJobCard";
+import PostedJobCard from "../../components/helpers/PostedJobCard";
 
 const popularTags = ["internship", "remote", "react", "python", "design"];
 
@@ -148,8 +148,8 @@ const postedJobs = [
 
 const Home = () => {
   return (
-    <main>
-      <section className="flex flex-col justify-center items-center gap-3 px-10 py-8 bg-linear-to-b from-indigo-50 via-indigo-50/40 to-white">
+    <main >
+      <section className="flex flex-col justify-center items-center gap-3   py-8 bg-linear-to-b from-indigo-50 via-indigo-50/40 to-white">
         <div className="flex flex-col mt-6 gap-4 items-center text-center">
           <h1 className="text-5xl font-extrabold">
             Find the internship or job
@@ -213,7 +213,7 @@ const Home = () => {
       </section>
 
       {/* Stats */}
-      <section className="px-10 pt-8 mt-8">
+      <section className="  pt-8 mt-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {stats.map((item) => (
             <div
@@ -227,7 +227,7 @@ const Home = () => {
         </div>
       </section>
       {/* Latest openings */}
-      <section className="flex flex-col gap-4 px-10 pt-8 mb-8">
+      <section className="flex flex-col gap-4   pt-8 mb-8">
         <div >
           <h2 className="text-xl font-bold">Latest openings</h2>
           <p className="text-gray-400 text-sm">Fresh roles from approved companies.</p>
@@ -243,7 +243,7 @@ const Home = () => {
         </div>
       </section>
       {/* Browse by job type */}
-      <section className="flex flex-col gap-4 px-10 pt-8 mb-8">
+      <section className="flex flex-col gap-4   pt-8 mb-8">
         <h2 className="text-xl font-bold">Browse by job type</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {jobTypes.map((job, i) => (
@@ -268,7 +268,7 @@ const Home = () => {
       </section>
 
       {/* How it works */}
-      <section className="flex flex-col gap-8 px-10 pt-12 pb-8 mb-10 border-b border-t border-gray-300 bg-white">
+      <section className="flex flex-col gap-8   pt-12 pb-8 mb-10 border-b border-t border-gray-300 bg-white">
         <div className="flex flex-col justify-center items-center text-center">
           <h2 className="text-2xl font-extrabold">How it works</h2>
           <p className="text-lg text-gray-500">
@@ -293,7 +293,7 @@ const Home = () => {
       </section>
 
       {/* CTA */}
-      <section className="px-10  mx-10 mb-15">
+      <section className="   mx-10 mb-15">
         <div className="flex  justify-between items-center   rounded-3xl bg-linear-to-r from-indigo-600  to-indigo-900 px-8 py-12">
           <div>
             <h2 className="text-2xl font-extrabold text-white">

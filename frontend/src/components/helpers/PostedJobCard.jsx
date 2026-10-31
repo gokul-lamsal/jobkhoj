@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { CiBookmark } from 'react-icons/ci';
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa';
 import { FiDollarSign } from 'react-icons/fi';
 import { MdOutlineHistory, MdOutlineLocationOn } from 'react-icons/md';
-import Badge from '../../components/global/Badge';
-import Tag from '../../components/global/Tag';
-import Button from '../../components/global/Button';
+import Badge from '../global/Badge';
+import Tag from '../global/Tag';
+import Button from '../global/Button';
+import { badgeType, gradients } from './ColorAndBadge';
 
 const PostedJobCard = ({
     title,
@@ -20,19 +20,7 @@ const PostedJobCard = ({
     bookmarked = false,
     onToggleBookmark,
 }) => {
-    const gradients = {
-        indigo: "from-indigo-600 to-indigo-900",
-        blue: "from-blue-600 to-blue-900",
-        emerald: "from-emerald-600 to-emerald-900",
-        purple: "from-purple-600 to-purple-900",
-    };
-
-    const badgeType = {
-        "contract": "success",
-        "part time": "warning",
-        "internship": "primary",
-        "full time": "info"
-    }
+    
     const [Isbookmarked, setIsBookMarked] = useState(false)
     const changeBookmarkState = () => {
         setIsBookMarked(prev => !prev)
