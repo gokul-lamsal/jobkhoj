@@ -11,7 +11,7 @@ const CompanyCard = ({ name, initials, accentColor, location, description, websi
         return splitUrl[splitUrl.length - 1]
     }
     return (
-        <div className='py-4 px-5 flex flex-col gap-4 border-2 border-gray-300 bg-white cursor-pointer hover:scale-105 hover:shadow shrink transition-all duration-200 ease-out min-h-fit h-50 rounded-2xl'>
+        <div className='p-5 flex flex-col gap-4 border-2 border-gray-300 bg-white cursor-pointer hover:scale-105 hover:shadow shrink transition-all duration-200 ease-out max-h-55  rounded-2xl'>
             <div className='flex gap-3'>
                 <div className={`h-13 w-13 rounded-xl flex items-center justify-center text-white font-bold text-lg bg-linear-to-b ${gradients[accentColor]}`} >
                     {initials}
