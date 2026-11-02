@@ -9,6 +9,7 @@ import { FiSend } from "react-icons/fi";
 import Button from "../../components/global/Button";
 import { Link } from "react-router-dom";
 import PostedJobCard from "../../components/helpers/PostedJobCard";
+import SearchBar from "../../components/helpers/SearchBar";
 
 const popularTags = ["internship", "remote", "react", "python", "design"];
 
@@ -162,44 +163,8 @@ const Home = () => {
           </p>
         </div>
         {/* Search bar */}
-        <div className=" max-w-280 bg-white border gap-4 border-gray-200 shadow-lg shadow-indigo-100 p-2 rounded-xl flex items-center ">
-          <div className="flex w-[22rem]  items-center gap-2 px-4">
-            <CiSearch color="gray" size={20} className="shrink-0" />
-            <input
-              type="text"
-              placeholder="Job title, skill or keyword"
-              className="w-full min-w-0 py-2 outline-none text-sm text-gray-700 placeholder:text-gray-400"
-            />
-          </div>
+        <SearchBar />
 
-          {/* Location */}
-          <div className="flex w-[15rem] min-w-0 items-center gap-2 pl-4 pr-2 border-l border-gray-200">
-            <CiLocationOn color="gray" size={20} className="shrink-0" />
-            <input
-              type="text"
-              placeholder="Location"
-              className="w-full min-w-0 py-2 outline-none text-sm text-gray-700 placeholder:text-gray-400"
-            />
-          </div>
-
-          <div className="w-[10rem] shrink-0 pl-2 pr-2 border-l border-gray-200">
-            <select
-              name="jobType"
-              className="w-full py-2 text-sm text-gray-700 outline-none bg-transparent cursor-pointer"
-              defaultValue="All types"
-            >
-              <option value="All types">All types</option>
-              <option value="type1">type1</option>
-              <option value="type2">type2</option>
-              <option value="type3">type3</option>
-              <option value="type4">type4</option>
-            </select>
-          </div>
-
-          <div className="w-[8rem] ">
-            <Button text={"Search"} />
-          </div>
-        </div>
 
         {/* Popular tags */}
         <div className="flex gap-2.5 mt-3 text-sm items-center">
