@@ -66,7 +66,7 @@ const steps = [
     icon: FiSend,
   },
 ];
-const postedJobs = [
+export const postedJobs = [
   {
     id: 1,
     title: "Frontend Developer",

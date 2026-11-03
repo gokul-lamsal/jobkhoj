@@ -5,26 +5,32 @@ import SearchBar from '../../components/helpers/SearchBar'
 import { VscSettingsCompact } from 'react-icons/vsc'
 import { FiDollarSign, FiMapPin } from 'react-icons/fi'
 import { TbCurrencyRupeeNepalese } from 'react-icons/tb'
-
+import Badge from "../../components/global/Badge"
+import { RxCross2 } from 'react-icons/rx'
+import { ImCross } from 'react-icons/im'
+import { postedJobs } from './HomePage'
+import PostedJobCard from '../../components/helpers/PostedJobCard'
 const Browsepage = () => {
   const [filter, setFilter] = useState({
-    jobType: null,
-    location:"",
-    salary:"",
+    type: "",
+    location: "",
+    salary: "",
+    keyword: "",
+    mode: ""
   })
-  const filterChange = (e)=>{
-    setFilter(prev=>({...prev,[e.target.name]:e.target.value}))
+  const filterChange = (e) => {
+    setFilter(prev => ({ ...prev, [e.target.name]: e.target.value }))
     console.log(filter);
-    
+
   }
   return (
     <main>
       {/* search bar */}
       <section className='bg-white mb-5 py-4 h-30 border-b-2 flex items-center justify-center gap-3 border-slate-200/70   text-center'>
-        <SearchBar />
+        <SearchBar onChange={filterChange} filter={filter} setFilter={setFilter} />
       </section>
       {/* Result section */}
-      <section className='flex gap-8 my-5 '>
+      <section className='flex gap-8 my-5 mb-15 '>
         <div className="h-[30rem] w-[20rem] rounded-2xl border border-slate-300/90 bg-white px-6 py-4 shadow-sm">
           <div className="flex items-center justify-between border-b border-gray-200 pb-4">
             <div className="flex items-center gap-3">
@@ -69,10 +75,10 @@ const Browsepage = () => {
   checked:after:text-xs"
                         name={job}
                         id={job}
-                        checked={filter.jobType === job}
+                        checked={filter.type === job}
                         onChange={(e) => {
                           if (e.target.checked) {
-                            setFilter(prev => ({ ...prev, jobType: job }))
+                            setFilter(prev => ({ ...prev, type: job }))
                           }
                         }}
                       />
@@ -116,7 +122,7 @@ const Browsepage = () => {
               <h2
                 className="mb-2 block text-xs font-semibold uppercase tracking-wider text-gray-500"
               >
-            Salary
+                Salary
               </h2>
               <div className="relative">
                 <TbCurrencyRupeeNepalese className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -136,9 +142,42 @@ const Browsepage = () => {
             </div>
           </div>
         </div>
-        <div className='border border-red-400 h-30 grow'>
+        {/* Result */}
+        <div className='grow px-2 py-1'>
+          <div>
+            <h2 className='font-bold text-xl'>{postedJobs.length} jobs found</h2>
+            <span className='text-gray-500  text-[16px]'>Only active jobs from approved companies are shown.</span>
+          </div>
+          <div className='my-5 flex gap-2 items-center'>
+            {
+              Object.keys(filter).map(e => {
+                console.log(e);
+                if (filter[e].length === 0) return <></>
+                return (
+                  <div className='badge badge-search '>
+                    {e}:<span className=' capitalize'>{filter[e].replace("_", " ")}</span>
+                    <button className='hover:scale-125 transition-all duration-200 cursor-pointer mb-1' onClick={() => {
+                      setFilter(prev => ({ ...prev, [e]: "" }))
+                    }}>
+                      <ImCross size={12} />
+                    </button>
+                  </div>
+                )
 
+              })
+            }
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5 ">
+            {
+              postedJobs.map((job, i) => {
+                return (
+                  <PostedJobCard title={job.title} company={job.company} companyInitials={job.companyInitials} logoColor={job.logoColor} location={job.location} salary={job.salary} type={job.type} skills={job.skills} postedAgo={job.postedAgo} bookmarked={job.bookmarked} />
+                )
+              })
+            }
+          </div>
         </div>
+
       </section>
     </main>
   )
