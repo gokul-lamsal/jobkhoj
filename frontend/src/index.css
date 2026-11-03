@@ -61,4 +61,7 @@ section{
   .badge-neutral {
     @apply bg-white/20 text-white;
   }
-  
+  /* search badge */
+  .badge-search{
+    @apply bg-black/10 border border-slate-300/80  text-primary
+  }

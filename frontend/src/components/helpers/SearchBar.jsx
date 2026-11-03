@@ -11,7 +11,7 @@ const SearchDropDown = ({ selectedType, setSelectedType }) => {
             <button
                 onClick={() => setIsOpen(prev => !prev)}
                 type="button"
-                className={`flex justify-between items-center py-2  w-full  h-full cursor-pointer  gap-2 rounded-lg ${selectedType ? "text-black":"text-gray-400"}  px-4`}
+                className={`flex justify-between items-center py-2  w-full  h-full cursor-pointer  gap-2 rounded-lg ${selectedType ? "text-black" : "text-gray-400"}  px-4`}
             >
                 {selectedType ?? "Work mode"}
                 <FaChevronDown
@@ -28,11 +28,12 @@ const SearchDropDown = ({ selectedType, setSelectedType }) => {
                     }`}
             >
                 <ul className="space-y-1 text-sm font-medium text-gray-700">
-                    {["Remote", "On-site","All"].map((item) => (
+                    {["Remote", "On-site", "All"].map((item) => (
                         <li key={item} >
                             <button
                                 onClick={() => {
                                     setSelectedType(item)
+
                                     setIsOpen(false)
                                 }}
                                 className="cursor-pointer  w-full rounded-md px-3 py-2 hover:bg-gray-100 hover:text-indigo-600"
@@ -47,7 +48,7 @@ const SearchDropDown = ({ selectedType, setSelectedType }) => {
     );
 };
 
-const SearchBar = () => {
+const SearchBar = ({ onChange, filter = { keyword: "", location: "" } }) => {
     const [selectedType, setSelectedType] = useState(null)
     return (
         <div className=" max-w-280 bg-white border gap-4 border-gray-200 shadow-lg shadow-indigo-100 p-2 rounded-xl flex items-center ">
@@ -56,7 +57,10 @@ const SearchBar = () => {
                 <input
                     type="text"
                     placeholder="Job title, skill or keyword"
+                    name='keyword'
                     className="w-full min-w-0 py-2 outline-none text-sm text-gray-700 placeholder:text-gray-400"
+                    value={filter.keyword}
+                    onChange={onChange}
                 />
             </div>
 
@@ -66,6 +70,9 @@ const SearchBar = () => {
                 <input
                     type="text"
                     placeholder="Location"
+                    name='location'
+                    value={filter.location}
+                    onChange={onChange}
                     className="w-full min-w-0 py-2 outline-none text-sm text-gray-700 placeholder:text-gray-400"
                 />
             </div>
@@ -73,7 +80,7 @@ const SearchBar = () => {
             <div className="w-[10rem] shrink-0 pl-2 pr-2 border-l border-gray-200">
                 <div className="w-full relative   text-sm text-gray-700 outline-none bg-transparent cursor-pointer">
 
-                    <SearchDropDown selectedType={selectedType} setSelectedType={setSelectedType} />
+                    <SearchDropDown selectedType={selectedType} filter={filter} onChange={onChange} setSelectedType={setSelectedType} />
                 </div>
             </div>
 
