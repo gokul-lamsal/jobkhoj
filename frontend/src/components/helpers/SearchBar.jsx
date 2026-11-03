@@ -13,7 +13,7 @@ const SearchDropDown = ({ selectedType, setSelectedType }) => {
                 type="button"
                 className={`flex justify-between items-center py-2  w-full  h-full cursor-pointer  gap-2 rounded-lg ${selectedType ? "text-black":"text-gray-400"}  px-4`}
             >
-                {selectedType ?? "Type"}
+                {selectedType ?? "Work mode"}
                 <FaChevronDown
                     size={12}
                     className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
@@ -28,7 +28,7 @@ const SearchDropDown = ({ selectedType, setSelectedType }) => {
                     }`}
             >
                 <ul className="space-y-1 text-sm font-medium text-gray-700">
-                    {["Remote", "City","All"].map((item) => (
+                    {["Remote", "On-site","All"].map((item) => (
                         <li key={item} >
                             <button
                                 onClick={() => {
