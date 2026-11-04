@@ -12,6 +12,7 @@ import SeekerNavBar from "./pages/seeker/SeekerNavBar";
 import SeekerDashBoard from "./pages/seeker/SeekerDashBoard";
 import Browsepage from "./pages/public/Browsepage";
 import CompaniesPage from "./pages/public/CompaniesPage";
+import SeekerJobPage from "./pages/seeker/SeekerJobPage";
 
 function App() {
   const route = createBrowserRouter([
@@ -31,6 +32,7 @@ function App() {
           path: "/company",
           element: <CompaniesPage />,
         },
+
       ],
     },
     {
@@ -59,9 +61,13 @@ function App() {
           element: <SeekerLayout />,
           children: [
             {
-              path: "dashboard",
+              path: "browse",
               element: <SeekerDashBoard />
-            }
+            },
+            {
+              path: "job/:id",
+              element: <SeekerJobPage />,
+            },
           ]
         }
 

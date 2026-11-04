@@ -151,11 +151,10 @@ const Browsepage = () => {
           <div className='my-5 flex gap-2 items-center'>
             {
               Object.keys(filter).map(e => {
-                console.log(e);
                 if (filter[e].length === 0) return <></>
                 return (
                   <div className='badge badge-search '>
-                    {e}:<span className=' capitalize'>{filter[e].replace("_", " ").slice(0,30)}{filter[e].length>30 && "..."}</span>
+                    {e}:<span className=' capitalize'>{filter[e].replace("_", " ").slice(0, 30)}{filter[e].length > 30 && "..."}</span>
                     <button className='hover:scale-125 transition-all duration-200 cursor-pointer mb-1' onClick={() => {
                       setFilter(prev => ({ ...prev, [e]: "" }))
                     }}>

@@ -7,7 +7,7 @@ const AuthContextProvider = ({ children }) => {
     username: "Jhon",
     role: "seeker"
   })
-  const [token, setToken] = useState(null)
+  const [token, setToken] = useState("lkjhgf")
 
   return (
     <AuthContext.Provider value={{ user, token }}>

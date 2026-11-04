@@ -6,6 +6,7 @@ import Badge from '../global/Badge';
 import Tag from '../global/Tag';
 import Button from '../global/Button';
 import { badgeType, gradients } from './ColorAndBadge';
+import { Link } from 'react-router-dom';
 
 const PostedJobCard = ({
     title,
@@ -19,6 +20,7 @@ const PostedJobCard = ({
     postedAgo,
     bookmarked = false,
     onToggleBookmark,
+    id
 }) => {
     
     const [Isbookmarked, setIsBookMarked] = useState(false)
@@ -78,9 +80,11 @@ const PostedJobCard = ({
                   <MdOutlineHistory size={18}/>  
                   <span>{postedAgo}</span>
                 </div>
-                <div className='h-10  text-center'>
-                    <Button type='button' text={"Apply now"} />
-                </div>
+                <Link to={`/seeker/job/${id}`}>
+                    <div className='h-10  text-center'>
+                        <Button type='button' text={"Apply now"} />
+                    </div>
+                </Link>
             </div>
         </div >
     )
