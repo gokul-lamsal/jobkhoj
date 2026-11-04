@@ -65,7 +65,7 @@ function App() {
               element: <SeekerDashBoard />
             },
             {
-              path: "job/:id",
+              path: "browse/:id",
               element: <SeekerJobPage />,
             },
           ]
