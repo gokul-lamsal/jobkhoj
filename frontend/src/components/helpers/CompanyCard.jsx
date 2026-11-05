@@ -4,6 +4,7 @@ import { MdOutlineAddLocationAlt, MdOutlineLocationOn } from 'react-icons/md'
 import { FaLink } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
+
 const CompanyCard = ({ name, initials, accentColor, location, description, website }) => {
     const onlyUrl = (url) => {
         const splitUrl = url.split("https://")
