@@ -170,7 +170,7 @@ const Browsepage = () => {
             {
               postedJobs.map((job, i) => {
                 return (
-                  <PostedJobCard title={job.title} company={job.company} companyInitials={job.companyInitials} logoColor={job.logoColor} location={job.location} salary={job.salary} type={job.type} skills={job.skills} postedAgo={job.postedAgo} bookmarked={job.bookmarked} />
+                  <PostedJobCard id={job.id} title={job.title} company={job.company} companyInitials={job.companyInitials} logoColor={job.logoColor} location={job.location} salary={job.salary} type={job.type} skills={job.skills} postedAgo={job.postedAgo} bookmarked={job.bookmarked} />
                 )
               })
             }

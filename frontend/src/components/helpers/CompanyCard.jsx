@@ -5,14 +5,14 @@ import { FaLink } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 
-const CompanyCard = ({ name, initials, accentColor, location, description, website }) => {
+const CompanyCard = ({ name, initials, accentColor, location, description, website, isBrowse = false }) => {
     const onlyUrl = (url) => {
         const splitUrl = url.split("https://")
         if (splitUrl.length < 2) return url
         return splitUrl[splitUrl.length - 1]
     }
     return (
-        <div className='p-5 flex flex-col gap-4 border-2 border-gray-300 bg-white cursor-pointer hover:scale-105 hover:shadow shrink transition-all duration-200 ease-out max-h-55  rounded-2xl'>
+        <div className='p-5 flex flex-col gap-4 border-2 border-gray-300 bg-white cursor-pointer hover:scale-105 hover:shadow shrink transition-all duration-200 ease-out max-h-65 rounded-2xl'>
             <div className='flex gap-3'>
                 <div className={`h-13 w-13 rounded-xl flex items-center justify-center text-white font-bold text-lg bg-linear-to-b ${gradients[accentColor]}`} >
                     {initials}
@@ -45,12 +45,22 @@ const CompanyCard = ({ name, initials, accentColor, location, description, websi
                         {onlyUrl(website)}
                     </div>
                 </a>
-                <Link to={"/company/2"}>
-                    <div className='bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 active:scale-95 transition-all duration-200 px-4 py-1.5 text-[15px] font-semibold text-white rounded-lg shadow-sm cursor-pointer'>
+                {
+                    !isBrowse && (<Link to={"/company/2"}>
+                        <div className='bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 active:scale-95 transition-all duration-200 px-4 py-1.5 text-[15px] font-semibold text-white rounded-lg shadow-sm cursor-pointer'>
+                            View company
+                        </div>
+                    </Link>)
+                }
+
+            </div>
+            {
+                isBrowse && (<Link to={"/company/2"}>
+                    <div className=' ring-slate-400 ring  hover:ring-slate-700 text-center  active:scale-95 transition-all duration-200 px-4 py-3 text-[15px] font-semibold text-gray-700 rounded-lg cursor-pointer'>
                         View company
                     </div>
-                </Link>
-            </div>
+                </Link>)
+            }
         </div>
     )
 }

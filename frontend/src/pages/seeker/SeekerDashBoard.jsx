@@ -1,8 +1,11 @@
-import React from 'react'
+import LatestOpening from '../../components/helpers/LatestOpening'
 
 const SeekerDashBoard = () => {
   return (
-    <div>SeekerDashBoard</div>
+    <>
+    <LatestOpening/>
+    
+    </>
   )
 }
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 import SeekerNavBar from '../../pages/seeker/SeekerNavBar'
+import Footer from '../global/Footer'
 
 const SeekerLayout = () => {
     return (
-        <div>
+        <>
             <SeekerNavBar navLinks={[
 
                 {
@@ -25,7 +26,9 @@ const SeekerLayout = () => {
                 },
             ]} />
             <Outlet />
-        </div>
+            <Footer />
+
+        </>
     )
 }
 
