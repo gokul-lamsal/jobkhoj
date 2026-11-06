@@ -4,7 +4,7 @@ export const gradients = {
     emerald: "from-emerald-600 to-emerald-900",
     purple: "from-purple-600 to-purple-900",
     pink: "from-pink-700 to-purple-900",
-    green:"from-green-700 to-green-900"
+    green: "from-green-700 to-green-900"
 };
 
 export const badgeType = {
@@ -12,4 +12,9 @@ export const badgeType = {
     "part time": "warning",
     "internship": "primary",
     "full time": "info"
+}
+export const statusBadge = {
+    "accepted": "success",
+    "rejected": "danger",
+    "pending": "warning",
 }

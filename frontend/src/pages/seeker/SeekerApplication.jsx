@@ -64,9 +64,19 @@ function SeekerApplication() {
       status: "Pending",
     },
   ]);
+  const [currentStatus, setCurrentStatus] = useState("All")
+
+  const stats = [
+    { label: "Total", value: 5, color: "text-gray-700" },
+    { label: "Pending", value: 3, color: "text-amber-700" },
+    { label: "Accepted", value: 1, color: "text-emerald-700" },
+    { label: "Rejected", value: 1, color: "text-rose-700" },
+  ];
+
+
   return (
     <main>
-      <section className=" flex flex-col gap-4 py-8">
+      <section className=" flex flex-col py-8">
         <div>
           <h1 className="font-bold text-2xl">My applications</h1>
           <p className="text-sm text-gray-400">
@@ -76,70 +86,36 @@ function SeekerApplication() {
 
         {/* status part */}
 
-        <div className="grid grid-cols-4 gap-2 ">
-          <div className="border-2 border-gray-400 rounded-lg py-6 px-2 flex flex-col justify-center">
-            <p className="text-md text-gray-400">Total</p>
-            <h1 className="text-2xl font-extrabold px-2">5</h1>
-          </div>
-          <div className="border-2 border-gray-400 rounded-lg py-6 px-2 flex flex-col justify-center">
-            <span>
-              <Badge type="warning" text={"Pending"} />
-            </span>
-            <h1 className="text-2xl font-extrabold px-4">3</h1>
-          </div>
-          <div className="border-2 border-gray-400 rounded-lg py-6 px-2 flex flex-col justify-center">
-            <span>
-              <Badge type="success" text={"Accepted"} />
-            </span>
-            <h1 className="text-2xl font-extrabold px-4">1</h1>
-          </div>
-          <div className="border-2 border-gray-400 rounded-lg py-6 px-2 flex flex-col justify-center">
-            <span>
-              <Badge type="danger" text={"Rejected"} />
-            </span>
-            <h1 className="text-2xl font-extrabold px-4">1</h1>
-          </div>
+        <div className="grid grid-cols-4  gap-5 ">
+          {stats.map(({ label, value, color }) => (
+            <div
+              key={label}
+              className="bg-white border border-gray-300 rounded-2xl shadow-sm px-5 py-6 flex flex-col justify-center gap-3"
+            >
+              <p className={`text-sm font-medium ${color}`}>{label}</p>
+              <h1 className="text-3xl font-extrabold text-gray-900">{value}</h1>
+            </div>
+          ))}
         </div>
 
         {/* last part */}
-        <div className="border border-gray-400 rounded-lg">
-          <div>
-            <div className="flex gap-4 shadow shadow-gray-400 p-2 rounded-lg">
-              <div className="group flex justify-center items-center gap-1 p-1.5 rounded-2xl cursor-pointer hover:bg-primary-hover transition-colors duration-300">
-                <p className="font-semibold text-gray-700 text-sm group-hover:text-white">
-                  All
-                </p>
-                <p className="font-semibold text-gray-700 text-sm group-hover:text-white">
-                  5
-                </p>
-              </div>
-              <div className="group flex justify-center items-center gap-1 p-1.5 rounded-2xl cursor-pointer hover:bg-primary-hover transition-colors duration-300">
-                <p className="font-semibold text-gray-700 text-sm group-hover:text-white">
-                  Pending
-                </p>
-                <p className="font-semibold text-gray-700 text-sm group-hover:text-white">
-                  3
-                </p>
-              </div>
-              <div className="group flex justify-center items-center gap-1 p-1.5 rounded-2xl cursor-pointer hover:bg-primary-hover transition-colors duration-300">
-                <p className="font-semibold text-gray-700 text-sm group-hover:text-white">
-                  Accepted
-                </p>
-                <p className="font-semibold text-gray-700 text-sm group-hover:text-white">
-                  1
-                </p>
-              </div>
-              <div className="group flex justify-center items-center gap-1 p-1.5 rounded-2xl cursor-pointer hover:bg-primary-hover transition-colors duration-300">
-                <p className="font-semibold text-gray-700 text-sm group-hover:text-white">
-                  Rejected
-                </p>
-                <p className="font-semibold text-gray-700 text-sm group-hover:text-white">
-                  1
-                </p>
-              </div>
-            </div>
+        <div className="border  mt-4 flex gap-3 border-gray-300  py-4.5 px-5 bg-white rounded-t-2xl">
+          {
+            ["All", "Pending", "Accepted", "Rejected"].map((e, i) => {
+              return (
+                <button onClick={() => setCurrentStatus(e)} key={e.type} className={`px-5 text-[14px] font-semibold py-2 transition-all duration-200 ease-in-out cursor-pointer border  ${(e === currentStatus) ? "bg-primary  border-primary text-white" : "bg-white text-gray-600   border-gray-300"} rounded-full`}>
+                  {e}
+                  <span className="text-[12px] ml-3">
+                    {Math.floor(Math.random() * 4) + 1}
+                    {/* Aaile ko lagi random number , paxi backend bata aauxa , maybe lol */}
+                  </span>
+                </button>
+              )
+            })
+          }
 
-            <div className="p-4 grid grid-cols-6 gap-4 items-center justify-center">
+
+          {/* <div className="p-4 grid grid-cols-6 gap-4 items-center justify-center">
               <div>
                 <p className="font-bold text-gray-400">JOB</p>
               </div>
@@ -204,17 +180,73 @@ function SeekerApplication() {
 
                   <div className="flex flex-col gap-2">
                     <div className="shrink-0">
-                      <Badge type="success" text={JobDetails.status} />
+                      <Badge type={statusBadge[JobDetails.status.toLowerCase()]} text={JobDetails.status} />
                     </div>
                   </div>
 
                   <div className=" ring-slate-400 ring  hover:ring-slate-700 text-center  active:scale-95 transition-all duration-200 px-4 py-3 text-[15px] font-semibold text-gray-700 rounded-lg cursor-pointer">
-                    View company
+                    View job
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
+            </div> */}
+        </div>
+        {/* Table */}
+        <div className="w-full overflow-hidden rounded-b-2xl border border-t-0 border-gray-300 ">
+          <table className="border w-full   text-left">
+            <thead className="border-b  border-gray-300">
+              <tr className="text-[14px] uppercase tracking-wider  text-gray-500">
+                <th className=" py-4.5 px-5 font-semibold">Job</th>
+                <th className=" py-4.5 px-5 font-semibold">Type</th>
+                <th className=" py-4.5 px-5 font-semibold">Location</th>
+                <th className=" py-4.5 px-5 font-semibold">Applied on</th>
+                <th className=" py-4.5 px-5 font-semibold">Status</th>
+                <th className=" py-4.5 px-5" />
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              <tr>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+              </tr>
+              <tr>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+              </tr>
+              <tr>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+              </tr>
+              <tr>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+              </tr>
+              <tr>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
     </main>

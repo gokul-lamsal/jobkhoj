@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { badgeType, gradients } from "../../components/helpers/ColorAndBadge";
-import { FaBookmark, FaLink, FaRegBookmark } from "react-icons/fa";
+import { FaRegBookmark } from "react-icons/fa";
 import Badge from "../../components/global/Badge";
 import { MdEventNote, MdOutlineLocationOn } from "react-icons/md";
 import { FiBriefcase, FiDollarSign } from "react-icons/fi";
@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 import Button from "../../components/global/Button";
 import { LuUsers } from "react-icons/lu";
 import CompanyCard from "../../components/helpers/CompanyCard"
-import PostedJobCard from "../../components/helpers/PostedJobCard"
 const SeekerJobPage = () => {
   {
     /* use this info to build dummy aaile ko lagi paxi yo json change huna sakxa , for now build ui yei use garera
