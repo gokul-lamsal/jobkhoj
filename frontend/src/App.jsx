@@ -13,6 +13,8 @@ import SeekerDashBoard from "./pages/seeker/SeekerDashBoard";
 import Browsepage from "./pages/public/Browsepage";
 import CompaniesPage from "./pages/public/CompaniesPage";
 import SeekerJobPage from "./pages/seeker/SeekerJobPage";
+import SeekerApplication from "./pages/seeker/SeekerApplication";
+
 
 function App() {
   const route = createBrowserRouter([
@@ -67,6 +69,10 @@ function App() {
             {
               path: "browse/:id",
               element: <SeekerJobPage />,
+            },
+             {
+              path: "application",
+              element: <SeekerApplication />,
             },
           ]
         }
