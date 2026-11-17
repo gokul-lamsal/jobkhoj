@@ -86,7 +86,7 @@ function SeekerApplication() {
 
         {/* status part */}
 
-        <div className="grid grid-cols-4  gap-5 ">
+        <div className="grid grid-cols-4 mt-10  gap-5 ">
           {stats.map(({ label, value, color }) => (
             <div
               key={label}
