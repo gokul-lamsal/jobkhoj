@@ -23,7 +23,7 @@ const PostedJobCard = ({
     id
 }) => {
     
-    const [Isbookmarked, setIsBookMarked] = useState(false)
+    const [Isbookmarked, setIsBookMarked] = useState(bookmarked)
     const changeBookmarkState = () => {
         setIsBookMarked(prev => !prev)
     }
@@ -38,7 +38,7 @@ const PostedJobCard = ({
                     <h3 className='font-bold -mt-0.5 text-lg'>{title}</h3>
                     <span className=' text-sm  -mt-0.5 font-semibold text-gray-400'>{company}</span>
                 </div>
-                <button onClick={changeBookmarkState} className={`ml-auto self-start border font-bold ${Isbookmarked ? "border-yellow-400  text-yellow-400" : "border-gray-400 text-gray-600"} cursor-pointer p-2 rounded-xl`}>
+                <button onClick={changeBookmarkState} className={`ml-auto self-start border font-bold ${Isbookmarked ? "border-blue-600  text-blue-700" : "border-gray-400 text-gray-600"} cursor-pointer p-2 rounded-xl`}>
 
                     {Isbookmarked ? (<FaBookmark size={22} />) : (<FaRegBookmark size={22} />)}
 
