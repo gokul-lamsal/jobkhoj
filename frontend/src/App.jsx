@@ -63,9 +63,13 @@ function App() {
         {
           element: <SeekerLayout />,
           children: [
+             {
+              path: "",
+              element: <SeekerDashBoard/>,
+            },
             {
               path: "browse",
-              element: <SeekerDashBoard />
+              element: <Browsepage/>
             },
             {
               path: "browse/:id",
@@ -75,10 +79,10 @@ function App() {
               path: "application",
               element: <SeekerApplication />,
             },
-            {
-              path:"saved",
-              element: <SeekerSavedJobPage />,
-            }
+             {
+              path: "company",
+              element: <CompaniesPage />,
+            },
           ]
         }
 
