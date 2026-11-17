@@ -14,6 +14,7 @@ import Browsepage from "./pages/public/Browsepage";
 import CompaniesPage from "./pages/public/CompaniesPage";
 import SeekerJobPage from "./pages/seeker/SeekerJobPage";
 import SeekerApplication from "./pages/seeker/SeekerApplication";
+import SeekerSavedJobPage from "./pages/seeker/SeekerSavedJobPage";
 
 
 function App() {
