@@ -62,12 +62,14 @@ const SeekerNavBar = ({ navLinks = [] }) => {
   return (
     <nav className='seekerNav flex justify-between items-center h-19'>
       <div className='flex  items-center'>
-        <h1 className='text-2xl  font-bold'>
-          <span >Job </span>
-          <span className="bg-linear-to-r from-indigo-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Portal.
-          </span>
-        </h1>
+        <Link to>
+          <h1 className='text-2xl  font-bold'>
+            <span >Job </span>
+            <span className="bg-linear-to-r from-indigo-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Portal.
+            </span>
+          </h1>
+        </Link>
         <ul className='flex items-center gap-5 ml-15 text-lg'>
 
           {

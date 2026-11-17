@@ -83,6 +83,10 @@ function App() {
               path: "company",
               element: <CompaniesPage />,
             },
+             {
+              path: "saved",
+              element: <SeekerSavedJobPage />,
+            },
           ]
         }
 

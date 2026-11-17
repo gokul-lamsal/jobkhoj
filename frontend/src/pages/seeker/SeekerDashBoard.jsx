@@ -32,7 +32,7 @@ function SeekerDashBoard() {
   return (
     <main className="my-8">
       <section className="flex flex-col gap-4">
-        <div className="flex justify-between items-center border-2 border-purple-800 py-6 px-4 rounded-2xl bg-purple-800">
+        <div className="flex justify-between items-center  py-6 px-4 rounded-2xl bg-primary">
           <div className="flex flex-col gap-1">
             <p className="text-white text-sm">{formatted}</p>
             <h1 className="text-white text-3xl font-bold">
