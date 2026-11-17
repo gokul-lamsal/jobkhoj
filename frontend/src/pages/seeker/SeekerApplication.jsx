@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Badge from "../../components/global/Badge";
-import { badgeType, gradients } from "../../components/helpers/ColorAndBadge";
+import { badgeType, gradients, statusBadge } from "../../components/helpers/ColorAndBadge";
 import Button from "../../components/global/Button";
+import Tag from "../../components/global/Tag";
+import { Link } from "react-router-dom";
 
 function SeekerApplication() {
   const [jobInfo, setJobInfo] = useState([
@@ -205,46 +207,37 @@ function SeekerApplication() {
               </tr>
             </thead>
             <tbody className="bg-white">
-              <tr>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-              </tr>
-              <tr>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-              </tr>
-              <tr>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-              </tr>
-              <tr>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-              </tr>
-              <tr>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-                <td className=" py-4.5 px-5 font-semibold">Front end developer</td>
-              </tr>
+              {
+                jobInfo.map((job, id) => {
+                  return (
+                    <tr>
+                      <td className=" py-4.5 px-5 font-semibold">
+                        <div className='flex gap-3 '>
+                          <div className={`h-10 w-10 rounded-xl flex items-center justify-center text-white font-bold text-sm bg-linear-to-b ${gradients[job.accentColor]}`} >
+                            {job.initials}
+                          </div>
+                          <div className='flex flex-col '>
+                            <h3 className='font-bold -mt-0.5 '>{job.title}</h3>
+                            <span className=' text-[13px]  -mt-0.5 font-semibold text-gray-400'>{job.company}</span>
+                          </div>
+                        </div>
+
+                      </td>
+                      <td className=" py-4.5 px-5 font-semibold">{<Badge type={badgeType[job.jobType.toLowerCase()]} text={job.jobType}/>}</td>
+                      <td className=" py-4.5 px-5  text-gray-500">{job.location}</td>
+                      <td className=" py-4.5 px-5 ">{job.appliedOn}</td>
+                      <td className=" py-4.5 px-5 font-semibold">{<Badge type={statusBadge[job.status.toLowerCase()]} text={"● " + job.status}/>}</td>
+                      <td className=" py-4.5 px-5 font-semibold">
+                        <Link to={`/seeker/browse/${job.id}`} className="border-2 border-gray-400/50 text-gray-700 px-4 py-1.5 rounded-xl hover:cursor-pointer">
+                          View job
+                        </Link>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+
+
             </tbody>
           </table>
         </div>
