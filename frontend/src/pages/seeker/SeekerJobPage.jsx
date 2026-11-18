@@ -30,7 +30,8 @@ const SeekerJobPage = () => {
     return splitUrl[splitUrl.length - 1];
   };
 
-  const [jobInfo, setJobInfo] = useState({
+  const [jobInfo, setJobInfo] = useState(
+    {
     id: 1,
     title: "Frontend Developer",
     jobType: "Full time",
