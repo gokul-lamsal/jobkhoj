@@ -1,11 +1,10 @@
 import React from "react";
-import { FaBan } from "react-icons/fa6";
-import { IoBan } from "react-icons/io5";
 import Button from "../../components/global/Button";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const ErrorPage = () => {
   const { pathname } = useLocation();
+    const navigate = useNavigate();
   const currentPath = pathname.split("/")[1]
 
   const selectError = {
@@ -15,6 +14,7 @@ const ErrorPage = () => {
       errorDescription:
         "The page you are looking for doesn't exist. It may have been removed by the company or admin.",
       errorColor: "blue",
+      goBack: false
     },
     "unauthorized": {
       errorType: "403",
@@ -22,10 +22,19 @@ const ErrorPage = () => {
       errorDescription:
         "Your account role can't open this page. For example, a job seeker trying to open the admin area.",
       errorColor: "red",
+      goBack: true
     }
   }
- const {errorType,errorDescription,errorMessage,errorColor} = selectError[currentPath]
- 
+  const error = selectError[currentPath] ?? selectError["not-found"];
+  const { errorType, errorDescription, errorMessage, errorColor, goBack } = error;
+  const handleBack = () => {
+    if (goBack && key !== "default") {
+      navigate(-1);
+    } else {
+      navigate("/", { replace: true });
+    }
+  };
+
   return (
     <div className=" flex justify-center items-center min-h-screen ">
       <div className="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
@@ -36,7 +45,7 @@ const ErrorPage = () => {
           <div className="w-30">
             <Link to={"/"}>
 
-              <Button text={"Back"} type="button" />
+              <Button text="Back" type="button" onClick={handleBack} />
             </Link>
           </div>
 

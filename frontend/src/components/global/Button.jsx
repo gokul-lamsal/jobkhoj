@@ -1,12 +1,11 @@
-const Button = ({ text, type = "submit",extraCss }) => {
+const Button = ({ text, type = "submit", btnType = "primary",classname }) => {
   return (
     <button
       type={type}
-      className="bg-primary flex justify-center items-center w-full h-full  hover:bg-primary-hover rounded-xl px-3 py-2 shadow-2xl  hover:cursor-pointer"
-      style={extraCss}
+      className={`btn-${btnType}    flex justify-center items-center w-full h-full  transition-all duration-200  rounded-xl px-3 py-2   hover:cursor-pointer ${classname}`}
 
     >
-      <span className="text-lg text-white">{text}</span>
+      {text}
     </button>
   );
 };

@@ -1,8 +1,9 @@
 import React from 'react'
 import { gradients } from './ColorAndBadge'
-import { MdOutlineAddLocationAlt, MdOutlineLocationOn } from 'react-icons/md'
+import { MdOutlineAddLocationAlt } from 'react-icons/md'
 import { FaLink } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import Button from '../global/Button'
 
 
 const CompanyCard = ({ name, initials, accentColor, location, description, website, isBrowse = false }) => {
@@ -56,9 +57,7 @@ const CompanyCard = ({ name, initials, accentColor, location, description, websi
             </div>
             {
                 isBrowse && (<Link to={"/company/2"}>
-                    <div className=' ring-slate-400 ring  hover:ring-slate-700 text-center  active:scale-95 transition-all duration-200 px-4 py-3 text-[15px] font-semibold text-gray-700 rounded-lg cursor-pointer'>
-                        View company
-                    </div>
+                    <Button type='button' btnType='secondary' text="View company" />
                 </Link>)
             }
         </div>

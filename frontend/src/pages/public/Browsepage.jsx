@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
-import { CiSearch } from 'react-icons/ci'
-import Button from '../../components/global/Button'
 import SearchBar from '../../components/helpers/SearchBar'
 import { VscSettingsCompact } from 'react-icons/vsc'
-import { FiDollarSign, FiMapPin } from 'react-icons/fi'
+import { FiMapPin } from 'react-icons/fi'
 import { TbCurrencyRupeeNepalese } from 'react-icons/tb'
-import Badge from "../../components/global/Badge"
-import { RxCross2 } from 'react-icons/rx'
 import { ImCross } from 'react-icons/im'
 import { postedJobs } from './HomePage'
 import PostedJobCard from '../../components/helpers/PostedJobCard'
@@ -150,10 +146,10 @@ const Browsepage = () => {
           </div>
           <div className='my-5 flex gap-2 items-center'>
             {
-              Object.keys(filter).map(e => {
-                if (filter[e].length === 0) return <></>
+              Object.keys(filter).map((e) => {
+                if (filter[e].length === 0) return null
                 return (
-                  <div className='badge badge-search '>
+                  <div key={e} className='badge badge-search '>
                     {e}:<span className=' capitalize'>{filter[e].replace("_", " ").slice(0, 30)}{filter[e].length > 30 && "..."}</span>
                     <button className='hover:scale-125 transition-all duration-200 cursor-pointer mb-1' onClick={() => {
                       setFilter(prev => ({ ...prev, [e]: "" }))
@@ -168,9 +164,9 @@ const Browsepage = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5 ">
             {
-              postedJobs.map((job, i) => {
+              postedJobs.map((job) => {
                 return (
-                  <PostedJobCard id={job.id} title={job.title} company={job.company} companyInitials={job.companyInitials} logoColor={job.logoColor} location={job.location} salary={job.salary} type={job.type} skills={job.skills} postedAgo={job.postedAgo} bookmarked={job.bookmarked} />
+                  <PostedJobCard key={job.id} id={job.id} title={job.title} company={job.company} companyInitials={job.companyInitials} logoColor={job.logoColor} location={job.location} salary={job.salary} type={job.type} skills={job.skills} postedAgo={job.postedAgo} bookmarked={job.bookmarked} />
                 )
               })
             }

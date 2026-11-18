@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
@@ -19,51 +18,79 @@
   --color-border: #e2e8f0;
 }
 
+html {
+  /* Always reserve space for the vertical scrollbar so short pages
+     (e.g. /seeker/saved) don't shift the layout horizontally. */
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
 body {
-  @apply bg-page ;
+  @apply bg-page;
   font-family: "DM Sans", sans-serif;
 
 }
 
-section{
-  @apply px-10 
+#root {
+  @apply min-h-screen flex flex-col;
 }
-.seekerNav{
-  @apply px-10 py-4  border-b-2 border-slate-200/70 bg-white/90 
+
+main {
+  @apply flex-1;
 }
- .badge {
-    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold;
-  }
 
-  /* purple: Internship, Company */
-  .badge-primary {
-    @apply bg-violet-100 text-violet-700;
-  }
+section {
+  @apply px-10
+}
 
-  /* blue: Full time, Seeker */
-  .badge-info {
-    @apply bg-sky-100 text-sky-700;
-  }
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary-hover active:scale-95;
+}
 
-  /* amber: Part time, Pending, Admin */
-  .badge-warning {
-    @apply bg-amber-100 text-amber-700;
-  }
+.btn-secondary {
+  @apply bg-white text-gray-700 ring-1 ring-inset ring-slate-300 hover:bg-gray-50 hover:ring-slate-400 active:scale-95;
+}
 
-  /* green: Contract, Accepted */
-  .badge-success {
-    @apply bg-emerald-100 text-emerald-700;
-  }
 
-  /* red: Rejected */
-  .badge-danger {
-    @apply bg-rose-100 text-rose-700;
-  }
-  /* grey badge */
-  .badge-neutral {
-    @apply bg-white/20 text-white;
-  }
-  /* search badge */
-  .badge-search{
-    @apply bg-black/10 border border-slate-300/80  text-primary
-  }
+.seekerNav {
+  @apply px-10 py-4 border-b-2 border-slate-200/70 bg-white/90
+}
+
+.badge {
+  @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold;
+}
+
+/* purple: Internship, Company */
+.badge-primary {
+  @apply bg-violet-100 text-violet-700;
+}
+
+/* blue: Full time, Seeker */
+.badge-info {
+  @apply bg-sky-100 text-sky-700;
+}
+
+/* amber: Part time, Pending, Admin */
+.badge-warning {
+  @apply bg-amber-100 text-amber-700;
+}
+
+/* green: Contract, Accepted */
+.badge-success {
+  @apply bg-emerald-100 text-emerald-700;
+}
+
+/* red: Rejected */
+.badge-danger {
+  @apply bg-rose-100 text-rose-700;
+}
+
+/* grey badge */
+.badge-neutral {
+  @apply bg-white/20 text-white;
+}
+
+/* search badge */
+.badge-search {
+  @apply bg-black/10 border border-slate-300/80 text-primary
+}

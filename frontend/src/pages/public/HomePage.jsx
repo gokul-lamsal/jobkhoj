@@ -1,14 +1,11 @@
 import { AiOutlineThunderbolt } from "react-icons/ai";
-import { CiSearch, CiLocationOn } from "react-icons/ci";
 import { PiBag } from "react-icons/pi";
 import { IoMdTime } from "react-icons/io";
 import { TbBrandDatabricks } from "react-icons/tb";
 import { LuUser } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
 import { FiSend } from "react-icons/fi";
-import Button from "../../components/global/Button";
 import { Link } from "react-router-dom";
-import PostedJobCard from "../../components/helpers/PostedJobCard";
 import SearchBar from "../../components/helpers/SearchBar";
 import LatestOpening from "../../components/helpers/LatestOpening";
 
@@ -25,7 +22,6 @@ const jobTypes = [
     title: "Internship",
     desc: "Start your career",
     icon: AiOutlineThunderbolt,
-    color: "purple",
     color: "bg-purple-100 text-purple-700",
 
   },

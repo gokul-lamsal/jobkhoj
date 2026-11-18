@@ -8,13 +8,13 @@ import ConfirmPage from "./pages/auth/ConfirmPage";
 import ErrorPage from "./pages/public/ErrorPage";
 import RoleProtectedRoute from "./components/auth/RoleProtectedRoute";
 import SeekerLayout from "./components/layout/SeekerLayout";
-import SeekerNavBar from "./pages/seeker/SeekerNavBar";
 import SeekerDashBoard from "./pages/seeker/SeekerDashBoard";
 import Browsepage from "./pages/public/Browsepage";
 import CompaniesPage from "./pages/public/CompaniesPage";
 import SeekerJobPage from "./pages/seeker/SeekerJobPage";
 import SeekerApplication from "./pages/seeker/SeekerApplication";
 import SeekerSavedJobPage from "./pages/seeker/SeekerSavedJobPage";
+import SeekerNotification from "./pages/seeker/SeekerNotification";
 
 
 function App() {
@@ -86,6 +86,10 @@ function App() {
              {
               path: "saved",
               element: <SeekerSavedJobPage />,
+            },
+             {
+              path: "notification",
+              element: <SeekerNotification />,
             },
           ]
         }
