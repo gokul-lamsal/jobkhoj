@@ -44,7 +44,7 @@ const RegisterPage = () => {
         </p>
       </div>
       <div className="flex justify-center items-center gap-3 ">
-        {chooseRole.map((e, i) => {
+        {chooseRole.map((e) => {
           return (
             <div
               key={e.role}

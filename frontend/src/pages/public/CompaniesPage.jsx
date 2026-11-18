@@ -66,21 +66,19 @@ const CompaniesPage = () => {
   ];
   return (
     <main className='min-h-fit'>
-      <section className='py-10 '>
-        <div className='text-gray-500 flex flex-col gap-2'>
-          <h1 className='text-black font-bold text-3xl'>
-            Companies hiring now
-          </h1>
-          <span className='text-[16px] '>
+      <section className='py-8 '>
+        <div>
+          <h1 className="font-bold text-2xl">Companies hiring now</h1>
+          <p className="text-sm text-gray-400">
             Every company here has been reviewed and approved by our team.
-          </span>
+          </p>
         </div>
         {/* {company list} */}
         <div className='grid grid-cols-3 gap-8 mt-10'>
           {
             companies.map((company, i) => {
               return (
-                <CompanyCard key={i} name={company.name} initials={company.initials} description={company.description} website={company.website} location={company.location} accentColor={company.accentColor}/>
+                <CompanyCard key={i} name={company.name} initials={company.initials} description={company.description} website={company.website} location={company.location} accentColor={company.accentColor} />
               )
             })
           }

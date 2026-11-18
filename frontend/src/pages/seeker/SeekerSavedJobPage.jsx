@@ -33,83 +33,84 @@ const SeekerSavedJobPage = () => {
       postedAgo: "3d ago",
       bookmarked: true,
     },
-    {
-      id: 3,
-      title: "Full Stack Engineer",
-      company: "InnoLabs",
-      companyInitials: "IL",
-      logoColor: "blue",
-      location: "Kathmandu, Nepal",
-      salary: "NPR 80k-120k",
-      type: "Full time",
-      skills: ["React", "Node.js", "Prisma"],
-      postedAgo: "4d ago",
-      bookmarked: true,
-    },
-    {
-      id: 3,
-      title: "Full Stack Engineer",
-      company: "InnoLabs",
-      companyInitials: "IL",
-      logoColor: "blue",
-      location: "Kathmandu, Nepal",
-      salary: "NPR 80k-120k",
-      type: "Full time",
-      skills: ["React", "Node.js", "Prisma"],
-      postedAgo: "4d ago",
-      bookmarked: true,
-    },
+    // {
+    //   id: 3,
+    //   title: "Full Stack Engineer",
+    //   company: "InnoLabs",
+    //   companyInitials: "IL",
+    //   logoColor: "blue",
+    //   location: "Kathmandu, Nepal",
+    //   salary: "NPR 80k-120k",
+    //   type: "Full time",
+    //   skills: ["React", "Node.js", "Prisma"],
+    //   postedAgo: "4d ago",
+    //   bookmarked: true,
+    // },
+    // {
+    //   id: 3,
+    //   title: "Full Stack Engineer",
+    //   company: "InnoLabs",
+    //   companyInitials: "IL",
+    //   logoColor: "blue",
+    //   location: "Kathmandu, Nepal",
+    //   salary: "NPR 80k-120k",
+    //   type: "Full time",
+    //   skills: ["React", "Node.js", "Prisma"],
+    //   postedAgo: "4d ago",
+    //   bookmarked: true,
+    // },
   ];
   return (
     <main>
 
-    <section className="py-8 ">
-         <div className="flex justify-between">
-            <div>
-
-          <h1 className="font-bold text-2xl">Saved jobs</h1>
-          <p className="text-sm text-gray-400">
-            3 jobs you have bookmarked. click the bookmark again to remove.
-          </p>
-            </div>
+      <section className="py-8 ">
+        <div className="flex justify-between">
           <div>
+
+            <h1 className="font-bold text-2xl">Saved jobs</h1>
+            <p className="text-sm text-gray-400">
+              3 jobs you have bookmarked. click the bookmark again to remove.
+            </p>
+          </div>
+          <div className="h-10">
             <Link to={`/seeker/browse`}>
-            <button className="border-2 border-gray-400 px-3 py-2 rounded-xl font-semibold hover:cursor-pointer ">Browse more jobs</button>
+              <Button type="button" btnType="secondary" text={"Browse more jobs"} classname={"font-medium bg-white"} />
             </Link>
           </div>
         </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-5 mt-10 ">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-5 mt-10 ">
 
-        {postedJobs.map((job, i) => {
-          return (
-            <PostedJobCard
-              id={job.id}
-              title={job.title}
-              company={job.company}
-              companyInitials={job.companyInitials}
-              logoColor={job.logoColor}
-              location={job.location}
-              salary={job.salary}
-              type={job.type}
-              skills={job.skills}
-              postedAgo={job.postedAgo}
-              bookmarked={job.bookmarked}
-            />
-          );
-        })}
-         <Link to={`/seeker/browse`}>
-             <div className=' py-4 px-5 flex flex-col justify-center items-center gap-2 border-2 border-gray-300  cursor-pointer  min-h-fit h-60 rounded-2xl border-dashed'>
-                <FaRegBookmark color="gray" size={30}/>
-                <div className="text-gray-500 font-bold text-lg">
+          {postedJobs.map((job) => {
+            return (
+              <PostedJobCard
+                key={job.id}
+                id={job.id}
+                title={job.title}
+                company={job.company}
+                companyInitials={job.companyInitials}
+                logoColor={job.logoColor}
+                location={job.location}
+                salary={job.salary}
+                type={job.type}
+                skills={job.skills}
+                postedAgo={job.postedAgo}
+                bookmarked={job.bookmarked}
+              />
+            );
+          })}
+          <Link to={`/seeker/browse`} key="save-more-jobs">
+            <div className=' py-4 px-5 flex flex-col justify-center items-center gap-2 border-2 border-gray-300  cursor-pointer  min-h-fit h-60 rounded-2xl border-dashed'>
+              <FaRegBookmark color="gray" size={30} />
+              <div className="text-gray-500 font-bold text-lg">
                 Save more jobs
-                </div>
-                <div className="text-gray-400">
+              </div>
+              <div className="text-gray-400">
                 Tap the bookmark on any job card.
-                </div>
-                     </div>
-         </Link>
-      </div>
-    </section>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </section>
     </main>
   );
 };

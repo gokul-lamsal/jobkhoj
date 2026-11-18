@@ -11,9 +11,9 @@ const LatestOpening = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-5">
           {
-            postedJobs.map((job, i) => {
+            postedJobs.map((job) => {
               return (
-                <PostedJobCard id={job.id} title={job.title} company={job.company} companyInitials={job.companyInitials} logoColor={job.logoColor} location={job.location} salary={job.salary} type={job.type} skills={job.skills} postedAgo={job.postedAgo} bookmarked={job.bookmarked} />
+                <PostedJobCard key={job.id} id={job.id} title={job.title} company={job.company} companyInitials={job.companyInitials} logoColor={job.logoColor} location={job.location} salary={job.salary} type={job.type} skills={job.skills} postedAgo={job.postedAgo} bookmarked={job.bookmarked} />
               )
             })
           }

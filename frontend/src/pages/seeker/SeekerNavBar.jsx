@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import React, { useContext } from 'react'
+import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import Button from '../../components/global/Button';
-import { FaChevronDown, FaChevronRight } from 'react-icons/fa6';
+import { FaChevronDown } from 'react-icons/fa6';
 import { FiBell } from 'react-icons/fi';
 
 
@@ -41,7 +40,7 @@ const SeekerProfile = () => {
       </Link>
       <Link to={"/seeker/profile"}>
         <div className='flex items-center justify-between gap-2  pr-1.5 pl-1 py-1 border border-gray-300  rounded-4xl cursor-pointer'>
-          <div className='p-2 w-10 h-full text-white font-bold bg-linear-to-r from-fuchsia-600 to-purple-600 rounded-full flex justify-center items-center tracking-wider'>JD</div>
+          <div className='p-2 w-10 h-full text-white font-bold bg-linear-to-r  from-fuchsia-600 to-purple-600 rounded-full flex justify-center items-center tracking-wider'>JD</div>
           <div className='w-30 flex items-center text-center justify-center gap-4'>
             <span className='text-lg tracking-wide capitalize'>jhon Doe</span>
             <span ><FaChevronDown size={14} /></span>
@@ -52,17 +51,16 @@ const SeekerProfile = () => {
   )
 }
 const SeekerNavBar = ({ navLinks = [] }) => {
+  const { token } = useContext(AuthContext)
 
   if (navLinks.length === 0) {
     return <div className='text-xl text-red-400 text-center p-2'>Error on NavBar.  Be sure to set navLinks props.</div>
   }
 
-  const { token } = useContext(AuthContext)
-
   return (
     <nav className='seekerNav flex justify-between items-center h-19'>
       <div className='flex  items-center'>
-        <Link to>
+        <Link to="">
           <h1 className='text-2xl  font-bold'>
             <span >Job </span>
             <span className="bg-linear-to-r from-indigo-600 via-purple-500 to-pink-500 bg-clip-text text-transparent">

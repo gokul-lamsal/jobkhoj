@@ -138,14 +138,23 @@ const SeekerJobPage = () => {
               <div className="h-10">
                 <Button type="button" text={"Apply now"} />
               </div>
-              <button className="h-10 border border-gray-300 px-4 cursor-pointer rounded-xl text-gray-700 hover:bg-gray-50 transition-colors">
-                <span className="flex gap-1.5 text-sm font-semibold justify-center items-center">
-                  <FaRegBookmark size={16} /> Save Job
-                </span>
-              </button>
+              <div className="h-10">
+                <Button
+                  type="button"
+                  btnType="secondary"
+                  text={
+                    <>
+                      <FaRegBookmark size={16} className="mr-1" />
+                      Save Job
+                    </>
+                  }
+                />
+
+              </div>
+
             </div>
           </div>
-          
+
           {/* About  div*/}
 
 
@@ -247,9 +256,9 @@ const SeekerJobPage = () => {
             <h2 className="font-bold text-lg text-gray-900">
               More from this company
             </h2>
-            {jobInfo.moreFromCompany.map((moreJobs, i) => (
-              <Link to={`/seeker/browse/${moreJobs.id}`}>
-                <div key={i} className="flex gap-3 justify-between items-center hover:scale-105 transition-all duration-200">
+            {jobInfo.moreFromCompany.map((moreJobs) => (
+              <Link key={moreJobs.id} to={`/seeker/browse/${moreJobs.id}`}>
+                <div className="flex gap-3 justify-between items-center hover:scale-105 transition-all duration-200">
                   <div className="flex gap-3 items-center min-w-0">
                     <div
                       className={`h-12 w-12 shrink-0 rounded-xl flex items-center justify-center text-white font-bold text-lg bg-linear-to-b ${gradients[moreJobs.accentColor]}`}

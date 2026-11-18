@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import Badge from "../../components/global/Badge";
 
@@ -60,7 +60,7 @@ const AuthSideBar = () => {
           <h1 className="text-3xl text-white font-extrabold">starts here.</h1>
         </div>
         <div className=" relative  h-[8rem] flex flex-col">
-          {demoCompany.map((item, index) => {
+          {demoCompany.map((item) => {
             return (
               <div
                 className=" rounded-2xl transition-all duration-700 ease-out absolute w-[30rem] h-[8rem]  p-4 bg-white/20 border-white/20 backdrop-blur-xl"
@@ -87,11 +87,11 @@ const AuthSideBar = () => {
                 </div>
                 <div className="flex p-2 gap-2">
                   {item?.tags.map((tag) => {
-                    return <Badge text={tag} />;
+                    return <Badge key={tag} text={tag} />;
                   })}
                 </div>
                 <div className="z-10  flex flex-col gap-2 absolute right-0 -translate-y-1/2 top-1/2 p-5">
-                  {demoCompany.map((e, i) => {
+                  {demoCompany.map((e) => {
                     return (
                       <div
                         className={`h-2 w-2 ${e.isActive ? "bg-white" : "bg-gray-400"} rounded-3xl`}

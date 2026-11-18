@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Badge from "../../components/global/Badge";
 import { badgeType, gradients, statusBadge } from "../../components/helpers/ColorAndBadge";
 import Button from "../../components/global/Button";
-import Tag from "../../components/global/Tag";
 import { Link } from "react-router-dom";
 
 function SeekerApplication() {
@@ -103,9 +102,9 @@ function SeekerApplication() {
         {/* last part */}
         <div className="border  mt-4 flex gap-3 border-gray-300  py-4.5 px-5 bg-white rounded-t-2xl">
           {
-            ["All", "Pending", "Accepted", "Rejected"].map((e, i) => {
+            ["All", "Pending", "Accepted", "Rejected"].map((e) => {
               return (
-                <button onClick={() => setCurrentStatus(e)} key={e.type} className={`px-5 text-[14px] font-semibold py-2 transition-all duration-200 ease-in-out cursor-pointer border  ${(e === currentStatus) ? "bg-primary  border-primary text-white" : "bg-white text-gray-600   border-gray-300"} rounded-full`}>
+                <button onClick={() => setCurrentStatus(e)} key={e} className={`px-5 text-[14px] font-semibold py-2 transition-all duration-200 ease-in-out cursor-pointer border  ${(e === currentStatus) ? "bg-primary  border-primary text-white" : "bg-white text-gray-600   border-gray-300"} rounded-full`}>
                   {e}
                   <span className="text-[12px] ml-3">
                     {Math.floor(Math.random() * 4) + 1}
@@ -117,81 +116,7 @@ function SeekerApplication() {
           }
 
 
-          {/* <div className="p-4 grid grid-cols-6 gap-4 items-center justify-center">
-              <div>
-                <p className="font-bold text-gray-400">JOB</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-400">TYPE</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-400">LOCATION</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-400">APPLIED ON</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-400">STATUS</p>
-              </div>
-            </div>
-            <div className="border border-gray-400">
-              {jobInfo.map((JobDetails, i) => (
-                <div className="p-2 grid grid-cols-6 gap-4 justify-center items-center">
-                  <div className="flex flex-col gap-2">
-                    <div>
-                      <div className="flex gap-4">
-                        <div
-                          className={`h-12 w-12 shrink-0 rounded-xl flex items-center justify-center text-white font-bold text-lg bg-linear-to-b ${gradients[JobDetails.accentColor]}`}
-                        >
-                          {JobDetails.initials}
-                        </div>
-                        <div className="flex flex-col gap-0.5">
-                          <h3 className="font-bold text-md leading-tight text-gray-900">
-                            {JobDetails.title}
-                          </h3>
-                          <span className="text-[12px] font-medium text-gray-500">
-                            {JobDetails.company}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <div className="shrink-0">
-                      <Badge
-                        type={badgeType[JobDetails.jobType.toLowerCase()]}
-                        text={JobDetails.jobType}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <div>
-                      <p className="text-sm text-gray-400">
-                        {JobDetails.location}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <div>
-                      <p className="text-sm ">{JobDetails.appliedOn}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <div className="shrink-0">
-                      <Badge type={statusBadge[JobDetails.status.toLowerCase()]} text={JobDetails.status} />
-                    </div>
-                  </div>
-
-                  <div className=" ring-slate-400 ring  hover:ring-slate-700 text-center  active:scale-95 transition-all duration-200 px-4 py-3 text-[15px] font-semibold text-gray-700 rounded-lg cursor-pointer">
-                    View job
-                  </div>
-                </div>
-              ))}
-            </div> */}
+         
         </div>
         {/* Table */}
         <div className="w-full overflow-hidden rounded-b-2xl border border-t-0 border-gray-300 ">
@@ -208,9 +133,9 @@ function SeekerApplication() {
             </thead>
             <tbody className="bg-white">
               {
-                jobInfo.map((job, id) => {
+                jobInfo.map((job) => {
                   return (
-                    <tr>
+                    <tr key={job.id}>
                       <td className=" py-4.5 px-5 font-semibold">
                         <div className='flex gap-3 '>
                           <div className={`h-10 w-10 rounded-xl flex items-center justify-center text-white font-bold text-sm bg-linear-to-b ${gradients[job.accentColor]}`} >
@@ -228,8 +153,8 @@ function SeekerApplication() {
                       <td className=" py-4.5 px-5 ">{job.appliedOn}</td>
                       <td className=" py-4.5 px-5 font-semibold">{<Badge type={statusBadge[job.status.toLowerCase()]} text={"● " + job.status}/>}</td>
                       <td className=" py-4.5 px-5 font-semibold">
-                        <Link to={`/seeker/browse/${job.id}`} className="border-2 border-gray-400/50 text-gray-700 px-4 py-1.5 rounded-xl hover:cursor-pointer">
-                          View job
+                        <Link to={`/seeker/browse/${job.id}`} >
+                         <Button type="button" text={"View job"} btnType="secondary" classname="text-gray-600!"/>
                         </Link>
                       </td>
                     </tr>

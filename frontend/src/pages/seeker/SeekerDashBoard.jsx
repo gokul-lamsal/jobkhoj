@@ -1,3 +1,6 @@
+import React from "react";
+import { FaArrowRight, FaRegBookmark, FaRegCircleCheck } from "react-icons/fa6";
+import { FiClock } from "react-icons/fi";
 import React, { useState } from "react";
 import {
   FaAngleRight,
@@ -198,11 +201,11 @@ function SeekerDashBoard() {
         </div>
         <div className="grid grid-cols-4 gap-5 ">
           {stats.map(({ label, value, color, Icon, bg }) => (
-            <div className="bg-white border border-gray-300 rounded-2xl shadow-sm px-5 py-6 flex items-center gap-3">
+            <div key={label} className="bg-white border border-gray-300 rounded-2xl shadow-sm px-5 py-6 flex items-center gap-3">
               <div className={`p-4 rounded-2xl ${bg} ${color}`}>
                 <Icon size={20} />
               </div>
-              <div key={label}>
+              <div>
                 <h1 className="text-3xl font-extrabold text-gray-900">
                   {value}
                 </h1>
