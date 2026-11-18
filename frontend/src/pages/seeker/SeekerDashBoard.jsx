@@ -1,12 +1,7 @@
-import React from "react";
-import { FaArrowRight, FaRegBookmark, FaRegCircleCheck } from "react-icons/fa6";
-import { FiClock } from "react-icons/fi";
 import React, { useState } from "react";
 import {
   FaAngleRight,
   FaArrowRight,
-  FaBookmark,
-  FaCheck,
   FaLink,
   FaLocationArrow,
   FaRegBookmark,
@@ -15,14 +10,11 @@ import {
 import { FiClock, FiDollarSign } from "react-icons/fi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import PostedJobCard from "../../components/helpers/PostedJobCard";
 import { badgeType, gradients } from "../../components/helpers/ColorAndBadge";
 import { MdOutlineAddLocationAlt, MdOutlineLocationOn } from "react-icons/md";
 import Badge from "../../components/global/Badge";
-import Tag from "../../components/global/Tag";
 import { LuBuilding, LuUserRound } from "react-icons/lu";
-import { GoDotFill } from "react-icons/go";
-import { CiLocationArrow1 } from "react-icons/ci";
+
 
 function SeekerDashBoard() {
   const onlyUrl = (url) => {
@@ -114,7 +106,7 @@ function SeekerDashBoard() {
         title: "Application Status Updated",
         message: "Your application for Frontend Developer has been accepted",
         type: "APPLICATION_UPDATE",
-        isRead: false,
+        isRead: true,
         createdAt: "2026-11-17",
       },
       {
@@ -122,7 +114,7 @@ function SeekerDashBoard() {
         title: "Application Status Updated",
         message: "Your application for UI/UX Designer has been rejected",
         type: "APPLICATION_UPDATE",
-        isRead: false,
+        isRead: true,
         createdAt: "2026-11-16",
       },
       {
@@ -130,7 +122,7 @@ function SeekerDashBoard() {
         title: "Application Status Updated",
         message: "Your application for DevOps Intern has been accepted",
         type: "APPLICATION_UPDATE",
-        isRead: true,
+        isRead: false,
         createdAt: "2026-11-10",
       },
     ],
@@ -187,8 +179,8 @@ function SeekerDashBoard() {
             </p>
           </div>
           <div>
-            <Link to={"/browse"}>
-              <span className="px-2 py-2 rounded-4xl font-semibold text-lg flex items-center cursor-pointer gap-2 bg-white">
+            <Link to={"/seeker/browse"}>
+              <span className="px-4 py-2 rounded-4xl font-semibold text-lg flex items-center cursor-pointer gap-2 bg-white">
                 Browse jobs{" "}
                 <FaArrowRight
                   size={45}
@@ -229,8 +221,9 @@ function SeekerDashBoard() {
                 </p>
               </div>
               <div>
-                <Link to={"/browse"}>
-                  <span className="text-purple-700 cursor-pointer">
+                <Link to={"/seeker/browse"}>
+                  <span className="text-purple-700  hover:underline cursor-pointer font-semibold">
+
                     Browse all jobs
                   </span>
                 </Link>
@@ -239,7 +232,7 @@ function SeekerDashBoard() {
             <div className="grid grid-cols-1 sm:grid-cols-1 gap-5 ">
               {jobInfo.jobs.map((job, i) => {
                 return (
-                  <Link to={"/seeker/browse/1"} key={i}  className=" py-4 group px-5 flex flex-col gap-4 bg-white cursor-pointer rounded-2xl hover:scale-102 transition-all duration-200 ">
+                  <Link to={"/seeker/browse/1"} key={i} className=" py-4 group px-5 flex flex-col gap-4 bg-white cursor-pointer rounded-2xl hover:scale-102 transition-all duration-200 ">
                     <div className="flex justify-between ">
                       <div className="flex gap-4 items-center">
                         <div
@@ -310,8 +303,8 @@ function SeekerDashBoard() {
                 </p>
               </div>
               <div>
-                <Link to={"/company"}>
-                  <span className="text-purple-700 cursor-pointer font-semibold">
+                <Link to={"/seeker/company"}>
+                  <span className="text-purple-700  hover:underline cursor-pointer font-semibold">
                     Browse companies
                   </span>
                 </Link>
@@ -370,8 +363,8 @@ function SeekerDashBoard() {
             </div>
           </div>
         </div>
-         
-         {/* start of the left side (Quick actions section)  */}
+
+        {/* start of the left side (Quick actions section)  */}
 
         <div className=" flex flex-col gap-6 w-[25%]">
           <div className="flex flex-col gap-4 border-2 border-gray-300 rounded-2xl px-4 py-6">
@@ -389,7 +382,7 @@ function SeekerDashBoard() {
               </div>
             </Link>
 
-            <Link to={"/"}>
+            <Link to={"/seeker/profile"}>
               <div className="flex items-center border border-gray-300 cursor-pointer rounded-xl px-3 py-4 gap-4">
                 <span className="inline-flex p-2 rounded-lg bg-green-200">
                   <LuUserRound size={20} color="green" />
@@ -402,7 +395,7 @@ function SeekerDashBoard() {
               </div>
             </Link>
 
-            <Link to={"/company"}>
+            <Link to={"/seeker/company"}>
               <div className="flex items-center border cursor-pointer border-gray-300 rounded-xl px-3 py-4 gap-4">
                 <span className="inline-flex p-2 rounded-lg bg-orange-200">
                   <LuBuilding size={20} color="orange" />
@@ -423,11 +416,12 @@ function SeekerDashBoard() {
               <div className="flex gap-4">
                 <h1 className="text-xl font-bold">Notification</h1>
                 <span>
-                  <Badge text={"Live"} type={"success"} />
+                  <Badge text={"● Live"} type={"success"} />
                 </span>
               </div>
               <div>
-                <span className="text-purple-600 text-lg cursor-pointer">
+                <span className="text-purple-700  hover:underline cursor-pointer font-semibold">
+
                   View all
                 </span>
               </div>
@@ -436,13 +430,7 @@ function SeekerDashBoard() {
               {jobInfo.notification.map((info, i) => (
                 <div className="flex gap-4 px-2 py-4">
                   <div>
-                    <input
-                      type="checkbox"
-                      name=""
-                      id=""
-                      size={15}
-                      className="cursor-pointer"
-                    />
+                    {info.isRead && <div className="w-2 h-2 mt-2 rounded-full bg-purple-600" > </div>}
                   </div>
                   <div className="flex flex-col">
                     <h1 className="text-md font-semibold">{info.title}</h1>
