@@ -10,7 +10,7 @@ const LoginPage = () => {
   const [form, setForm] = useState([]);
 
   const handleChange = (e) => {
-    setform((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
