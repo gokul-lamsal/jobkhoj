@@ -89,6 +89,9 @@ section {
 .badge-neutral {
   @apply bg-white/20 text-white;
 }
+.badge-add {
+  @apply bg-white text-gray-600 border-dashed border-2 rounded-lg;
+}
 
 /* search badge */
 .badge-search {
