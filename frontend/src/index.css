@@ -85,6 +85,9 @@ section {
   @apply bg-rose-100 text-rose-700;
 }
 
+.badge-close{
+  @apply bg-gray-200 text-gray-500;
+}
 /* grey badge */
 .badge-neutral {
   @apply bg-white/20 text-white;
