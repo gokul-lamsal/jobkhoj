@@ -8,7 +8,8 @@ import { CiClock2 } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import Button from "../../components/global/Button";
 import { LuUsers } from "react-icons/lu";
-import CompanyCard from "../../components/helpers/CompanyCard"
+import CompanyCard from "../../components/helpers/CompanyCard";
+import SeekerApplyPopup from "./SeekerApplyPopup";
 const SeekerJobPage = () => {
   {
     /* use this info to build dummy aaile ko lagi paxi yo json change huna sakxa , for now build ui yei use garera
@@ -30,8 +31,7 @@ const SeekerJobPage = () => {
     return splitUrl[splitUrl.length - 1];
   };
 
-  const [jobInfo, setJobInfo] = useState(
-    {
+  const [jobInfo, setJobInfo] = useState({
     id: 1,
     title: "Frontend Developer",
     jobType: "Full time",
@@ -88,10 +88,17 @@ const SeekerJobPage = () => {
       },
     ],
   });
+  const [openSeekerPopup, setSeekerPopup] = useState(false);
+
+  const openApply = () => {
+    setSeekerPopup((prev) => !prev);
+  };
   return (
-    <main >
+    <main>
+        {openSeekerPopup && <SeekerApplyPopup setSeekerPopup ={setSeekerPopup} />}
 
       <section className="flex gap-5">
+
         <div className=" flex flex-col gap-4 my-4 py-6">
           <div className="flex flex-col gap-5 border-2 rounded-xl px-5 py-5 border-gray-200 bg-white cursor-pointer">
             {/* Header */}
@@ -136,7 +143,7 @@ const SeekerJobPage = () => {
             {/* Actions */}
             <div className="flex justify-start gap-3 items-center">
               <div className="h-10">
-                <Button type="button" text={"Apply now"} />
+                <Button onClick={openApply} type="button" text={"Apply now"} />
               </div>
               <div className="h-10">
                 <Button
@@ -149,18 +156,17 @@ const SeekerJobPage = () => {
                     </>
                   }
                 />
-
               </div>
-
             </div>
           </div>
 
           {/* About  div*/}
 
-
           <div className="flex flex-col gap-7 border-gray-200 border-2 px-6 bg-white  py-6 rounded-xl">
             <div className="flex flex-col gap-3">
-              <h2 className="font-bold text-lg text-gray-900">About the role</h2>
+              <h2 className="font-bold text-lg text-gray-900">
+                About the role
+              </h2>
               <p className="text-sm leading-relaxed text-gray-600">
                 {jobInfo.about}
               </p>
@@ -168,10 +174,15 @@ const SeekerJobPage = () => {
 
             {/* Responsibilities */}
             <div className="flex flex-col gap-3">
-              <h2 className="font-bold text-lg text-gray-900">What you will do</h2>
+              <h2 className="font-bold text-lg text-gray-900">
+                What you will do
+              </h2>
               <ul className="list-disc pl-5 flex flex-col gap-2.5 marker:text-gray-400">
                 {jobInfo.responsibilities.map((task, i) => (
-                  <li key={i} className="text-sm leading-relaxed text-gray-600 pl-1">
+                  <li
+                    key={i}
+                    className="text-sm leading-relaxed text-gray-600 pl-1"
+                  >
                     {task}
                   </li>
                 ))}
@@ -180,7 +191,9 @@ const SeekerJobPage = () => {
 
             {/* Skills */}
             <div className="flex flex-col gap-3">
-              <h2 className="font-bold text-lg text-gray-900">Required skills</h2>
+              <h2 className="font-bold text-lg text-gray-900">
+                Required skills
+              </h2>
               <div className="flex flex-wrap gap-2">
                 {jobInfo.requiredSkills.map((skill, i) => (
                   <Badge key={i} type="search" text={skill} />
@@ -286,6 +299,7 @@ const SeekerJobPage = () => {
           </div>
         </div>
       </section>
+     
     </main>
   );
 };

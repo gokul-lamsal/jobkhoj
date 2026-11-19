@@ -19,6 +19,7 @@ import SeekerSingleCompany from "./pages/seeker/SeekerSingleCompany";
 import CompanyLayout from "./components/layout/CompanyLayout";
 import CompanyDashboard from "./pages/company/CompanyDashboard";
 import CompanyJobs from "./pages/company/CompanyJobs";
+import SeekerProfile from "./pages/seeker/SeekerProfile";
 
 
 function App() {
@@ -99,6 +100,10 @@ function App() {
               path: "notification",
               element: <SeekerNotification />,
             },
+            {
+              path: "profile",
+              element:<SeekerProfile />,
+            }
           ]
         }
 
