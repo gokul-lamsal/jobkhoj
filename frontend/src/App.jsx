@@ -15,6 +15,10 @@ import SeekerJobPage from "./pages/seeker/SeekerJobPage";
 import SeekerApplication from "./pages/seeker/SeekerApplication";
 import SeekerSavedJobPage from "./pages/seeker/SeekerSavedJobPage";
 import SeekerNotification from "./pages/seeker/SeekerNotification";
+import SeekerSingleCompany from "./pages/seeker/SeekerSingleCompany";
+import CompanyLayout from "./components/layout/CompanyLayout";
+import CompanyDashboard from "./pages/company/CompanyDashboard";
+import CompanyJobs from "./pages/company/CompanyJobs";
 import SeekerProfile from "./pages/seeker/SeekerProfile";
 
 
@@ -64,31 +68,35 @@ function App() {
         {
           element: <SeekerLayout />,
           children: [
-             {
+            {
               path: "",
-              element: <SeekerDashBoard/>,
+              element: <SeekerDashBoard />,
             },
             {
               path: "browse",
-              element: <Browsepage/>
+              element: <Browsepage />
             },
             {
               path: "browse/:id",
               element: <SeekerJobPage />,
             },
-             {
+            {
+              path: "company/:id",
+              element: <SeekerSingleCompany />,
+            },
+            {
               path: "application",
               element: <SeekerApplication />,
             },
-             {
+            {
               path: "company",
               element: <CompaniesPage />,
             },
-             {
+            {
               path: "saved",
               element: <SeekerSavedJobPage />,
             },
-             {
+            {
               path: "notification",
               element: <SeekerNotification />,
             },
@@ -99,6 +107,26 @@ function App() {
           ]
         }
 
+      ]
+    },
+    {
+      path: "/company",
+      element: <RoleProtectedRoute allowedRoles={"company"} />,
+      children: [
+        {
+          element: <CompanyLayout />,
+          children: [
+            {
+              path: "",
+              element: <CompanyDashboard />,
+            },
+            {
+              path: "jobs",
+              element: <CompanyJobs />,
+            }
+          ]
+
+        }
       ]
     },
     {

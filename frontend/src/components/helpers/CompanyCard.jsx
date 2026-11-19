@@ -4,14 +4,14 @@ import { MdOutlineAddLocationAlt } from 'react-icons/md'
 import { FaLink } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import Button from '../global/Button'
-
+export const onlyUrl = (url) => {
+    const splitUrl = url.split("https://")
+    if (splitUrl.length < 2) return url
+    return splitUrl[splitUrl.length - 1]
+}
 
 const CompanyCard = ({ name, initials, accentColor, location, description, website, isBrowse = false }) => {
-    const onlyUrl = (url) => {
-        const splitUrl = url.split("https://")
-        if (splitUrl.length < 2) return url
-        return splitUrl[splitUrl.length - 1]
-    }
+
     return (
         <div className='p-5 flex flex-col gap-4 border-2 border-gray-300 bg-white cursor-pointer hover:scale-105 hover:shadow shrink transition-all duration-200 ease-out max-h-65 rounded-2xl'>
             <div className='flex gap-3'>
@@ -47,7 +47,7 @@ const CompanyCard = ({ name, initials, accentColor, location, description, websi
                     </div>
                 </a>
                 {
-                    !isBrowse && (<Link to={"/company/2"}>
+                    !isBrowse && (<Link to={"/seeker/company/2"}>
                         <div className='bg-linear-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 active:scale-95 transition-all duration-200 px-4 py-1.5 text-[15px] font-semibold text-white rounded-lg shadow-sm cursor-pointer'>
                             View company
                         </div>
@@ -56,7 +56,7 @@ const CompanyCard = ({ name, initials, accentColor, location, description, websi
 
             </div>
             {
-                isBrowse && (<Link to={"/company/2"}>
+                isBrowse && (<Link to={"/seeker/company/2"}>
                     <Button type='button' btnType='secondary' text="View company" />
                 </Link>)
             }
