@@ -3,6 +3,7 @@ import Badge from "../../components/global/Badge";
 import { badgeType, gradients, statusBadge } from "../../components/helpers/ColorAndBadge";
 import Button from "../../components/global/Button";
 import { Link } from "react-router-dom";
+import { StatsCard } from "./SeekerDashBoard";
 
 function SeekerApplication() {
   const [jobInfo, setJobInfo] = useState([
@@ -68,10 +69,10 @@ function SeekerApplication() {
   const [currentStatus, setCurrentStatus] = useState("All")
 
   const stats = [
-    { label: "Total", value: 5, color: "text-gray-700" },
-    { label: "Pending", value: 3, color: "text-amber-700" },
-    { label: "Accepted", value: 1, color: "text-emerald-700" },
-    { label: "Rejected", value: 1, color: "text-rose-700" },
+    { label: "Total", value: 5, textColor: "text-gray-700" },
+    { label: "Pending", value: 3, textColor: "text-amber-700" },
+    { label: "Accepted", value: 1, textColor: "text-emerald-700" },
+    { label: "Rejected", value: 1, textColor: "text-rose-700" },
   ];
 
 
@@ -88,14 +89,8 @@ function SeekerApplication() {
         {/* status part */}
 
         <div className="grid grid-cols-4 mt-10  gap-5 ">
-          {stats.map(({ label, value, color }) => (
-            <div
-              key={label}
-              className="bg-white border border-gray-300 rounded-2xl shadow-sm px-5 py-6 flex flex-col justify-center gap-3"
-            >
-              <p className={`text-sm font-medium ${color}`}>{label}</p>
-              <h1 className="text-3xl font-extrabold text-gray-900">{value}</h1>
-            </div>
+          {stats.map(({ label, value, textColor }) => (
+           <StatsCard label={label} value={value} textColor={textColor}/>
           ))}
         </div>
 

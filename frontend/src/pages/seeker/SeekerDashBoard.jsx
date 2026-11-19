@@ -15,6 +15,28 @@ import { MdOutlineAddLocationAlt, MdOutlineLocationOn } from "react-icons/md";
 import Badge from "../../components/global/Badge";
 import { LuBuilding, LuUserRound } from "react-icons/lu";
 
+export const StatsCard = ({
+  bg = "",
+  color = "",
+  label,
+  value,
+  Icon,
+  textColor = "text-gray-500",
+}) => {
+  return (
+    <div className="bg-white border border-gray-300 rounded-2xl shadow-sm px-5 py-6 flex items-center gap-3">
+      {Icon && (
+        <div className={`p-4 rounded-2xl ${bg} ${color}`}>
+          <Icon size={20} />
+        </div>
+      )}
+      <div>
+        <h1 className="text-3xl font-extrabold text-gray-900">{value}</h1>
+        <p className={`text-sm font-medium ${textColor}  `}>{label}</p>
+      </div>
+    </div>
+  );
+};
 
 function SeekerDashBoard() {
   const onlyUrl = (url) => {
@@ -193,24 +215,19 @@ function SeekerDashBoard() {
         </div>
         <div className="grid grid-cols-4 gap-5 ">
           {stats.map(({ label, value, color, Icon, bg }) => (
-            <div key={label} className="bg-white border border-gray-300 rounded-2xl shadow-sm px-5 py-6 flex items-center gap-3">
-              <div className={`p-4 rounded-2xl ${bg} ${color}`}>
-                <Icon size={20} />
-              </div>
-              <div>
-                <h1 className="text-3xl font-extrabold text-gray-900">
-                  {value}
-                </h1>
-                <p className={`text-sm font-medium text-gray-500`}>{label}</p>
-              </div>
-            </div>
+            <StatsCard
+              label={label}
+              value={value}
+              color={color}
+              Icon={Icon}
+              bg={bg}
+            />
           ))}
         </div>
       </section>
 
       <section className="my-8 flex gap-6 min-w-full">
         <div className="flex flex-col gap-8 w-[75%]">
-
           {/* start of latest jop section */}
           <div className="flex flex-col gap-4 py-4 px-5 border-2 border-gray-300 bg-white cursor-pointer rounded-2xl">
             <div className="flex justify-between items-center">
@@ -223,7 +240,6 @@ function SeekerDashBoard() {
               <div>
                 <Link to={"/seeker/browse"}>
                   <span className="text-purple-700  hover:underline cursor-pointer font-semibold">
-
                     Browse all jobs
                   </span>
                 </Link>
@@ -232,7 +248,11 @@ function SeekerDashBoard() {
             <div className="grid grid-cols-1 sm:grid-cols-1 gap-5 ">
               {jobInfo.jobs.map((job, i) => {
                 return (
-                  <Link to={"/seeker/browse/1"} key={i} className=" py-4 group px-5 flex flex-col gap-4 bg-white cursor-pointer rounded-2xl hover:scale-102 transition-all duration-200 ">
+                  <Link
+                    to={"/seeker/browse/1"}
+                    key={i}
+                    className=" py-4 group px-5 flex flex-col gap-4 bg-white cursor-pointer rounded-2xl hover:scale-102 transition-all duration-200 "
+                  >
                     <div className="flex justify-between ">
                       <div className="flex gap-4 items-center">
                         <div
@@ -421,7 +441,6 @@ function SeekerDashBoard() {
               </div>
               <div>
                 <span className="text-purple-700  hover:underline cursor-pointer font-semibold">
-
                   View all
                 </span>
               </div>
@@ -430,7 +449,11 @@ function SeekerDashBoard() {
               {jobInfo.notification.map((info, i) => (
                 <div className="flex gap-4 px-2 py-4">
                   <div>
-                    {info.isRead && <div className="w-2 h-2 mt-2 rounded-full bg-purple-600" > </div>}
+                    {info.isRead && (
+                      <div className="w-2 h-2 mt-2 rounded-full bg-purple-600">
+                        {" "}
+                      </div>
+                    )}
                   </div>
                   <div className="flex flex-col">
                     <h1 className="text-md font-semibold">{info.title}</h1>
