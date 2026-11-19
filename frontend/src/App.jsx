@@ -15,6 +15,7 @@ import SeekerJobPage from "./pages/seeker/SeekerJobPage";
 import SeekerApplication from "./pages/seeker/SeekerApplication";
 import SeekerSavedJobPage from "./pages/seeker/SeekerSavedJobPage";
 import SeekerNotification from "./pages/seeker/SeekerNotification";
+import SeekerProfile from "./pages/seeker/SeekerProfile";
 
 
 function App() {
@@ -91,6 +92,10 @@ function App() {
               path: "notification",
               element: <SeekerNotification />,
             },
+            {
+              path: "profile",
+              element:<SeekerProfile />,
+            }
           ]
         }
 
