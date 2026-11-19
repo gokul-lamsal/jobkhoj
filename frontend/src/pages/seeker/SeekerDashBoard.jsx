@@ -14,6 +14,7 @@ import { badgeType, gradients } from "../../components/helpers/ColorAndBadge";
 import { MdOutlineAddLocationAlt, MdOutlineLocationOn } from "react-icons/md";
 import Badge from "../../components/global/Badge";
 import { LuBuilding, LuUserRound } from "react-icons/lu";
+import { SeekerResume } from "./SeekerProfile";
 
 export const StatsCard = ({
   bg = "",
@@ -229,7 +230,7 @@ function SeekerDashBoard() {
       <section className="my-8 flex gap-6 min-w-full">
         <div className="flex flex-col gap-8 w-[75%]">
           {/* start of latest jop section */}
-          <div className="flex flex-col gap-4 py-4 px-5 border-2 border-gray-300 bg-white cursor-pointer rounded-2xl">
+          <div className="flex flex-col gap-4 py-4 px-5 border border-gray-300 bg-white cursor-pointer rounded-2xl">
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-xl font-bold">Latest jobs</h1>
@@ -302,7 +303,7 @@ function SeekerDashBoard() {
                         </div>
                       </div>
                       <div>
-                        <span className="inline-flex group-hover:text-blue-800 transition-colors duration-200 group-hover:border-blue-600 items-center justify-center border-2 border-gray-300 rounded-lg p-2">
+                        <span className="inline-flex group-hover:text-blue-800 transition-colors duration-200 group-hover:border-blue-600 items-center justify-center border border-gray-300 rounded-lg p-2">
                           <FaLocationArrow size={25} />
                         </span>
                       </div>
@@ -314,7 +315,7 @@ function SeekerDashBoard() {
           </div>
 
           {/* start of the  comapanies card section  */}
-          <div className="flex flex-col gap-4 py-4 px-5 border-2 border-gray-300 bg-white cursor-pointer rounded-2xl">
+          <div className="flex flex-col gap-4 py-4 px-5 border border-gray-300 bg-white cursor-pointer rounded-2xl">
             <div className="flex justify-between items-center">
               <div>
                 <h1 className="text-xl font-bold">Companies</h1>
@@ -334,7 +335,7 @@ function SeekerDashBoard() {
               {jobInfo.companies.map((companyInfo, i) => (
                 <div
                   key={i}
-                  className="flex flex-col gap-6 border-2 border-gray-300 rounded-2xl px-4 py-8"
+                  className="flex flex-col gap-6 border border-gray-300 rounded-2xl px-4 py-8"
                 >
                   <div className="flex gap-3">
                     <div
@@ -386,8 +387,8 @@ function SeekerDashBoard() {
 
         {/* start of the left side (Quick actions section)  */}
 
-        <div className=" flex flex-col gap-6 w-[25%]">
-          <div className="flex flex-col gap-4 border-2 border-gray-300 rounded-2xl px-4 py-6">
+        <div className=" flex flex-col gap-6 w-[25rem]">
+          <div className="flex flex-col gap-4 border border-gray-300 rounded-2xl px-4 py-6">
             <h1 className="text-xl font-bold">Quick actions</h1>
             <Link to={"/seeker/saved"}>
               <div className="flex items-center border border-gray-300 cursor-pointer rounded-xl px-3 py-4 gap-4">
@@ -431,7 +432,7 @@ function SeekerDashBoard() {
 
           {/* start of the notification section  */}
 
-          <div className="flex flex-col gap-1 border-2 border-gray-300 rounded-2xl px-4 py-6">
+          <div className="flex flex-col gap-1 border border-gray-300 rounded-2xl px-4 py-6">
             <div className="flex justify-between items-center">
               <div className="flex gap-4">
                 <h1 className="text-xl font-bold">Notification</h1>
@@ -465,6 +466,12 @@ function SeekerDashBoard() {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Resume part beginning */}
+
+          <div>
+          <SeekerResume/>
           </div>
         </div>
       </section>
