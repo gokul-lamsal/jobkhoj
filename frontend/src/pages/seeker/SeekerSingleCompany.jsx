@@ -6,11 +6,11 @@ import { VscLinkExternal } from "react-icons/vsc";
 import { FiBriefcase } from "react-icons/fi";
 import { LuClock } from "react-icons/lu";
 import { FaArrowRight } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { badgeType } from "../../components/helpers/ColorAndBadge";
 
-const SeekerSingleCompany = () => {
-  const companyDetails = {
+const companies = {
+  comp_01: {
     company: {
       name: "TechCorp Pvt Ltd",
       initials: "TC",
@@ -48,7 +48,13 @@ const SeekerSingleCompany = () => {
         posted: "2w ago",
       },
     ],
-  };
+  },
+};
+
+const SeekerSingleCompany = () => {
+  const { id } = useParams();
+  const companyDetails = companies[id] ?? companies.comp_01;
+
   const iconMap = {
     "full time": { bg: "bg-green-100", color: "text-green-600" },
     internship: { bg: "bg-red-100", color: "text-red-600" },
@@ -159,7 +165,7 @@ const SeekerSingleCompany = () => {
                         text={c.type}
                       />
                       <div className="h-10 w-28">
-                        <Link to={`/seeker/browse/${c.id}`}>
+                        <Link to={`../browse/${c.id}`}>
                           <Button
                             type="button"
                             btnType="secondary"

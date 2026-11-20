@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FiSend, FiUpload } from "react-icons/fi";
+import React from "react";
+import { FiSend } from "react-icons/fi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
@@ -9,14 +9,14 @@ import { FaExclamationCircle } from "react-icons/fa";
 function SeekerApplyPopup({setSeekerPopup}) {
 
   return (
-    <form className="fixed inset-0 w-full flex items-center justify-center backdrop-blur-2xl ">
-      <div className="  flex flex-col px-4 py-6 gap-4 border-2 rounded-2xl w-[35rem]  border-gray-300">
+    <form className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm">
+      <div className="flex max-h-[90vh] w-[35rem] flex-col gap-4 overflow-y-auto rounded-2xl border-2 border-gray-300 bg-white px-4 py-6 shadow-2xl">
         <div className="flex justify-between items-center ">
           <div>
             <h1 className="font-bold text-xl ">Apply to Frontend Developer</h1>
           </div>
           <div>
-            <button>
+            <button type="button">
               <RxCross2
                 size={25}
                 className="cursor-pointer"
@@ -52,70 +52,44 @@ function SeekerApplyPopup({setSeekerPopup}) {
             Cover message
           </p>
           <textarea
-            type="text"
-            className="border-2 border-gray-300 p-2 rounded-xl outline-none"
+            className="w-full min-h-32 resize-none rounded-xl border-2 border-gray-300 p-3 text-sm text-gray-700 outline-none transition-colors duration-200 focus:border-primary"
           />
           <p className="text-[14px] text-gray-400 font-semibold ">
             Optional. Tell the company why you are a good fit.
           </p>
         </div>
-        <div className="flex flex-col gap-1">
-          <div>
-            <p className="text-[14px] text-gray-600 font-semibold ">Resume </p>
-          </div>
-          <div className="border-2 border-gray-300 p-2 rounded-2xl group cursor-pointer hover:scale-102 transition-all duration-200 ">
-            <div className="flex gap-2.5 items-center  group-hover:text-blue-800 transition-colors duration-200 group-hover:border-blue-600">
-              <div>
-                <input type="radio" className="w-4 h-4" />
-              </div>
-              <div>
-                <span>
-                  <IoDocumentTextOutline size={20} />
-                </span>
-              </div>
-              <div className="flex flex-col gap-0">
-                <p className="text-sm font-bold ">Use my profile resume </p>
-                <p className="text-[12px] text-gray-600 ">file name</p>
-              </div>
-            </div>
-          </div>
-          <div className="border-2 border-gray-300 p-2 rounded-2xl group cursor-pointer hover:scale-102 transition-all duration-200 ">
-            <div className="flex gap-2.5 items-center  group-hover:text-blue-800 transition-colors duration-200 group-hover:border-blue-600">
-              <div>
-                <input type="radio" className="w-4 h-4" />
-              </div>
-              <div>
-                <span>
-                  <FiUpload size={20} />
-                </span>
-              </div>
-              <div className="flex flex-col gap-0">
-                <p className="text-sm font-bold ">Upload a different file </p>
-                <p className="text-[12px] text-gray-600 ">
-                  file name in PDF or Doc
-                </p>
-              </div>
-            </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-[14px] font-semibold text-gray-600">Resume</p>
+
+          <div className="flex items-center gap-3 rounded-xl border-2 border-gray-300 p-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-rose-50 text-rose-500">
+              <IoDocumentTextOutline size={20} />
+            </span>
+            <span className="flex min-w-0 flex-col">
+              <span className="truncate text-sm font-semibold text-gray-900">
+                jhon-doe-resume.pdf
+              </span>
+              <span className="text-[12px] text-gray-500">
+                Updated 2 days ago · PDF
+              </span>
+            </span>
           </div>
         </div>
-        <div className="p-2 bg-orange-200 rounded-xl">
-          <div className="flex gap-2">
-            <span>
-              <FaExclamationCircle size={20} color="orange" />
-            </span>
-            <p className="text-sm text-orange-600">
-              You can apply to each job only once. After you submit, the company
-              will be notified.
-            </p>
-          </div>
+        <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4">
+          <FaExclamationCircle size={18} className="mt-0.5 shrink-0 text-amber-600" />
+          <p className="text-sm leading-relaxed text-amber-800">
+            <span className="font-semibold">One application per job.</span> Once
+            you submit, it&apos;s final — no edits or resends, and the company
+            is notified immediately.
+          </p>
         </div>
         <div className="ml-auto  flex gap-2">
           <div>
-            <Button type="Reset" btnType="secondary" text={<>Cancel</>} onClick={()=>setSeekerPopup(false)} />
+            <Button type="button" btnType="secondary" text={<>Cancel</>} onClick={()=>setSeekerPopup(false)} />
           </div>
           <div>
             <Button
-              type="Reset"
+              type="button"
               text={
                 <>
                   {" "}

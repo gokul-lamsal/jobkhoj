@@ -26,19 +26,28 @@ const LoginBtns = () => {
     </>
   )
 }
-const SeekerProfile = () => {
+const SeekerProfile = ({ user }) => {
+  const redirectProfile = {
+    "seeker": "/seeker/profile",
+    "company": "/employer/profile",
+    "admin": "/admin/profile",
+  }
   return (
     <>
-      <Link to={"/seeker/notification"}>
-        <div className='text-gray-500 border h-10 w-10 flex justify-center items-center text-xl p-2 border-gray-300  rounded-full'>
-          <span className='relative '>
-            <FiBell />
-            <span className='absolute  bg-red-500 h-1.75 w-1.75 top-0 right-[6%] rounded-4xl '>
-            </span>
-          </span>
-        </div>
-      </Link>
-      <Link to={"/seeker/profile"}>
+      {
+        user?.role == "seeker" && (
+          <Link to={"/seeker/notification"}>
+            <div className='text-gray-500 border h-10 w-10 flex justify-center items-center text-xl p-2 border-gray-300  rounded-full'>
+              <span className='relative '>
+                <FiBell />
+                <span className='absolute  bg-red-500 h-1.75 w-1.75 top-0 right-[6%] rounded-4xl '>
+                </span>
+              </span>
+            </div>
+          </Link>
+        )
+      }
+      <Link to={redirectProfile[user.role]}>
         <div className='flex items-center justify-between gap-2  pr-1.5 pl-1 py-1 border border-gray-300  rounded-4xl cursor-pointer'>
           <div className='p-2 w-10 h-full text-white font-bold bg-linear-to-r  from-fuchsia-600 to-purple-600 rounded-full flex justify-center items-center tracking-wider'>JD</div>
           <div className='w-30 flex items-center text-center justify-center gap-4'>
@@ -51,7 +60,7 @@ const SeekerProfile = () => {
   )
 }
 const SeekerNavBar = ({ navLinks = [] }) => {
-  const { token } = useContext(AuthContext)
+  const { token, user } = useContext(AuthContext)
 
   if (navLinks.length === 0) {
     return <div className='text-xl text-red-400 text-center p-2'>Error on NavBar.  Be sure to set navLinks props.</div>
@@ -95,7 +104,7 @@ const SeekerNavBar = ({ navLinks = [] }) => {
       {/* login buttons or profile */}
       <div className='flex items-center gap-3 h-10'>
         {
-          token ? <SeekerProfile /> :
+          token ? <SeekerProfile user={user} /> :
             <LoginBtns />
         }
       </div>

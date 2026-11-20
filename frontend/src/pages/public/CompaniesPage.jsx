@@ -76,9 +76,9 @@ const CompaniesPage = () => {
         {/* {company list} */}
         <div className='grid grid-cols-3 gap-8 mt-10'>
           {
-            companies.map((company, i) => {
+            companies.map((company) => {
               return (
-                <CompanyCard key={i} name={company.name} initials={company.initials} description={company.description} website={company.website} location={company.location} accentColor={company.accentColor} />
+                <CompanyCard key={company.id} id={company.id} name={company.name} initials={company.initials} description={company.description} website={company.website} location={company.location} accentColor={company.accentColor} />
               )
             })
           }

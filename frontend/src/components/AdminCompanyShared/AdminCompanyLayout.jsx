@@ -6,12 +6,12 @@ import AdminCompanyTopBar from './AdminCompanyTopBar'
 
 
 const AdminCompanyLayout = ({
-    title = 'Dashboard',
     logoTo = '/',
     navGroups = [],
     profile,
     onLogout,
 }) => {
+    
     return (
         <div className='flex min-h-screen bg-page'>
             <div className='sticky top-0 flex h-screen w-64 shrink-0 flex-col border-r-2 border-slate-200/70 bg-white'>
@@ -39,7 +39,7 @@ const AdminCompanyLayout = ({
                                 }>
                                     <Icon size={18} className='shrink-0' />
                                     <span className='flex-1'>{title}</span>
-                                    {title === "Notifications"  && (
+                                    {title === "Notifications" && (
                                         <span className='flex h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1.5 text-[11px] font-bold text-white'>
                                             3
                                         </span>
@@ -63,7 +63,7 @@ const AdminCompanyLayout = ({
             </div>
 
             <div className='flex min-w-0 flex-1 flex-col'>
-                <AdminCompanyTopBar title={title} profile={profile} />
+                <AdminCompanyTopBar profile={profile} />
                 <main className='px-8 py-6'>
                     <Outlet />
                 </main>

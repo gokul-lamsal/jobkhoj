@@ -4,7 +4,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 export const RoleDashBoard = {
     seeker: "/seeker/dashboard",
-    company: "/company/dashboard",
+    company: "/employer",
     admin: "/admin/dashboard",
 };
 const RoleProtectedRoute = ({ allowedRoles }) => {
