@@ -17,4 +17,7 @@ export const statusBadge = {
     "accepted": "success",
     "rejected": "danger",
     "pending": "warning",
+    "active":"success",
+    "closed":"close",
+
 }
