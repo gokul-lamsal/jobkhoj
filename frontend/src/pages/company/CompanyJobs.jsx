@@ -193,7 +193,7 @@ const CompanyJobs = () => {
 
       {/* Table */}
       <div className="w-full overflow-hidden  border border-t-0 border-gray-300 ">
-        <table className="border w-full   text-left">
+        <table className="border w-full text-left">
           <thead className="border-b  border-gray-300">
             <tr className="text-[14px] uppercase tracking-wider  text-gray-500">
               <th className=" py-4.5 px-5 font-semibold">Job</th>
@@ -202,7 +202,6 @@ const CompanyJobs = () => {
               <th className=" py-4.5 px-5 font-semibold">applicants</th>
               <th className=" py-4.5 px-5 font-semibold">Status</th>
               <th className=" py-4.5 px-5 font-semibold">Actions</th>
-              <th className=" py-4.5 px-5" />
             </tr>
           </thead>
           <tbody className="bg-white">

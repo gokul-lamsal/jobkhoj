@@ -21,6 +21,8 @@ import CompanyDashboard from "./pages/company/CompanyDashboard";
 import CompanyJobs from "./pages/company/CompanyJobs";
 import SeekerProfile from "./pages/seeker/SeekerProfile";
 import CompanyPostJob from "./pages/company/CompanyPostJob";
+import CompanyApplicants from "./pages/company/CompanyApplicants";
+import CompanyProfile from "./pages/company/CompanyProfile";
 
 
 function App() {
@@ -136,7 +138,15 @@ function App() {
             {
               path: "post-job",
               element: <CompanyPostJob />,
-            }
+            },
+            {
+              path: "jobs/:id",
+              element: <CompanyApplicants />,
+            },
+            {
+              path: "profile",
+              element: <CompanyProfile />,
+            },
           ]
 
         }

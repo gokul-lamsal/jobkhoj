@@ -4,14 +4,24 @@ import { FiBriefcase, FiPhone, FiPlus, FiSend, FiUser } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
 import { SearchDropDown } from "../../components/helpers/SearchBar";
 import Badge from "../../components/global/Badge";
-import LatestOpening from "../../components/helpers/LatestOpening";
 import PostedJobCard from "../../components/helpers/PostedJobCard";
-import { postedJobs } from "../public/HomePage";
 import { FaExclamationCircle } from "react-icons/fa";
 import Button from "../../components/global/Button";
 
 function CompanyPostJob() {
-  const selectedJob = postedJobs[0];
+  const selectedJob = {
+    id: 1,
+    title: "Frontend Developer",
+    company: "TechCorp Pvt Ltd",
+    companyInitials: "TC",
+    logoColor: "indigo",
+    location: "Lalitpur, Nepal",
+    salary: "NPR 50k-70k",
+    type: "Full time",
+    skills: ["React", "Tailwind", "REST"],
+    postedAgo: "2d ago",
+    bookmarked: false,
+  };
   const profileDetails = {
     name: "John doe",
     email: "john@student.com",
@@ -181,7 +191,7 @@ function CompanyPostJob() {
               <Button btnType="secondary" text={"Save as draft"} />
             </div>
             <div>
-              <Button text={<> <FiSend className="mr-2"/> Publish job</>} />
+              <Button text={<> <FiSend className="mr-2" /> Publish job</>} />
             </div>
           </div>
         </div>
@@ -193,10 +203,10 @@ function CompanyPostJob() {
                 How job seekers will see it.
               </p>
             </div>
-            <div>
+            <div  >
               {selectedJob && (
                 <PostedJobCard
-                  id={selectedJob.id}
+                 
                   title={selectedJob.title}
                   company={selectedJob.company}
                   companyInitials={selectedJob.companyInitials}
