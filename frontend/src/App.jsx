@@ -20,6 +20,7 @@ import CompanyLayout from "./components/layout/CompanyLayout";
 import CompanyDashboard from "./pages/company/CompanyDashboard";
 import CompanyJobs from "./pages/company/CompanyJobs";
 import SeekerProfile from "./pages/seeker/SeekerProfile";
+import CompanyPostJob from "./pages/company/CompanyPostJob";
 
 
 function App() {
@@ -123,6 +124,10 @@ function App() {
             {
               path: "jobs",
               element: <CompanyJobs />,
+            },
+            {
+              path: "post-job",
+              element: <CompanyPostJob />,
             }
           ]
 

@@ -4,7 +4,7 @@ import Button from '../global/Button'
 import { FaChevronDown } from 'react-icons/fa';
 
 
-const SearchDropDown = ({ selectedType, setSelectedType }) => {
+export const SearchDropDown = ({ selectedType, setSelectedType }) => {
     const [isOpen, setIsOpen] = useState(false)
     return (
         <>
