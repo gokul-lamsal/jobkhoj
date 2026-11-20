@@ -14,11 +14,9 @@ const ProfileBlock = ({ initials, name, subtitle }) => {
     )
 }
 
-const AdminCompanyTopBar = ({ title = 'Dashboard', profile }) => {
+const AdminCompanyTopBar = ({ profile }) => {
     return (
-        <header className='sticky top-0 z-10 flex h-19 shrink-0 items-center justify-between border-b-2 border-slate-200/70 bg-white px-8'>
-            <h1 className='text-base font-semibold text-gray-900'>{title}</h1>
-
+        <header className='sticky top-0 z-10 flex h-19 shrink-0 items-center justify-end border-b-2 border-slate-200/70 bg-white px-8'>
             {profile && (
                 <div className='flex items-center gap-5'>
                     <ProfileBlock {...profile} />

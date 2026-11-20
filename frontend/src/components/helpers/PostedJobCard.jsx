@@ -80,7 +80,7 @@ const PostedJobCard = ({
                   <MdOutlineHistory size={18}/>  
                   <span>{postedAgo}</span>
                 </div>
-                <Link to={`/seeker/browse/${id}`}>
+                <Link to={`../browse/${id}`}>
                     <div className='h-10  text-center'>
                         <Button type='button' text={"Apply now"} />
                     </div>

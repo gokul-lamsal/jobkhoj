@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import Badge from "../../components/global/Badge";
 import { FiUser, FiPhone, FiPlus } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
-import { FaPlus, FaRegFile } from "react-icons/fa";
+import { FaRegFile } from "react-icons/fa";
 import Button from "../../components/global/Button";
 import { LuEye } from "react-icons/lu";
 import { FiUpload } from "react-icons/fi";
-import { GoPlus } from "react-icons/go";
 
 
 export const SeekerResume = () => {
@@ -15,17 +14,21 @@ export const SeekerResume = () => {
     <div className="bg-white border border-gray-300 rounded-2xl shadow-sm px-5 py-6 flex flex-col justify-center gap-3 w-[25rem]">
       <div>
 
-        <h1 className="font-bold text-2xl">Resume</h1>
+        <h2 className="font-bold text-2xl">Resume</h2>
       </div>
 
       <div className="flex bg-gray-100 border-gray-400 boder rounded-xl w-full h-[5rem] items-center">
         <div className="bg-rose-200 h-[3rem] w-[3rem]  rounded-xl mx-4 flex justify-center items-center text-rose-600">
           <FaRegFile size={22} />
         </div>
-        <div className="text-[12px]">
-          <input type="file" name="file" className="file:hidden" id="resume-upload" />
+        <label className="text-[12px] cursor-pointer">
+          <p className="text-sm font-medium text-slate-900 truncate">
+            {file ? file.name : "No file chosen"}
+          </p>
+          <input onChange={(e) => setFile(e.target.files?.[0] ?? null)}  type="file" name="file" className="file:hidden hidden" id="resume-upload" />
+
           <p className="text-[12px] text-gray-400">240 KB. Uploaded 2 days ago</p>
-        </div>
+        </label>
       </div>
 
       <div className="flex w-full gap-2">

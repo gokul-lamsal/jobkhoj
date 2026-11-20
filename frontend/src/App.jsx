@@ -38,8 +38,16 @@ function App() {
           element: <Browsepage />,
         },
         {
+          path: "browse/:id",
+          element: <SeekerJobPage />,
+        },
+        {
           path: "/company",
           element: <CompaniesPage />,
+        },
+        {
+          path: "/company/:id",
+          element: <SeekerSingleCompany />,
         },
 
       ],
@@ -103,7 +111,7 @@ function App() {
             },
             {
               path: "profile",
-              element:<SeekerProfile />,
+              element: <SeekerProfile />,
             }
           ]
         }
@@ -111,7 +119,7 @@ function App() {
       ]
     },
     {
-      path: "/company",
+      path: "/employer",
       element: <RoleProtectedRoute allowedRoles={"company"} />,
       children: [
         {

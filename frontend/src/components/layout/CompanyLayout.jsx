@@ -7,16 +7,16 @@ const navGroups = [
     {
         label: 'Employer',
         links: [
-            { title: 'Dashboard', to: '/company', icon: FiGrid, end: true },
-            { title: 'My jobs', to: '/company/jobs', icon: FiBriefcase },
-            { title: 'Post a job', to: '/company/post-job', icon: FiPlus },
-            { title: 'Company profile', to: '/company/profile', icon: LuBuilding },
+            { title: 'Dashboard', to: '/employer', icon: FiGrid, end: true },
+            { title: 'My jobs', to: '/employer/jobs', icon: FiBriefcase },
+            { title: 'Post a job', to: '/employer/post-job', icon: FiPlus },
+            { title: 'Company profile', to: '/employer/profile', icon: LuBuilding },
         ],
     },
     {
         label: 'Account',
         links: [
-            { title: 'Notifications', to: '/company/notifications', icon: FiBell, },
+            { title: 'Notifications', to: '/employer/notifications', icon: FiBell, },
         ],
     },
 ]
@@ -30,8 +30,7 @@ const profile = {
 const CompanyLayout = () => {
     return (
         <AdminCompanyLayout
-            title='Dashboard'
-            logoTo='/company'
+            logoTo='/employer'
             navGroups={navGroups}
             profile={profile}
         />

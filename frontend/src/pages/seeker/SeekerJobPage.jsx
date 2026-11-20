@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { badgeType, gradients } from "../../components/helpers/ColorAndBadge";
 import { FaRegBookmark } from "react-icons/fa";
 import Badge from "../../components/global/Badge";
@@ -10,20 +10,9 @@ import Button from "../../components/global/Button";
 import { LuUsers } from "react-icons/lu";
 import CompanyCard from "../../components/helpers/CompanyCard";
 import SeekerApplyPopup from "./SeekerApplyPopup";
+import { AuthContext } from "../../context/AuthContext";
 const SeekerJobPage = () => {
-  {
-    /* use this info to build dummy aaile ko lagi paxi yo json change huna sakxa , for now build ui yei use garera
-  yo page only seeker lai ho so Auth context ma userToken kei hunu parxa , so null bata hatayera string rakheko
-  if u remove the string u cant accesss this page so tyo rakha 
 
-  job page : /seeker/job/{id}
-
-  gg ngga banau majale ani buje paxi yo cmt hatau
-
-  "maile bujina banai deko xu aafai k garnu parne banau" - SHital Rai to Gokte
-  
-  */
-  }
 
   const onlyUrl = (url) => {
     const splitUrl = url.split("https://");
@@ -53,6 +42,7 @@ const SeekerJobPage = () => {
     requiredSkills: ["React", "Tailwind CSS", "REST APIs", "Git", "JavaScript"],
 
     company: {
+      id: "comp_01",
       name: "TechCorp Pvt Ltd",
       initials: "TC",
       location: { isRemote: false, city: "Lalitpur, Nepal" },
@@ -89,13 +79,23 @@ const SeekerJobPage = () => {
     ],
   });
   const [openSeekerPopup, setSeekerPopup] = useState(false);
-
+  const { token, user } = useContext(AuthContext)
+  const checkUser = () => {
+    return user && (user.role === "seeker")
+  }
   const openApply = () => {
-    setSeekerPopup((prev) => !prev);
+    if (checkUser()) {
+      setSeekerPopup((prev) => !prev);
+    } else {
+      return alert("Not allowed, please login")
+    }
   };
+  const saveJob = () => {
+    if (!checkUser()) return alert("Not allowed, please login")
+  }
   return (
     <main>
-        {openSeekerPopup && <SeekerApplyPopup setSeekerPopup ={setSeekerPopup} />}
+      {openSeekerPopup && <SeekerApplyPopup setSeekerPopup={setSeekerPopup} />}
 
       <section className="flex gap-5">
 
@@ -149,6 +149,7 @@ const SeekerJobPage = () => {
                 <Button
                   type="button"
                   btnType="secondary"
+                  onClick={saveJob}
                   text={
                     <>
                       <FaRegBookmark size={16} className="mr-1" />
@@ -256,6 +257,8 @@ const SeekerJobPage = () => {
 
           <CompanyCard
             isBrowse={true}
+            id={jobInfo.company.id}
+            companyLink='/seeker/company/{id}'
             accentColor={"purple"}
             name={jobInfo.company.name}
             initials={jobInfo.company.initials}
@@ -299,7 +302,7 @@ const SeekerJobPage = () => {
           </div>
         </div>
       </section>
-     
+
     </main>
   );
 };
