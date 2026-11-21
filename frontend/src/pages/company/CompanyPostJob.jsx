@@ -184,7 +184,6 @@ function CompanyPostJob() {
                 </div>
               </div>
             </div>
-            <div className="border border-gray-300 shadow-sm"></div>
           </div>
           <div className="bg-white flex gap-4 p-2 ml-auto">
             <div>
