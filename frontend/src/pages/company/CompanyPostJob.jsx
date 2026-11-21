@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { FiBriefcase, FiPhone, FiPlus, FiSend, FiUser } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
@@ -9,17 +9,16 @@ import { FaExclamationCircle } from "react-icons/fa";
 import Button from "../../components/global/Button";
 
 function CompanyPostJob() {
-  const selectedJob = {
-    id: 1,
-    title: "Frontend Developer",
+  const postJobInit = {
+    title: "Type a title",
     company: "TechCorp Pvt Ltd",
     companyInitials: "TC",
     logoColor: "indigo",
     location: "Lalitpur, Nepal",
-    salary: "NPR 50k-70k",
+    salary: "Enter salary",
     type: "Full time",
-    skills: ["React", "Tailwind", "REST"],
-    postedAgo: "2d ago",
+    skills: [],
+    postedAgo: "just now",
     bookmarked: false,
   };
   const profileDetails = {
@@ -30,9 +29,20 @@ function CompanyPostJob() {
     location: "Kathmandu, Nepal",
     skills: ["React", "Node js", "MySql", "Tailwind CSS"],
   };
+  const [data, setData] = useState(postJobInit)
+  const [selectedType, setSelectedType] = useState(null)
+  const handleChange = (e) => {
+    setData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
+
         <div>
           <h1 className="font-bold text-2xl">Post a new job</h1>
           <p className="text-sm text-gray-400">
@@ -50,20 +60,22 @@ function CompanyPostJob() {
                 <div className="flex gap-5">
                   <div className="flex flex-col gap-2 w-full">
                     <div className="flex flex-col w-full gap-2">
-                      <label htmlFor="jobDetail">
+                      <label htmlFor="title">
                         job title <span className="text-red-500">*</span>
                       </label>
-                      <div className="flex  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
+                      <div className="flex h-11 items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
                         <p>
                           <FiBriefcase />
                         </p>
 
                         <input
                           type="text"
-                          name="jobDetail"
-                          id="jobDetail"
+                          name="title"
+                          id="title"
                           placeholder="Frontend Developer"
                           className="outline-none w-full"
+
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -73,7 +85,7 @@ function CompanyPostJob() {
                         <label htmlFor="location">
                           Location <span className="text-red-500">*</span>
                         </label>
-                        <div className="flex  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
+                        <div className="flex h-11  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
                           <p>
                             <IoLocationOutline />
                           </p>
@@ -84,6 +96,7 @@ function CompanyPostJob() {
                             id="location"
                             placeholder="Lalitpur, Nepal"
                             className="outline-none w-full"
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
@@ -92,16 +105,10 @@ function CompanyPostJob() {
                         <label htmlFor="jobType">
                           Job type <span className="text-red-500">*</span>
                         </label>
-                        <div className="flex  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
-                          <select
-                            name="jobType"
-                            className="outline-none w-full"
-                          >
-                            <option value="Full time">Full time</option>
-                            <option value="Internship">Internship</option>
-                            <option value="Part time">Part time</option>
-                            <option value="Full time">Something</option>
-                          </select>
+                        <div className="flex h-11 items-center shrink-0 border border-purple-600 rounded-md focus-within:ring-4 focus-within:ring-purple-100">
+                          <div className="w-full h-full relative   text-base text-gray-700 outline-none bg-transparent cursor-pointer">
+                            <SearchDropDown selectedType={selectedType} title={"Job type"} dropDownOptions={["Internship", "Full time", "Part time", "Contract"]} setSelectedType={setSelectedType} />
+                          </div>
                         </div>
                         <p className="text-sm text-gray-400">
                           Internship, Full time, Part time or Contract.
@@ -114,15 +121,17 @@ function CompanyPostJob() {
                         <label htmlFor="salary">
                           Salary <span className="text-red-500">*</span>
                         </label>
-                        <div className="flex  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
+                        <div className="flex h-11  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
                           <p>
                             <BsCurrencyDollar />
                           </p>
 
                           <input
                             type="text"
+                            required
                             name="salary"
                             id="salary"
+                            onChange={handleChange}
                             placeholder="NPR 30k-70k"
                             className="outline-none w-full"
                           />
@@ -133,8 +142,8 @@ function CompanyPostJob() {
                       </div>
 
                       <div className="flex flex-col gap-2 w-[50%]">
-                        <label htmlFor="jobType">Application deadline </label>
-                        <div className="flex  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
+                        <label htmlFor="date" >Application deadline   </label>
+                        <div onClick={(e) => e.target.showPicker()} className="flex h-11  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
                           <input
                             type="date"
                             name="date"
@@ -142,6 +151,7 @@ function CompanyPostJob() {
                             className="outline-none w-full"
                           />
                         </div>
+
                         <p className="text-sm text-gray-400">Optional.</p>
                       </div>
                     </div>
@@ -204,19 +214,19 @@ function CompanyPostJob() {
               </p>
             </div>
             <div  >
-              {selectedJob && (
+              {data && (
                 <PostedJobCard
-                 
-                  title={selectedJob.title}
-                  company={selectedJob.company}
-                  companyInitials={selectedJob.companyInitials}
-                  logoColor={selectedJob.logoColor}
-                  location={selectedJob.location}
-                  salary={selectedJob.salary}
-                  type={selectedJob.type}
-                  skills={selectedJob.skills}
-                  postedAgo={selectedJob.postedAgo}
-                  bookmarked={selectedJob.bookmarked}
+
+                  title={data.title}
+                  company={data.company}
+                  companyInitials={data.companyInitials}
+                  logoColor={data.logoColor}
+                  location={data.location}
+                  salary={data.salary}
+                  type={selectedType || "internship"}
+                  skills={data.skills}
+                  postedAgo={data.postedAgo}
+                  bookmarked={data.bookmarked}
                 />
               )}
             </div>
