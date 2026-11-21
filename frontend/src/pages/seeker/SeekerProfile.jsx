@@ -26,7 +26,6 @@ export const SeekerResume = () => {
             {file ? file.name : "No file chosen"}
           </p>
           <input onChange={(e) => setFile(e.target.files?.[0] ?? null)}  type="file" name="file" className="file:hidden hidden" id="resume-upload" />
-
           <p className="text-[12px] text-gray-400">240 KB. Uploaded 2 days ago</p>
         </label>
       </div>
