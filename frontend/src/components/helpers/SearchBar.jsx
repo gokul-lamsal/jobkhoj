@@ -1,19 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { CiLocationOn, CiSearch } from 'react-icons/ci'
 import Button from '../global/Button'
 import { FaChevronDown } from 'react-icons/fa';
 
 
-export const SearchDropDown = ({ selectedType, setSelectedType }) => {
+export const SearchDropDown = ({ selectedType, setSelectedType,dropDownOptions,title }) => {
     const [isOpen, setIsOpen] = useState(false)
+    const dropdownRef = useRef(null)
+
+    useEffect(() => {
+        if (!isOpen) return
+
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [isOpen])
+
     return (
-        <>
+        <div ref={dropdownRef} className="relative w-full h-full">
             <button
                 onClick={() => setIsOpen(prev => !prev)}
                 type="button"
                 className={`flex justify-between items-center py-2  w-full  h-full cursor-pointer  gap-2 rounded-lg ${selectedType ? "text-black" : "text-gray-400"}  px-4`}
             >
-                {selectedType ?? "Work mode"}
+                {selectedType ?? title}
                 <FaChevronDown
                     size={12}
                     className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""
@@ -23,17 +38,19 @@ export const SearchDropDown = ({ selectedType, setSelectedType }) => {
 
             <div
                 className={`absolute left-0 z-10 mt-2 w-full  rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-all duration-300 ease-out ${isOpen
-                    ? " translate-y-0 scale-100 opacity-100"
-                    : " -translate-y-2 scale-95 opacity-0"
+                    ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
+                    : "pointer-events-none -translate-y-2 scale-95 opacity-0"
                     }`}
+                aria-hidden={!isOpen}
             >
                 <ul className="space-y-1 text-sm font-medium text-gray-700">
-                    {["Remote", "On-site", "All"].map((item) => (
+                    {dropDownOptions.map((item) => (
                         <li key={item} >
                             <button
+                            type='button'
                                 onClick={() => {
                                     setSelectedType(item)
-
+                                     
                                     setIsOpen(false)
                                 }}
                                 className="cursor-pointer  w-full rounded-md px-3 py-2 hover:bg-gray-100 hover:text-indigo-600"
@@ -44,7 +61,7 @@ export const SearchDropDown = ({ selectedType, setSelectedType }) => {
                     ))}
                 </ul>
             </div>
-        </>
+        </div>
     );
 };
 
@@ -80,7 +97,7 @@ const SearchBar = ({ onChange, filter = { keyword: "", location: "" } }) => {
             <div className="w-[10rem] shrink-0 pl-2 pr-2 border-l border-gray-200">
                 <div className="w-full relative   text-sm text-gray-700 outline-none bg-transparent cursor-pointer">
 
-                    <SearchDropDown selectedType={selectedType} filter={filter} onChange={onChange} setSelectedType={setSelectedType} />
+                    <SearchDropDown selectedType={selectedType} title={"Work mode"} dropDownOptions={["Remote", "On-site", "All"]} setSelectedType={setSelectedType} />
                 </div>
             </div>
 
