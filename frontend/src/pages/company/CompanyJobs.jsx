@@ -237,15 +237,18 @@ const CompanyJobs = () => {
                     }
                   </td>
                   <td className="flex justify-center items-center  gap-2 py-4.5 px-5 font-semibold">
-                      <Button
-                        type="button"
-                        text={<>
-                        <FiUsers className="mr-1" />
-                        Applicants
-                        </>}
-                        btnType="secondary"
-                        classname="text-gray-600!"
-                         />
+
+                      <Link to={"1"}>
+                        <Button
+                          type="button"
+                          text={<>
+                          <FiUsers className="mr-1" />
+                          Applicants
+                          </>}
+                          btnType="secondary"
+                          classname="text-gray-600!"
+                           />
+                      </Link>
                       <div className="h-10 w-14">
                         <Button
                           type="button"
