@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
-  FaClock,
-  FaExclamationCircle,
   FaLink,
   FaRegClock,
 } from "react-icons/fa";
-import { FiBriefcase, FiSend } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuBuilding } from "react-icons/lu";
 import Button from "../../components/global/Button";
@@ -14,8 +11,16 @@ import Badge from "../../components/global/Badge";
 
 const CompanyProfile = () => {
   const [file, setFile] = useState(null);
+  const [img,setImg] = useState(null);
   useEffect(()=>{
    console.log(file);
+   if(file){
+const getUrl = URL.createObjectURL(file)
+   setImg(getUrl)
+   console.log(getUrl);
+   }
+   
+   
    
   },[file])
   return (
@@ -54,10 +59,14 @@ const CompanyProfile = () => {
           <div className="flex flex-col gap-4 border py-10 bg-white border-gray-300 rounded-xl p-4 shadow-sm">
             <div className="flex flex-col justify-center items-center gap-4">
               <div
-                className={`h-20 w-20 rounded-xl flex items-center justify-center text-white font-bold text-3xl bg-linear-to-b bg-purple-600`}
+                className={` rounded-xl  h-25 w-25 overflow-hidden   flex items-center justify-center text-white font-bold text-3xl bg-linear-to-b bg-purple-600`}
               >
-                TC
+                  {
+                img ? (<img src={img} className="h-full w-full object-cover"/>): "TC"
+              }
               </div>
+            
+             
               <div className="flex flex-col gap-2 justify-center items-center">
                 <div className="flex flex-col justify-center items-center">
                   <h3 className="text-md font-bold">Company logo</h3>

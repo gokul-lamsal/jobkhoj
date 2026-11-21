@@ -22,7 +22,7 @@ const CompanyApplicants = () => {
       deadline: "15 Nov 2026",
       editButton: "Edit job",
     },
-    
+
     applicants: [
       {
         id: 1,
@@ -70,13 +70,13 @@ const CompanyApplicants = () => {
         phone: "9845678901",
         skills: ["Java", "Spring Boot"],
         coverLetter:
-          "Interested in this internship because of the Node.js focus.",
+          "I am particularly interested in this internship because of its strong focus on Node.js. g focus on Node.js.g focus on Node.js.g focus on Node.js.g focus on Node.js.g focus on Node.js.g focus on Node.js.",
         resume: "alice_wong_resume.pdf",
         appliedDate: "07 Oct",
         status: "rejected",
       },
     ],
-   
+
     decisionMessage: "Decision made. Candidate was notified.",
   };
 
@@ -100,80 +100,81 @@ const CompanyApplicants = () => {
         </div>
 
         <div className="w-full flex justify-between">
-          
-        <div className="  flex  flex-col">
-          <div className="text-3xl font-bold">{applicantsData.job.title}: Applicants</div>
 
-          <div className="flex justify-between items-center">
-            <div className="flex gap-2">
-              <Badge
-                type={badgeType[applicantsData.job.category.toLowerCase()]}
-                text={applicantsData.job.category}
-              />
-              <div>{applicantsData.job.location}</div>
-              <div>{applicantsData.job.deadline}</div>
+          <div className="  flex  flex-col">
+            <div className="text-3xl font-bold">{applicantsData.job.title}: Applicants</div>
+
+            <div className="flex justify-between items-center">
+              <div className="flex gap-2">
+                <Badge
+                  type={badgeType[applicantsData.job.category.toLowerCase()]}
+                  text={applicantsData.job.category}
+                />
+                <div>{applicantsData.job.location}</div>
+                <div>{applicantsData.job.deadline}</div>
+              </div>
             </div>
           </div>
+          <div className="h-[3rem] ">
+            <Button
+              type="button"
+              text={
+                <>
+                  <FiEdit3 className="mr-1" />
+                  Edit Job
+                </>
+              }
+              btnType="secondary"
+              className="text-gray-600 "
+            />
+          </div>
         </div>
-         <div className="h-[3rem] ">
-              <Button
-                type="button"
-                text={
-                  <>
-                    <FiEdit3 className="mr-1" />
-                    Edit Job
-                  </>
-                }
-                btnType="secondary"
-                className="text-gray-600 "
-              />
-            </div>
-        </div>
-        
+
       </div>
 
       <div className="my-5 ">
-            {["All", "pending", "Accepted", "Rejected"].map((e) => {
-              return (
-                <button
-                  onClick={() => setCurrentStatus(e)}
-                  key={e}
-                  className={`px-5 text-[14px] mx-1.5 font-semibold py-2 transition-all duration-200 ease-in-out cursor-pointer border  ${e === currentStatus ? "bg-primary  border-primary text-white" : "bg-white text-gray-600   border-gray-300"} rounded-full`}
-                >
-                  {e}
-                  <span className="text-[12px] ml-3">
-                    {Math.floor(Math.random() * 4) + 1}
-                    {/* Aaile ko lagi random number , paxi backend bata aauxa , maybe lol */}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+        {["All", "pending", "Accepted", "Rejected"].map((e) => {
+          return (
+            <button
+              onClick={() => setCurrentStatus(e)}
+              key={e}
+              className={`px-5 text-[14px] mx-1.5 font-semibold py-2 transition-all duration-200 ease-in-out cursor-pointer border  ${e === currentStatus ? "bg-primary  border-primary text-white" : "bg-white text-gray-600   border-gray-300"} rounded-full`}
+            >
+              {e}
+              <span className="text-[12px] ml-3">
+                {Math.floor(Math.random() * 4) + 1}
+                {/* Aaile ko lagi random number , paxi backend bata aauxa , maybe lol */}
+              </span>
+            </button>
+          );
+        })}
+      </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-1 lg:grid-cols-2 gap-5 mt-10 ">
-            {
-              applicantsData.applicants.map((applicants)=>{
-                return(
-                  <ApplicantsCard 
-                  key={applicants.id}
-                  name={applicants.name}
-                  initials={applicants.initials}
-                  email={applicants.email}
-                  phone={applicants.phone}
-                  skills={applicants.skills}
-                  coverletter={applicants.coverLetter}
-                  appliedDate={applicants.appliedDate}
-                  status={applicants.status}
-                   />
+      <div className="mt-10 grid grid-cols-1 items-start gap-5 lg:grid-cols-2">
+        {
+          applicantsData.applicants.map((applicants) => {
+            return (
+              <ApplicantsCard
+                key={applicants.id}
+                name={applicants.name}
+                initials={applicants.initials}
+                email={applicants.email}
+                phone={applicants.phone}
+                skills={applicants.skills}
+                id={applicants.id}
+                coverletter={applicants.coverLetter}
+                appliedDate={applicants.appliedDate}
+                status={applicants.status}
+              />
 
-                )
-              })
+            )
+          })
 
-            }
-          </div>
+        }
+      </div>
     </div>
   );
-    
+
 };
 
 export default CompanyApplicants;

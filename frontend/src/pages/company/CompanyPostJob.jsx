@@ -7,6 +7,7 @@ import Badge from "../../components/global/Badge";
 import PostedJobCard from "../../components/helpers/PostedJobCard";
 import { FaExclamationCircle } from "react-icons/fa";
 import Button from "../../components/global/Button";
+import Tag from "../../components/global/Tag";
 
 function CompanyPostJob() {
   const postJobInit = {
@@ -17,7 +18,7 @@ function CompanyPostJob() {
     location: "Lalitpur, Nepal",
     salary: "Enter salary",
     type: "Full time",
-    skills: [],
+    skills:  ["React", "Node js", "MySql", "Tailwind CSS","Python","C#"],
     postedAgo: "just now",
     bookmarked: false,
   };
@@ -176,9 +177,10 @@ function CompanyPostJob() {
               </form>
               <div>
                 <h1 className="font-semibold">Required skills</h1>
-                <div className="flex gap-2.5">
+                <div className="flex items-center gap-2.5 mt-2">
                   {profileDetails.skills.map((s, i) => {
-                    return <Badge text={s} key={i} type="primary" />;
+                    return <Tag key={s} tag={s} />
+
                   })}
                   <button>
                     <Badge

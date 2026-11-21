@@ -50,23 +50,33 @@ const RecentApplication = () => {
                   {
                     list.status === "PENDING" ? (
                       <>
-                        <div className='h-8'>
-
-                          <Button text={<>
-                            <FiCheck />
-                            Accept
-                          </>} classname={"inline-flex items-center gap-1.5 bg-emerald-600! text-white! hover:bg-emerald-700!"} />
+                        <div className="h-9 w-24">
+                          <Button
+                            type="button"
+                            text={
+                              <>
+                                <FiCheck size={16} />
+                                Accept
+                              </>
+                            }
+                            classname={"inline-flex items-center justify-center gap-1.5 border border-emerald-200 bg-emerald-50! text-sm font-medium text-emerald-700! hover:border-emerald-300 hover:bg-emerald-100!"}
+                          />
                         </div>
-                        <div className='h-8'>
-
-                          <Button text={<>
-                            <FiX />
-                            Reject
-                          </>} classname={"inline-flex items-center gap-1.5 bg-rose-300/80! text-rose-700!  hover:bg-rose-200!"} />
+                        <div className="h-9 w-24">
+                          <Button
+                            type="button"
+                            text={
+                              <>
+                                <FiX size={16} />
+                                Reject
+                              </>
+                            }
+                            classname={"inline-flex items-center justify-center gap-1.5 border border-rose-200 bg-rose-50! text-sm font-medium text-rose-700! hover:border-rose-300 hover:bg-rose-100!"}
+                          />
                         </div>
                       </>
                     ):(
-                      <div className='h-8 w-30'>
+                      <div className='h-9 w-24'>
                       <Button  text={"View"} btnType='secondary'/>
                       </div>
                     )

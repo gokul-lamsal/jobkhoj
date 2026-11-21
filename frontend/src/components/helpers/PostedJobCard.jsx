@@ -64,7 +64,7 @@ const PostedJobCard = ({
                 </div>
             </div>
             {/* tag */}
-            <div className='flex items-center gap-2 border-b-2 pb-4 border-gray-300'>
+            <div className='flex  flex-wrap text-center items-center gap-x-2 gap-y-3 border-b-2 pb-4 border-gray-300'>
                 <Badge type={badgeType[type?.toLowerCase()]} text={type} />
                 {
                     skills?.map((skill) => {
