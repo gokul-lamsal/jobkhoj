@@ -13,6 +13,11 @@ export const badgeType = {
     "internship": "primary",
     "full time": "info"
 }
+export const roleType = {
+    "admin": "warning",
+    "company": "primary",
+    "seeker": "info"
+}
 export const statusBadge = {
     "accepted": "success",
     "rejected": "danger",
