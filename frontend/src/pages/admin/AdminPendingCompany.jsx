@@ -1,9 +1,187 @@
-import React from 'react'
+import React, { useState } from "react";
+import Badge from "../../components/global/Badge";
+import {
+  badgeType,
+  gradients,
+  statusBadge,
+} from "../../components/helpers/ColorAndBadge";
+import { Link } from "react-router-dom";
+import Button from "../../components/global/Button";
+import { LuEye } from "react-icons/lu";
+import { FiCheck, FiPhone, FiX } from "react-icons/fi";
+import { onlyUrl } from "../../components/helpers/CompanyCard";
+import { FaLink } from "react-icons/fa";
+import Pagination from "../../components/global/Pagination";
+import Modal from "../../components/helpers/Modal";
 
 const AdminPendingCompany = () => {
+  const [companyInfo, setCompanyInfo] = useState([
+    {
+      id: 1,
+      initials: "SH",
+      companyName: "StartUp Hub",
+      email: "founder@startuphub.com",
+      location: "Pokhara, Nepal",
+      website: "https://startuphub.com",
+      date: "10 Oct 2026",
+      status: "pending",
+      accentcolor: "indigo",
+    },
+    {
+      id: 2,
+      initials: "CN",
+      companyName: "CloudNine Tech",
+      email: "hr@cloudnine.io",
+      location: "Pokhara, Nepal",
+      website: "https://cloudnine.io",
+      date: "09 Oct 2026",
+      status: "pending",
+      accentcolor: "green",
+    },
+    {
+      id: 3,
+      initials: "PS",
+      companyName: "Pixel Studio",
+      email: "team@pixelstudio.co",
+      location: "Bhaktapur, Nepal",
+      website: "https://pixelstudio.co",
+      date: "08 Oct 2026",
+      status: "pending",
+      accentcolor: "blue",
+    },
+    {
+      id: 4,
+      initials: "HD",
+      companyName: "Himalayan Data",
+      email: "jobs@himalayandata.com",
+      location: "Kathmandu, Nepal",
+      website: "https://himalayandata.com",
+      date: "06 Oct 2026",
+      status: "pending",
+      accentcolor: "pink",
+    },
+  ]);
   return (
-    <div>AdminPendingCompany</div>
-  )
-}
+    <div>
+      <div className="flex justify-between">
+        <div>
+          <h1 className="font-bold text-2xl">Pending Companies</h1>
+          <p className="text-sm text-gray-400">
+            New companies must be approved before they can post jobs.
+          </p>
+        </div>
+        <div className="h-10 mt-2">
+          <Badge text={"4 waiting"} type={"warning"} />
+        </div>
+      </div>
 
-export default AdminPendingCompany
+      {/* Table */}
+      <div className="w-full overflow-hidden rounded-t-2xl border border-t-0 border-gray-300 mt-4">
+        <table className="border w-full   text-left">
+          <thead className="border-b  border-gray-300">
+            <tr className="text-[14px] uppercase tracking-wider  text-gray-500">
+              <th className=" py-4.5 px-5 font-semibold">Company</th>
+              <th className=" py-4.5 px-5 font-semibold">Location</th>
+              <th className=" py-4.5 px-5 font-semibold">Website</th>
+              <th className=" py-4.5 px-5 font-semibold">Registered</th>
+              <th className=" py-4.5 px-5 font-semibold text-center">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white">
+            {companyInfo.map((company) => {
+              return (
+                <tr key={company.id}>
+                  <td className=" py-4.5 px-5 font-semibold">
+                    <div className="flex gap-3 ">
+                      <div
+                        className={`h-10 w-10 rounded-xl flex items-center justify-center text-white font-bold text-sm bg-linear-to-b ${gradients[company.accentcolor]}`}
+                      >
+                        {company.initials}
+                      </div>
+                      <div className="flex flex-col ">
+                        <h3 className="font-bold -mt-0.5 ">
+                          {company.companyName}
+                        </h3>
+                        <span className=" text-[13px]  -mt-0.5 font-semibold text-gray-400">
+                          {company.email}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td className=" py-4.5 px-5  text-gray-500">
+                    {company.location}
+                  </td>
+                  <td className=" py-4.5 px-5 ">
+                     <a href={company.website} target="_blank" rel="noopener noreferrer">
+                                        <div className='text-purple-500 hover:underline flex items-center gap-1.5 text-[15px] font-semibold'>
+                                            <FaLink />
+                                            {onlyUrl(company.website)}
+                                        </div>
+                                    </a>
+                  </td>
+                  <td className=" py-4.5 px-5 font-semibold">{company.date}</td>
+                  <td className=" py-4.5 px-5 font-semibold">
+                    <div className="flex gap-3 justify-end">
+                      <Link>
+                        <Button
+                          type="button"
+                          text={
+                            <>
+                              <LuEye className="mr-1" />
+                              <p>Review</p>
+                            </>
+                          }
+                          btnType="secondary"
+                          classname="text-gray-600!"
+                        />
+                      </Link>
+                      <div className="h-9 w-24">
+                        <Button
+                          type="button"
+                          text={
+                            <>
+                              <FiCheck size={16} />
+                              Accept
+                            </>
+                          }
+                          classname="inline-flex items-center justify-center gap-1.5 border border-emerald-200 bg-emerald-50! text-sm font-medium text-emerald-700! hover:border-emerald-300 hover:bg-emerald-100!"
+                        />
+                      </div>
+                      <div className="h-9 w-24">
+                        <Button
+                          type="button"
+                          text={
+                            <>
+                              <FiX size={16} />
+                              Reject
+                            </>
+                          }
+                          classname="inline-flex items-center justify-center gap-1.5 border border-rose-200 bg-rose-50! text-sm font-medium text-rose-700! hover:border-rose-300 hover:bg-rose-100!"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="border border-t-0 justify-between   flex gap-3 border-gray-300  py-4.5 px-5 bg-white rounded-b-2xl">
+        <div className="text-gray-400">
+          Showing 1 to 4 of 4 companies
+        </div>
+        <div>
+          <Pagination totalPages={22} />
+        </div>
+
+        </div>
+        {/* <Modal title={"Reject startup job?"} message={"The company will not be able to post jobs. The owner will see the status as Rejected."}/> */}
+    </div>
+  );
+};
+
+export default AdminPendingCompany;
