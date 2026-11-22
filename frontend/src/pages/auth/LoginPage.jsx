@@ -7,7 +7,10 @@ import { Link } from "react-router-dom";
 import Button from "../../components/global/Button";
 
 const LoginPage = () => {
-  const [form, setForm] = useState([]);
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  });
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -30,7 +33,7 @@ const LoginPage = () => {
         <p className="text-[13px] text-gray-600">or</p>
         <div className="w-[45%] border text-gray-400"></div>
       </div>
-      <form  className="flex flex-col gap-2 w-full">
+      <form className="flex flex-col gap-2 w-full">
         <label htmlFor="Email" className="text-[12px] font-bold">
           {" "}
           Email address
@@ -42,11 +45,11 @@ const LoginPage = () => {
           <input
             type="email"
             name="email"
-            onClick={handleChange}
+            onChange={handleChange}
             value={form.email}
             id="email"
             placeholder="john@example.com"
-            className="text-sm outline-none"
+            className="text-sm outline-none w-full"
           />
         </div>
         <label htmlFor="Email" className="text-[12px] font-bold">
@@ -58,13 +61,14 @@ const LoginPage = () => {
             <IoLockClosedOutline color="gray" />
           </p>
           <input
-            onClick={handleChange}
+            onChange={handleChange}
+
             type="password"
             name="password"
             value={form.password}
             id="password"
             placeholder="●●●●●●●●"
-            className="text-sm outline-none "
+            className="text-sm outline-none w-full "
           />
           <span className="absolute right-4 text-gray-400 cursor-pointer">
             <FaRegEye color="gray" />
