@@ -17,6 +17,8 @@ import SeekerSavedJobPage from "./pages/seeker/SeekerSavedJobPage";
 import SeekerNotification from "./pages/seeker/SeekerNotification";
 import SeekerSingleCompany from "./pages/seeker/SeekerSingleCompany";
 import CompanyLayout from "./components/layout/CompanyLayout";
+import AdminLayout from "./components/layout/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import CompanyDashboard from "./pages/company/CompanyDashboard";
 import CompanyJobs from "./pages/company/CompanyJobs";
 import SeekerProfile from "./pages/seeker/SeekerProfile";
@@ -151,6 +153,21 @@ function App() {
 
         }
       ]
+    },
+    {
+      path: "/admin",
+      element: <RoleProtectedRoute allowedRoles={"admin"} />,
+      children: [
+        {
+          element: <AdminLayout />,
+          children: [
+            {
+              path: "",
+              element: <AdminDashboard />,
+            },
+          ],
+        },
+      ],
     },
     {
       path: "/unauthorized",

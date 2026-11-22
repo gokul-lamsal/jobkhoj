@@ -13,12 +13,12 @@ const navGroups = [
             { title: 'Company profile', to: '/employer/profile', icon: LuBuilding },
         ],
     },
-    {
-        label: 'Account',
-        links: [
-            { title: 'Notifications', to: '/employer/notifications', icon: FiBell, },
-        ],
-    },
+    // {
+    //     label: 'Account',
+    //     links: [
+    //         { title: 'Notifications', to: '/employer/notifications', icon: FiBell, },
+    //     ],
+    // },
 ]
 
 const profile = {

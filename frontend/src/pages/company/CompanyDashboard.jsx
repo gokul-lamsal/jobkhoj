@@ -17,7 +17,7 @@ const RecentApplication = () => {
     
   ]
   return (
-    <div className="flex my-8  flex-col gap-4 py-4 px-5 border border-gray-300 bg-white cursor-pointer rounded-2xl">
+    <div className="flex my-8  flex-col gap-4 py-4 px-5 border border-gray-300 bg-white rounded-2xl">
       <div className='flex justify-between border-b pb-4 border-gray-200'>
         <div >
           <h2 className="font-bold text-xl">Recent applications</h2>
@@ -29,7 +29,7 @@ const RecentApplication = () => {
           <Button type='button' text={"View All >"} btnType='secondary' />
         </Link>
       </div>
-      <div className='flex flex-col gap-6 [&>div]:not-last:border-b-2 [&>div]:not-last:pb-4 [&>div]:not-last:border-gray-200 '>
+      <div className='flex flex-col gap-6  [&>div]:not-last:pb-4 divide-y-2 divide-gray-200 '>
         {
           applicationList.map((list) => {
             return (
