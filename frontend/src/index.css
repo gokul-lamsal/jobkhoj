@@ -88,6 +88,9 @@ section {
 .badge-close{
   @apply bg-gray-200 text-gray-500;
 }
+.badge-closed{
+  @apply bg-gray-200 text-gray-500;
+}
 /* grey badge */
 .badge-neutral {
   @apply bg-white/20 text-white;

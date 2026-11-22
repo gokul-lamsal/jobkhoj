@@ -1,25 +1,20 @@
 import React from 'react'
 import {
     FiBriefcase,
+    FiCheck,
     FiClock,
     FiGrid,
     FiSend,
     FiUser,
     FiUsers,
+    FiX,
 } from 'react-icons/fi'
 import Button from '../../components/global/Button'
 import { StatsCard } from '../seeker/SeekerDashBoard'
 import { Link } from 'react-router-dom';
+import { gradients } from '../../components/helpers/ColorAndBadge';
 
-//   <StatsCard
-//             key={label}
-//             label={label}
-//             Icon={Icon}
-//             bg={bg}
-//             color={color}
-//             value={value}
-//             textColor={textColor}
-//           />
+
 const stats = [
     { label: "Total users", value: "1,284", Icon: FiUsers, bg: "bg-indigo-100", textColor: "text-indigo-700" },
     { label: "Job seekers", value: "1,102", Icon: FiUser, bg: "bg-sky-100", textColor: "text-sky-700" },
@@ -80,6 +75,48 @@ const pendingCompanies = [
         gradient: 'from-fuchsia-500 to-pink-600',
     },
 ]
+const PendingCompaniesList = ({ name, email, location, initials, gradient }) => {
+    return (
+        <div key={email} className='flex  justify-between items-center '>
+            <div className='flex gap-3 items-center'>
+                <div className={`h-11 w-11 rounded-xl flex items-center justify-center text-white font-bold text-sm bg-linear-to-l ${gradient}`} >
+                    {initials}
+                </div>
+                <div className='flex flex-col '>
+                    <h3 className='font-bold -mt-0.5 '>{name}</h3>
+                    <span className=' text-[13px]  -mt-0.5 font-semibold text-gray-400'>{email} •  {location} </span>
+                </div>
+
+            </div>
+            <div className='flex gap-2'>
+                <div className="h-9 w-24">
+                    <Button
+                        type="button"
+                        text={
+                            <>
+                                <FiCheck size={16} />
+                                Accept
+                            </>
+                        }
+                        classname={"inline-flex items-center justify-center gap-1.5 border border-emerald-200 bg-emerald-50! text-sm font-medium text-emerald-700! hover:border-emerald-300 hover:bg-emerald-100!"}
+                    />
+                </div>
+                <div className="h-9 w-24">
+                    <Button
+                        type="button"
+                        text={
+                            <>
+                                <FiX size={16} />
+                                Reject
+                            </>
+                        }
+                        classname={"inline-flex items-center justify-center gap-1.5 border border-rose-200 bg-rose-50! text-sm font-medium text-rose-700! hover:border-rose-300 hover:bg-rose-100!"}
+                    />
+                </div>
+            </div>
+        </div>
+    )
+}
 
 const AdminDashboard = () => {
     return (
@@ -92,7 +129,7 @@ const AdminDashboard = () => {
             </div>
 
             <div className='grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3'>
-                {stats.map(({ label, value, bg, Icon,color="text-slate-700" }) => (
+                {stats.map(({ label, value, bg, Icon, color = "text-slate-700" }) => (
                     <StatsCard
                         key={label}
                         label={label}
@@ -138,13 +175,13 @@ const AdminDashboard = () => {
                         </p>
                     </div>
                     <Link to={"pending-companies"} className='h-10 w-32 shrink-0'>
-                        <Button type='button' text='View all 4 >' btnType='secondary' />
+                        <Button type='button' text='View all >' btnType='secondary' />
                     </Link>
                 </div>
 
-                <div className='mt-5 flex flex-col [&>div]:not-last:pb-4 divide-y-2 divide-gray-200 '>
+                <div className='mt-5 flex flex-col gap-6 [&>div]:not-last:pb-4 divide-y-2 divide-gray-200 '>
                     {pendingCompanies.map(({ name, email, location, initials, gradient }) => (
-                        <></>
+                        <PendingCompaniesList name={name} email={email} location={location} initials={initials} gradient={gradient} />
                     ))}
                 </div>
             </div>
