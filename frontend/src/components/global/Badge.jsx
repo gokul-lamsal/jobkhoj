@@ -1,5 +1,5 @@
 
-const Badge = ({ type = "neutral",text }) => {
+const Badge = ({ type = "close",text }) => {
   return <span className={`badge capitalize flex items-center text-[14px]  badge-${type}`}>{text}</span>;
 };
 

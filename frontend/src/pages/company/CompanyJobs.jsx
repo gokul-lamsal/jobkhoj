@@ -257,7 +257,7 @@ const CompanyJobs = () => {
                           className="text-gray-600"
                         />
                       </div>
-                      <div className="h-10 w-14 border border-gray-200 rounded-xl hover:cursor-pointer flex justify-center items-center bg-red-100">
+                      <div className="h-10 w-14 rounded-xl hover:cursor-pointer flex justify-center items-center bg-red-100">
                         <button className="text-red-600 hover:cursor-pointer" ><RiDeleteBinLine size={20} /></button>
                       </div>
                       
