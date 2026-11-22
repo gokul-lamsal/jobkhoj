@@ -25,6 +25,9 @@ import SeekerProfile from "./pages/seeker/SeekerProfile";
 import CompanyPostJob from "./pages/company/CompanyPostJob";
 import CompanyApplicants from "./pages/company/CompanyApplicants";
 import CompanyProfile from "./pages/company/CompanyProfile";
+import AdminPendingCompany from "./pages/admin/AdminPendingCompany";
+import AdminUserList from "./pages/admin/AdminUserList";
+import AdminJobList from "./pages/admin/AdminJobList";
 
 
 function App() {
@@ -165,6 +168,19 @@ function App() {
               path: "",
               element: <AdminDashboard />,
             },
+            {
+              path: "pending-companies",
+              element: <AdminPendingCompany />,
+            },
+            {
+              path: "users",
+              element: <AdminUserList />,
+            },
+            {
+              path: "jobs",
+              element: <AdminJobList />,
+            },
+           
           ],
         },
       ],
