@@ -33,6 +33,8 @@ import AdminPendingCompany from "./pages/admin/AdminPendingCompany";
 import AdminUserList from "./pages/admin/AdminUserList";
 import AdminJobList from "./pages/admin/AdminJobList";
 import Callback from "./pages/auth/Callback";
+import "react-toastify/dist/ReactToastify.css";
+import { Bounce, ToastContainer } from "react-toastify";
 
 function App() {
   const route = createBrowserRouter([
@@ -204,6 +206,19 @@ function App() {
   return (
     <>
       <RouterProvider router={route} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 }

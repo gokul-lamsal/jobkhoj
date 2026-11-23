@@ -1,21 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Button from "../../components/global/Button";
+import api from "../../components/Api/api"
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [form, setForm] = useState({
     email: "",
     password: ""
   });
-
+  const [isLoading, setIsLoading] = useState(true)
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      setIsLoading(true)
+      const loginUser = await api.post("/api/auth/login", form)
+    } catch (err) {
+      console.log("Failed");
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <>
       <div className="flex flex-col justify-center items-center ">
@@ -33,7 +46,7 @@ const LoginPage = () => {
         <p className="text-[13px] text-gray-600">or</p>
         <div className="w-[45%] border text-gray-400"></div>
       </div>
-      <form className="flex flex-col gap-2 w-full">
+      <form className="flex flex-col gap-2 w-full" onSubmit={handleSubmit}>
         <label htmlFor="Email" className="text-[12px] font-bold">
           {" "}
           Email address
