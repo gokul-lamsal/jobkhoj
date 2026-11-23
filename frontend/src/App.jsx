@@ -1,4 +1,8 @@
-import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import HomeLayout from "./components/layout/HomeLayout";
 import HomePage from "./pages/public/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
@@ -28,7 +32,8 @@ import CompanyProfile from "./pages/company/CompanyProfile";
 import AdminPendingCompany from "./pages/admin/AdminPendingCompany";
 import AdminUserList from "./pages/admin/AdminUserList";
 import AdminJobList from "./pages/admin/AdminJobList";
-
+import "react-toastify/dist/ReactToastify.css";
+import { Bounce, ToastContainer } from "react-toastify";
 
 function App() {
   const route = createBrowserRouter([
@@ -56,7 +61,6 @@ function App() {
           path: "/company/:id",
           element: <SeekerSingleCompany />,
         },
-
       ],
     },
     {
@@ -69,12 +73,11 @@ function App() {
         {
           path: "/register",
           element: <RegisterPage />,
-
         },
         {
           path: "/confirm",
-          element: <ConfirmPage />
-        }
+          element: <ConfirmPage />,
+        },
       ],
     },
     {
@@ -90,7 +93,7 @@ function App() {
             },
             {
               path: "browse",
-              element: <Browsepage />
+              element: <Browsepage />,
             },
             {
               path: "browse/:id",
@@ -119,11 +122,10 @@ function App() {
             {
               path: "profile",
               element: <SeekerProfile />,
-            }
-          ]
-        }
-
-      ]
+            },
+          ],
+        },
+      ],
     },
     {
       path: "/employer",
@@ -152,10 +154,9 @@ function App() {
               path: "profile",
               element: <CompanyProfile />,
             },
-          ]
-
-        }
-      ]
+          ],
+        },
+      ],
     },
     {
       path: "/admin",
@@ -180,27 +181,39 @@ function App() {
               path: "jobs",
               element: <AdminJobList />,
             },
-           
           ],
         },
       ],
     },
     {
       path: "/unauthorized",
-      element: <ErrorPage />
+      element: <ErrorPage />,
     },
     {
       path: "/not-found",
-      element: <ErrorPage />
+      element: <ErrorPage />,
     },
     {
       path: "*",
-      element: <Navigate to={"/not-found"} replace />
-    }
+      element: <Navigate to={"/not-found"} replace />,
+    },
   ]);
   return (
     <>
       <RouterProvider router={route} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 }
