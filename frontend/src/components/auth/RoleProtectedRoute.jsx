@@ -9,7 +9,7 @@ export const RoleDashBoard = {
 };
 const RoleProtectedRoute = ({ allowedRoles }) => {
     const { user, token } = useContext(AuthContext)
-    console.log(allowedRoles,user.role);
+    console.log(allowedRoles,user?.role);
     
 
     if (!user || !token) return <Navigate to="/login" replace />

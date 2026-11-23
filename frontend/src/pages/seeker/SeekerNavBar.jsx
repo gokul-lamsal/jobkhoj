@@ -104,7 +104,7 @@ const SeekerNavBar = ({ navLinks = [] }) => {
       {/* login buttons or profile */}
       <div className='flex items-center gap-3 h-10'>
         {
-          token ? <SeekerProfile user={user} /> :
+          user ? <SeekerProfile user={user} /> :
             <LoginBtns />
         }
       </div>
