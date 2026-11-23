@@ -32,6 +32,7 @@ import CompanyProfile from "./pages/company/CompanyProfile";
 import AdminPendingCompany from "./pages/admin/AdminPendingCompany";
 import AdminUserList from "./pages/admin/AdminUserList";
 import AdminJobList from "./pages/admin/AdminJobList";
+import Callback from "./pages/auth/Callback";
 import "react-toastify/dist/ReactToastify.css";
 import { Bounce, ToastContainer } from "react-toastify";
 
@@ -77,6 +78,10 @@ function App() {
         {
           path: "/confirm",
           element: <ConfirmPage />,
+        },
+        {
+          path: "/callback",
+          element: <Callback />,
         },
       ],
     },
