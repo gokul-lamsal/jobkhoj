@@ -30,7 +30,7 @@ const SeekerProfile = ({ user }) => {
   const redirectProfile = {
     "seeker": "/seeker/profile",
     "company": "/employer/profile",
-    "admin": "/admin/profile",
+    "admin": "/admin",
   }
   return (
     <>
