@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoLockClosedOutline } from "react-icons/io5";
@@ -6,6 +6,8 @@ import { MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import Button from "../../components/global/Button";
 import api from "../../components/Api/api"
+import { toast } from "react-toastify";
+
 const LoginPage = () => {
   const [form, setForm] = useState({
     email: "",
