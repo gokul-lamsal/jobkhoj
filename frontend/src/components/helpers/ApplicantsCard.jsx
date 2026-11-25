@@ -55,7 +55,7 @@ const ApplicantsCard = ({
             type={statusBadge[status.toLowerCase()]}
             text={"● " + status}
           />
-          <p className="text-[14px] text-gray-500">Applied {appliedDate}</p>
+          <p className="text-[14px] text-gray-500">Applied : {appliedDate}</p>
         </div>
       </div>
 

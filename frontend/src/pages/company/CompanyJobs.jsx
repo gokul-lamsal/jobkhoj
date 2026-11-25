@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/global/Button";
 import { FiPlus } from "react-icons/fi";
 import { StatsCard } from "../seeker/SeekerDashBoard";
 import {
   badgeType,
+  formattedDate,
   gradients,
   statusBadge,
 } from "../../components/helpers/ColorAndBadge";
@@ -17,76 +18,32 @@ import { PiSuitcaseBold } from "react-icons/pi";
 import { FiEdit3 } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Pagination from "../../components/global/Pagination";
-
+import Loader from "../../components/helpers/Loader";
+import ErrorLoader from "../../components/helpers/ErrorLoader";
+import api from "../../components/api/api";
 
 const CompanyJobs = () => {
-  const [jobInfo, setJobInfo] = useState([
-    {
-      id: 1,
-      title: "Frontend Developer",
-      company: "TechCorp Pvt Ltd",
-      initials: "TC",
-      jobType: "Full time",
-      location: "Lalitpur, Nepal",
-      accentColor: "purple",
-      salary: "NPR 50k-70k",
-      deadline: "30 Nov 2026",
-      status: "Active",
-      applicants: "24 applicants",
-    },
-    {
-      id: 2,
-      title: "Full Stack Engineer",
-      company: "InnoLabs",
-      location: "Lalitpur, Nepal",
-      initials: "IL",
-      accentColor: "blue",
-      jobType: "Internship",
-      deadline: "05 Sep 2026",
-      status: "Active",
-      applicants: "12 applicants",
-    },
-    {
-      id: 3,
-      title: "UI/UX Designer",
-      company: "InnoLabs",
-      location: "Kathmandu, Nepal",
-      initials: "IL",
-      accentColor: "blue",
-      jobType: "Contract",
-      deadline: "08 Oct 2026",
-      status: "closed",
-      applicants: "8 applicants",
-    },
-    {
-      id: 4,
-      title: "DevOps Intern",
-      company: "Global Solutions",
-      location: "Remote",
-      initials: "GS",
-      accentColor: "green",
-      jobType: "Internship",
-      postedAt: "2 days ago",
-      deadline: "29 Sep 2026",
-      status: "active",
-      applicants: "17 applicants",
-    },
-    {
-      id: 5,
-      title: "Python Developer",
-      company: "Global Solutions",
-      initials: "GS",
-      accentColor: "green",
-      location: "Remote",
-      jobType: "Full time",
-      postedAt: "2 days ago",
-      deadline: "30 Nov 2026",
-      status: "closed",
-      applicants: "3 applicants",
-    },
-  ]);
+  const [jobInfo, setJobInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const [currentStatus, setCurrentStatus] = useState("All");
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await api.get("/api/jobs/my");
+        // console.log(res.data.data);
+        setJobInfo(res.data.data);
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  if (loading) return <Loader />;
+  if (!jobInfo) return <ErrorLoader />;
   const stats = [
     {
       label: "Active jobs",
@@ -138,19 +95,6 @@ const CompanyJobs = () => {
 
       {/* status part */}
 
-      <div className="grid grid-cols-3 mt-10  gap-5 ">
-        {stats.map(({ label, value, textColor, Icon, bg, color }) => (
-          <StatsCard
-            key={label}
-            label={label}
-            Icon={Icon}
-            bg={bg}
-            color={color}
-            value={value}
-            textColor={textColor}
-          />
-        ))}
-      </div>
 
       {/* last part */}
       <div className="border  mt-4 flex gap-3 border-gray-300  py-4.5 px-5 bg-white rounded-t-2xl">
@@ -215,8 +159,8 @@ const CompanyJobs = () => {
                         <div className=" font-semibold">
                           {
                             <Badge
-                              type={badgeType[job.jobType.toLowerCase()]}
-                              text={job.jobType}
+                              type={badgeType[job.type]}
+                              text={job.type}
                             />
                           }
                         </div>
@@ -226,60 +170,60 @@ const CompanyJobs = () => {
                   <td className=" py-4.5 px-5  text-gray-500">
                     {job.location}
                   </td>
-                  <td className=" py-4.5 px-5 ">{job.deadline}</td>
-                  <td className=" py-4.5 px-5 ">{job.applicants}</td>
+                  <td className=" py-4.5 px-5 ">{formattedDate(job.deadline)}</td>
+                  <td className=" py-4.5 px-5 ">{job._count.applications}</td>
                   <td className=" py-4.5 px-5 font-semibold">
                     {
                       <Badge
-                        type={statusBadge[job.status.toLowerCase()]}
-                        text={"● " + job.status}
+                        type={statusBadge[job.isActive ? "active":"closed"]}
+                        text={"● " + job.isActive ? "Active":"Closed"}
                       />
                     }
                   </td>
                   <td className="flex justify-center items-center  gap-2 py-4.5 px-5 font-semibold">
-
-                      <Link to={"1"}>
-                        <Button
-                          type="button"
-                          text={<>
-                          <FiUsers className="mr-1" />
-                          Applicants
-                          </>}
-                          btnType="secondary"
-                          classname="text-gray-600!"
-                           />
-                      </Link>
-                      <div className="h-10 w-14">
-                        <Button
-                          type="button"
-                          text={<><FiEdit3 /></>}
-                          btnType="secondary"
-                          className="text-gray-600"
-                        />
-                      </div>
-                      <div className="h-10 w-14 rounded-xl hover:cursor-pointer flex justify-center items-center bg-red-100">
-                        <button className="text-red-600 hover:cursor-pointer" ><RiDeleteBinLine size={20} /></button>
-                      </div>
-                      
+                    <Link to={`${job.id}`}>
+                      <Button
+                        type="button"
+                        text={
+                          <>
+                            <FiUsers className="mr-1" />
+                            Applicants
+                          </>
+                        }
+                        btnType="secondary"
+                        classname="text-gray-600!"
+                      />
+                    </Link>
+                    <div className="h-10 w-14">
+                      <Button
+                        type="button"
+                        text={
+                          <>
+                            <FiEdit3 />
+                          </>
+                        }
+                        btnType="secondary"
+                        className="text-gray-600"
+                      />
+                    </div>
+                    <div className="h-10 w-14 rounded-xl hover:cursor-pointer flex justify-center items-center bg-red-100">
+                      <button className="text-red-600 hover:cursor-pointer">
+                        <RiDeleteBinLine size={20} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-        
       </div>
       <div className="border justify-between   flex gap-3 border-gray-300  py-4.5 px-5 bg-white rounded-b-2xl">
-        <div className="text-gray-400">
-          Showing 1 to 5 of 5 jobs
-        </div>
+        <div className="text-gray-400">Showing 1 to 5 of 5 jobs</div>
         <div>
           <Pagination totalPages={22} />
         </div>
-
-        </div>
-
-
+      </div>
     </div>
   );
 };
