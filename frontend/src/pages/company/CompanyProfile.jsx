@@ -1,28 +1,70 @@
 import React, { useEffect, useState } from "react";
-import {
-  FaLink,
-  FaRegClock,
-} from "react-icons/fa";
+import { FaLink, FaRegClock } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuBuilding } from "react-icons/lu";
 import Button from "../../components/global/Button";
 import { MdOutlineFileUpload } from "react-icons/md";
 import Badge from "../../components/global/Badge";
+import Loader from "../../components/helpers/Loader";
+import ErrorLoader from "../../components/helpers/ErrorLoader";
+import api from "../../components/api/api";
+import { toast } from "react-toastify";
 
 const CompanyProfile = () => {
   const [file, setFile] = useState(null);
-  const [img,setImg] = useState(null);
-  useEffect(()=>{
-   console.log(file);
-   if(file){
-const getUrl = URL.createObjectURL(file)
-   setImg(getUrl)
-   console.log(getUrl);
-   }
-   
-   
-   
-  },[file])
+  const [img, setImg] = useState(null);
+  const [companyProfileInfo, setCompanyProfileInfo] = useState(null);
+  useEffect(() => {
+    console.log(file);
+    if (file) {
+      const getUrl = URL.createObjectURL(file);
+      setImg(getUrl);
+      console.log(getUrl);
+    }
+  }, [file]);
+
+  const [loading, setLoading] = useState(true);
+  const [btnLoading, setBtnLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await api.get("/api/companies/my");
+
+        setCompanyProfileInfo(res.data.data);
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+  if (loading) return <Loader />;
+  if (!companyProfileInfo) return <ErrorLoader />;
+  const handleChange = (e) => {
+    setCompanyProfileInfo((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { name, website, location, description } = companyProfileInfo;
+    try {
+      setBtnLoading(true);
+      const res = await api.put("/api/companies", {
+        name,
+        website,
+        location,
+        description,
+      });
+      setCompanyProfileInfo(res.data.data);
+      toast.success("Company profile updated successfully.")
+    } catch {
+    } finally {
+      setBtnLoading(false);
+    }
+  };
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
@@ -34,75 +76,40 @@ const getUrl = URL.createObjectURL(file)
             </p>
           </div>
           <div>
-            <Badge type={"warning"} text={"● Pending"} />
+            <Badge
+              type={companyProfileInfo.status}
+              text={companyProfileInfo.status}
+            />
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-4 bg-yellow-100 rounded-xl p-4 shadow-sm">
-        <div className="flex gap-2">
-          <span>
-            <FaRegClock size={20} color="orange" />
-          </span>
-          <div className="flex flex-col">
-            <p className="text-sm font-semibold text-orange-600">
-              Your company is waiting for admin approval.
-            </p>
-            <p className="text-sm text-orange-600">
-              You can edit your profile now. You will be able to post jobs once
-              an admin approves your company. We will notify you.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="flex mt-2 gap-6">
-        <div className="flex flex-col gap-4 w-[25rem]">
-          <div className="flex flex-col gap-4 border py-10 bg-white border-gray-300 rounded-xl p-4 shadow-sm">
-            <div className="flex flex-col justify-center items-center gap-4">
-              <div
-                className={` rounded-xl  h-25 w-25 overflow-hidden   flex items-center justify-center text-white font-bold text-3xl bg-linear-to-b bg-purple-600`}
-              >
-                  {
-                img ? (<img src={img} className="h-full w-full object-cover"/>): "TC"
-              }
-              </div>
-            
-             
-              <div className="flex flex-col gap-2 justify-center items-center">
-                <div className="flex flex-col justify-center items-center">
-                  <h3 className="text-md font-bold">Company logo</h3>
-                  <p className="text-gray-400 text-sm ">
-                    Square image, PNG or JPG.
-                  </p>
-                </div>
-              </div>
-              <label className="w-full" htmlFor="file">
-                <input
-                  type="file"
-                  onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                  className="file:hidden hidden"
-                  name=""
-                  id="file"
-                />
-                <div
-                  className={
-                    "w-full cursor-pointer btn-secondary flex justify-center items-center  h-10  transition-all duration-200 rounded-xl px-3 py-2   hover:cursor-pointer"
-                  }
-                >
-                  <MdOutlineFileUpload size={20} className="mr-2" />{" "}
-                  <p className="text-sm font-medium text-slate-900 truncate">
-                    {file ? file.name : "Upload file"}
-                  </p>
-                </div>
-              </label>
+      {!companyProfileInfo.status === "APPROVED" && (
+        <div className="flex flex-col gap-4 bg-yellow-100 rounded-xl p-4 shadow-sm">
+          <div className="flex gap-2">
+            <span>
+              <FaRegClock size={20} color="orange" />
+            </span>
+            <div className="flex flex-col">
+              <p className="text-sm font-semibold text-orange-600">
+                Your company is waiting for admin approval.
+              </p>
+              <p className="text-sm text-orange-600">
+                You can edit your profile now. You will be able to post jobs
+                once an admin approves your company. We will notify you.
+              </p>
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-6 w-[70%]">
-          <div className="border bg-white border-gray-300 rounded-2xl shadow-sm">
+      )}
+
+      <div className="flex  mt-2 gap-6">
+       
+        <div className="flex flex-col gap-6 w-full">
+          <div className="border bg-white border-gray-300 rounded-2xl shadow-sm ">
             <div className="bg-white rounded-2xl px-5 py-6 flex flex-col justify-center gap-3">
               <h1 className="font-bold text-lg">Company details</h1>
 
-              <form action="">
+              <form onSubmit={handleSubmit}>
                 <div className="flex gap-5">
                   <div className="flex flex-col gap-2 w-full">
                     <div className="flex flex-col w-full gap-2">
@@ -116,10 +123,12 @@ const getUrl = URL.createObjectURL(file)
 
                         <input
                           type="text"
-                          name="companyDetail"
+                          name="name"
                           id="companyDetail"
                           placeholder="TechCorp Pvt Ltd"
                           className="outline-none w-full"
+                          value={companyProfileInfo.name}
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -136,10 +145,12 @@ const getUrl = URL.createObjectURL(file)
 
                           <input
                             type="text"
-                            name="webLink"
+                            name="website"
                             id="webLink"
                             placeholder="https://example.com"
                             className="outline-none w-full"
+                            value={companyProfileInfo.website}
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
@@ -159,6 +170,8 @@ const getUrl = URL.createObjectURL(file)
                             id="location"
                             placeholder="Lalitpur, Nepal"
                             className="outline-none w-full"
+                            value={companyProfileInfo.location}
+                            onChange={handleChange}
                           />
                         </div>
                       </div>
@@ -173,6 +186,8 @@ const getUrl = URL.createObjectURL(file)
                           name="description"
                           id="description"
                           className="outline-none w-full h-[8rem] resize-none"
+                          value={companyProfileInfo.description}
+                          onChange={handleChange}
                         />
                       </div>
                       <p className="text-sm text-gray-400">
@@ -181,15 +196,19 @@ const getUrl = URL.createObjectURL(file)
                     </div>
                   </div>
                 </div>
+                <div className="bg-white flex justify-end gap-4 p-2 ml-auto">
+                  <div>
+                    <Button btnType="secondary" text={"Cancel"} />
+                  </div>
+                  <div>
+                    <Button
+                      type="submit"
+                      text={"Save change"}
+                      isLoading={btnLoading}
+                    />
+                  </div>
+                </div>
               </form>
-            </div>
-          </div>
-          <div className="bg-white flex gap-4 p-2 ml-auto">
-            <div>
-              <Button btnType="secondary" text={"Cancel"} />
-            </div>
-            <div>
-              <Button type="submit" text={"Save change"} />
             </div>
           </div>
         </div>

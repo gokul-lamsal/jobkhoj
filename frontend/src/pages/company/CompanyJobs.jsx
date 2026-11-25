@@ -113,6 +113,7 @@ const CompanyJobs = () => {
       bg: "bg-orange-200",
     },
   ];
+ 
   return (
     <div>
       <div className="flex justify-between">
