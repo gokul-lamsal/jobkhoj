@@ -5,27 +5,36 @@ import { FiUser } from "react-icons/fi";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { LuBuilding } from "react-icons/lu";
 import { MdOutlineMail } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/global/Button";
+import api from "../../components/api/api";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
-  const formInit = {
-    role: "seeker",
+  const navigate = useNavigate()
+  const [form, setForm] = useState({
+    role: "SEEKER",
     email: "",
     password: "",
-  };
-  const [form, setForm] = useState(formInit);
+  });
+  const [isLoading, setIsLoading] = useState(false)
+  const validationInit = {
+    isError: false,
+    email: "",
+    password: ""
+  }
+  const [validationMsg, setValidationMsg] = useState(validationInit)
   const chooseRole = [
     {
       title: "Job Seeker",
       description: "Find and apply to jobs",
-      role: "seeker",
+      role: "SEEKER",
       icon: FiUser,
     },
     {
       title: "Company",
       description: "Post jobs and hire",
-      role: "company",
+      role: "COMPANY",
       icon: LuBuilding,
     },
   ];
@@ -35,6 +44,41 @@ const RegisterPage = () => {
       [e.target.name]: e.target.value,
     }));
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      setIsLoading(true)
+      setValidationMsg(validationInit)
+      const res = await api.post("/api/auth/register", form)
+      if (res.data.success == true) {
+        navigate(`/confirm?email=${encodeURIComponent(form.email)}`, {
+          state: { fromRegister: true },
+          replace: true,
+        });
+      }
+    } catch (err) {
+      const errMsg = err.response?.data
+      if (!err.response) {
+        toast.error("server error");
+      }
+      else if (!errMsg.success && errMsg.message === 'Validation failed.') {
+        const fieldErrors = {};
+
+        errMsg.errors.forEach(e => {
+          fieldErrors[e.path] = "*" + e.msg;
+        })
+        setValidationMsg({ ...fieldErrors, isError: true });
+      } else if (errMsg.message === "Email already registered.") {
+        setValidationMsg({ ...validationInit, isError: true, email: "Email already registered."})
+      }
+      else {
+        toast.error("Please try again.");
+      }
+
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <>
       <div>
@@ -96,10 +140,13 @@ const RegisterPage = () => {
         <div className="w-[30%] border text-gray-400"></div>
       </div>
 
-      <form action="" className="flex flex-col gap-1">
-        <label htmlFor="Email" className="text-[12px] font-bold">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-1">
+        <label htmlFor="Email" className="text-[12px] font-bold flex items-center gap-1.5">
           {" "}
           Email address
+          <div>
+            <p className={`text-[12px] ${validationMsg.isError ? "text-red-500 " : "text-gray-500"} `}>{validationMsg.email}</p>
+          </div>
         </label>
         <div className="border border-purple-600 flex gap-2 p-2 rounded-md items-center">
           <p className="flex items-center ">
@@ -115,11 +162,15 @@ const RegisterPage = () => {
             className="text-sm outline-none grow"
           />
         </div>
-        <label htmlFor="Email" className="text-[12px] font-bold">
+
+        <label htmlFor="Email" className="text-[12px] font-bold flex items-center gap-1.5">
           {" "}
           Password
+          <div>
+            <p className={`text-[12px] ${validationMsg.isError ? "text-red-500 " : "text-gray-500"} `}>{validationMsg.password}</p>
+          </div>
         </label>
-        <div className="border border-purple-600 flex gap-2 p-2 rounded-md items-center ">
+        <div className="border border-purple-600 flex gap-2 p-2 rounded-md items-center mb-4">
           <p className="flex items-center ">
             <IoLockClosedOutline color="gray" />
           </p>
@@ -136,8 +187,8 @@ const RegisterPage = () => {
             <FaRegEye color="gray" />
           </span>
         </div>
-        <p className="text-[12px] text-gray-500 mt-1 ">At least 8 characters</p>
-        <Button text={"Register"} />
+
+        <Button text={"Register"} isLoading={isLoading} />
       </form>
       <div className="flex flex-col justify-center items-center gap-6">
         <p className=" text-gray-500">

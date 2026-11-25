@@ -28,14 +28,14 @@ const LoginBtns = () => {
 }
 const SeekerProfile = ({ user }) => {
   const redirectProfile = {
-    "seeker": "/seeker/profile",
-    "company": "/employer/profile",
-    "admin": "/admin",
+    "SEEKER": "/seeker/profile",
+    "COMPANY": "/employer/profile",
+    "ADMIN": "/admin",
   }
   return (
     <>
       {
-        user?.role == "seeker" && (
+        user?.role == "SEEKER" && (
           <Link to={"/seeker/notification"}>
             <div className='text-gray-500 border h-10 w-10 flex justify-center items-center text-xl p-2 border-gray-300  rounded-full'>
               <span className='relative '>

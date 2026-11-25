@@ -8,6 +8,7 @@ import HomePage from "./pages/public/HomePage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPage";
 import AuthLayout from "./components/layout/AuthLayout";
+import PublicOnlyRoute from "./components/auth/PublicOnlyRoute";
 import ConfirmPage from "./pages/auth/ConfirmPage";
 import ErrorPage from "./pages/public/ErrorPage";
 import RoleProtectedRoute from "./components/auth/RoleProtectedRoute";
@@ -65,7 +66,7 @@ function App() {
       ],
     },
     {
-      element: <AuthLayout />,
+      element: <PublicOnlyRoute><AuthLayout /></PublicOnlyRoute>,
       children: [
         {
           path: "/login",
@@ -87,7 +88,7 @@ function App() {
     },
     {
       path: "/seeker",
-      element: <RoleProtectedRoute allowedRoles={"seeker"} />,
+      element: <RoleProtectedRoute allowedRoles={"SEEKER"} />,
       children: [
         {
           element: <SeekerLayout />,
@@ -134,7 +135,7 @@ function App() {
     },
     {
       path: "/employer",
-      element: <RoleProtectedRoute allowedRoles={"company"} />,
+      element: <RoleProtectedRoute allowedRoles={"COMPANY"} />,
       children: [
         {
           element: <CompanyLayout />,
@@ -165,7 +166,7 @@ function App() {
     },
     {
       path: "/admin",
-      element: <RoleProtectedRoute allowedRoles={"admin"} />,
+      element: <RoleProtectedRoute allowedRoles={"ADMIN"} />,
       children: [
         {
           element: <AdminLayout />,
