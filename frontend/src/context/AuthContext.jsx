@@ -11,6 +11,7 @@ const AuthContextProvider = ({ children }) => {
     return localStorage.getItem("token") || "";
   });
 
+  const [profile, setProfile] = useState(null)
   const login = (user, token) => {
     if (!user || !token) return
     localStorage.setItem("token", token);
@@ -27,7 +28,7 @@ const AuthContextProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, profile }}>
       {children}
     </AuthContext.Provider>
   );

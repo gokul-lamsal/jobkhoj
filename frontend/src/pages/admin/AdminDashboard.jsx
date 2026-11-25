@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     FiBriefcase,
     FiCheck,
@@ -13,44 +13,14 @@ import Button from '../../components/global/Button'
 import { StatsCard } from '../seeker/SeekerDashBoard'
 import { Link } from 'react-router-dom';
 import { gradients } from '../../components/helpers/ColorAndBadge';
+import Loader from '../../components/helpers/Loader';
+import ErrorLoader from '../../components/helpers/ErrorLoader';
+import api from '../../components/api/api';
 
 
-const stats = [
-    { label: "Total users", value: "1,284", Icon: FiUsers, bg: "bg-indigo-100", textColor: "text-indigo-700" },
-    { label: "Job seekers", value: "1,102", Icon: FiUser, bg: "bg-sky-100", textColor: "text-sky-700" },
-    { label: "Companies", value: "181", Icon: FiGrid, bg: "bg-violet-100", textColor: "text-violet-700" },
-    { label: "Pending approval", value: "4", Icon: FiClock, bg: "bg-amber-100", textColor: "text-amber-700" },
-    { label: "Total jobs", value: "536", Icon: FiBriefcase, bg: "bg-emerald-100", textColor: "text-emerald-700" },
-    { label: "Applications", value: "3,906", Icon: FiSend, bg: "bg-rose-100", textColor: "text-rose-700" },
-];
 
 
-const breakdowns = [
-    {
-        label: 'Users',
-        note: '1102 seekers · 181 companies',
-        segments: [
-            { width: '86%', color: 'bg-sky-600' },
-            { width: '14%', color: 'bg-sky-200' },
-        ],
-    },
-    {
-        label: 'Companies',
-        note: '120 approved · 61 other',
-        segments: [
-            { width: '66%', color: 'bg-emerald-500' },
-            { width: '34%', color: 'bg-emerald-200' },
-        ],
-    },
-    {
-        label: 'Jobs',
-        note: '412 active · 124 inactive',
-        segments: [
-            { width: '77%', color: 'bg-orange-600' },
-            { width: '23%', color: 'bg-orange-200' },
-        ],
-    },
-]
+
 
 const pendingCompanies = [
     {
@@ -117,8 +87,71 @@ const PendingCompaniesList = ({ name, email, location, initials, gradient }) => 
         </div>
     )
 }
+const getSegmentWidth = (part, total) => {
+    if (!total) return "0%";
+    console.log(Math.round((part / total) * 100) + "%");
 
+    return Math.round((part / total) * 100) + "%";
+}
 const AdminDashboard = () => {
+    const [adminStats, setAdminStats] = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+
+                const res = await api.get("/api/admin/stats")
+                setAdminStats(res.data.data);
+            } catch (err) {
+
+            } finally {
+                setLoading(false)
+            }
+
+        }
+        fetchData()
+    }, [])
+    if (loading) return <Loader />
+    if (!adminStats) return <ErrorLoader />
+    const stats = [
+        { label: "Total users", value: adminStats.users.total, Icon: FiUsers, bg: "bg-indigo-100", textColor: "text-indigo-700" },
+        { label: "Job seekers", value: adminStats.users.seekers, Icon: FiUser, bg: "bg-sky-100", textColor: "text-sky-700" },
+        { label: "Companies", value: adminStats.users.companies, Icon: FiGrid, bg: "bg-violet-100", textColor: "text-violet-700" },
+        { label: "Pending approval", value: adminStats.companies.pending, Icon: FiClock, bg: "bg-amber-100", textColor: "text-amber-700" },
+        { label: "Total jobs", value: adminStats.jobs.total, Icon: FiBriefcase, bg: "bg-emerald-100", textColor: "text-emerald-700" },
+        { label: "Applications", value: adminStats.applications.total, Icon: FiSend, bg: "bg-rose-100", textColor: "text-rose-700" },
+    ];
+
+    const totalUser = adminStats.users.seekers + adminStats.users.companies
+    const totalCompany = adminStats.companies.approved + adminStats.companies.pending
+    const totalJobs = adminStats.jobs.total
+    const breakdowns = [
+        {
+            label: 'Users',
+            note: `${adminStats.users.seekers} seekers · ${adminStats.users.companies} companies`,
+            segments: [
+                { width: getSegmentWidth(adminStats.users.seekers, totalUser), color: 'bg-sky-600' },
+                { width: getSegmentWidth(adminStats.users.companies, totalUser), color: 'bg-sky-200' },
+            ],
+        },
+        {
+            label: 'Companies',
+            note: `${adminStats.companies.approved} approved · ${adminStats.companies.pending} pending`,
+            segments: [
+                { width: getSegmentWidth(adminStats.companies.approved, totalCompany), color: 'bg-emerald-500' },
+                { width: getSegmentWidth(adminStats.companies.pending, totalCompany), color: 'bg-emerald-200' },
+            ],
+        },
+        {
+            label: 'Jobs',
+            note: `${adminStats.jobs.active} active · ${totalJobs - adminStats.jobs.active} inactive`,
+            segments: [
+                { width: getSegmentWidth(adminStats.jobs.total, totalCompany), color: 'bg-orange-600' },
+                { width: getSegmentWidth(adminStats.jobs.total, totalJobs - adminStats.jobs.active), color: 'bg-orange-200' },
+            ],
+        },
+    ]
     return (
         <div className='flex flex-col gap-6'>
             <div>

@@ -22,6 +22,7 @@ const profile = {
 }
 
 const AdminLayout = () => {
+  
     return (
         <AdminCompanyLayout
             logoTo='/admin'

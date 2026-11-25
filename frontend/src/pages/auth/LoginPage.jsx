@@ -46,8 +46,7 @@ const LoginPage = () => {
     if (location.state?.ProtectedLogin) {
       toast.info("Please login to access this page.",{toastId:"Required login"});
     }
-    // OLD dep array (mismatch: effect reads `ProtectedLogin`, array watched `message`):
-    // }, [location.state?.message]);
+   
   }, [location.state?.ProtectedLogin]);
   return (
     <>
