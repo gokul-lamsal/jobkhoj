@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "../../components/global/Button";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { RoleDashBoard } from "../../components/auth/RoleProtectedRoute";
+import { AuthContext } from "../../context/AuthContext";
 
 const ErrorPage = () => {
   const { pathname } = useLocation();
-    const navigate = useNavigate();
+    const { user } = useContext(AuthContext)
+  
+  const navigate = useNavigate();
   const currentPath = pathname.split("/")[1]
 
   const selectError = {
@@ -28,10 +32,10 @@ const ErrorPage = () => {
   const error = selectError[currentPath] ?? selectError["not-found"];
   const { errorType, errorDescription, errorMessage, errorColor, goBack } = error;
   const handleBack = () => {
-    if (goBack && key !== "default") {
-      navigate(-1);
+    if (errorType === "403" && user) {
+      navigate(RoleDashBoard[user.role], { replace: true })
     } else {
-      navigate("/", { replace: true });
+      navigate("/", { replace: true })
     }
   };
 
@@ -43,10 +47,8 @@ const ErrorPage = () => {
           <p className="mb-4 text-3xl tracking-tight font-bold text-gray-900 md:text-4xl dark:text-white">{errorMessage}.</p>
           <p className="mb-4 text-lg font-light text-gray-500 dark:text-gray-400">{errorDescription}</p>
           <div className="w-30">
-            <Link to={"/"}>
 
-              <Button text="Back" type="button" onClick={handleBack} />
-            </Link>
+            <Button text="Back" type="button" onClick={handleBack} />
           </div>
 
 

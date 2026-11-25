@@ -1,34 +1,54 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaRegEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineMail } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/global/Button";
-import api from "../../components/Api/api"
+import api from "../../components/api/api"
 import { toast } from "react-toastify";
+import { AuthContext } from "../../context/AuthContext";
+import { RoleDashBoard } from "../../components/auth/RoleProtectedRoute";
 
 const LoginPage = () => {
+  const { login } = useContext(AuthContext)
+  const location = useLocation();
+
+  const navigate = useNavigate()
   const [form, setForm] = useState({
     email: "",
     password: ""
   });
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
+
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
+   
     e.preventDefault()
     try {
       setIsLoading(true)
       const loginUser = await api.post("/api/auth/login", form)
+      toast.success("Login success")
+      const { user, token } = loginUser.data.data
+      login(user, token);
+      navigate(RoleDashBoard[user.role], { replace: true })
+
     } catch (err) {
-      console.log("Failed");
+      toast.error(err?.response?.data?.message)
     } finally {
       setIsLoading(false)
     }
   }
+  useEffect(() => {
+    if (location.state?.ProtectedLogin) {
+      toast.info("Please login to access this page.",{toastId:"Required login"});
+    }
+    // OLD dep array (mismatch: effect reads `ProtectedLogin`, array watched `message`):
+    // }, [location.state?.message]);
+  }, [location.state?.ProtectedLogin]);
   return (
     <>
       <div className="flex flex-col justify-center items-center ">
@@ -69,7 +89,7 @@ const LoginPage = () => {
           {" "}
           Password
         </label>
-        <div className="border border-purple-600 flex gap-2 p-2 rounded-md items-center relative">
+        <div className="border border-purple-600 flex gap-2 p-2 rounded-md items-center relative mb-3">
           <p className="flex items-center ">
             <IoLockClosedOutline color="gray" />
           </p>
@@ -87,18 +107,8 @@ const LoginPage = () => {
             <FaRegEye color="gray" />
           </span>
         </div>
-        <div className="flex items-center gap-2 pt-3">
-          <input
-            type="checkbox"
-            name="Checkbox"
-            className="size-4  cursor-pointer"
-          />
-          <label htmlFor="Checkbox" className="text-[14px] text-gray-500">
-            {" "}
-            Remember me
-          </label>
-        </div>
-        <Button text={"Login"} />
+
+        <Button text={"Login"} type="submit" isLoading={isLoading} />
       </form>
       <div className="text-center">
         <p className=" text-gray-500">

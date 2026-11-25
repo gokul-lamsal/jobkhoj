@@ -1,13 +1,32 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CiMail } from "react-icons/ci";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../../components/global/Button";
+import { toast } from "react-toastify";
+import api from "../../components/api/api";
 
 const ConfirmPage = () => {
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
+
+
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const otpInput = useRef([]);
-  const handleChange = (otpBox, index) => {
 
+  const email = searchParams.get("email");
+  const allowed = location.state?.fromRegister && email;
+  {/* Dont allow in this page if it isnt send from register, or if no email is on url */ }
+  useEffect(() => {
+    if (allowed) {
+      toast.success("Please check your email for otp.", { toastId: "otp-sent" });
+    }
+  }, [allowed]);
+  if (!allowed) return <Navigate to="/register" replace />;
+
+
+  const handleChange = (otpBox, index) => {
     setOtp((prev) =>
       prev.map((e, i) => {
         if (i === index) return otpBox.target.value;
@@ -21,10 +40,77 @@ const ConfirmPage = () => {
     }
 
   };
-  const checkOtp = (e) => {
+
+  const checkOtp = async (e) => {
     e.preventDefault();
-    console.log(parseInt(otp.join("")));
+
+    const otpValue = otp.join("");
+
+    if (otpValue.length !== 6) {
+      toast.warn("Please enter all 6 digits of the OTP.");
+      return;
+    }
+
+    const toastId = toast.loading("Verifying OTP...");
+
+    try {
+      setIsLoading(true);
+
+      await api.post("/api/auth/verify-otp", {
+        email,
+        otp: otpValue,
+      });
+
+      toast.update(toastId, {
+        render: "Account verified! Redirecting to login...",
+        type: "success",
+        isLoading: true,
+        autoClose: 3000,
+        closeOnClick: true,
+      });
+
+      setTimeout(() => {
+        setIsLoading(false);
+
+        navigate("/login", { replace: true })
+        toast.update(toastId, {
+
+          isLoading: false,
+          autoClose: 4000,
+          closeOnClick: true,
+        })
+
+      }, 3000);
+    } catch (err) {
+      const errMessage =
+        err?.response?.data?.message || "Invalid or expired OTP.";
+
+      toast.update(toastId, {
+        render: errMessage,
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+        closeOnClick: true,
+      });
+      setIsLoading(false);
+
+    }
   };
+  const resendOtp = async () => {
+    try {
+      setIsLoading(true)
+      await api.post("/api/auth/resend-otp", { email })
+      toast.success("A new OTP has been sent to your email.");
+    } catch (err) {
+      const errMessage = err?.response?.data?.message || "Couldn't resend OTP. Please try again."
+
+      toast.error(errMessage);
+    } finally {
+      setIsLoading(false)
+    }
+
+
+  }
   return (
     <>
       <div className="flex justify-center items-center">
@@ -35,7 +121,7 @@ const ConfirmPage = () => {
       <div className="flex flex-col justify-center items-center gap-1">
         <p className="text-5xl font-bold">Check your email</p>
         <p className="text-gray-400 mt-2">we sent a 6 digit code to </p>
-        <p className="font-bold">john@student.com</p>
+        <p className="font-bold">{email || "JHondoes@gmail.com"}</p>
       </div>
       <div>
         <form className="flex flex-col  gap-2 mb-3 mt-2" onSubmit={checkOtp}>
@@ -56,16 +142,16 @@ const ConfirmPage = () => {
               );
             })}
           </div>
-          <Button text={"Verify Email"} />
+          <Button text={"Verify Email"} isLoading={isLoading} />
         </form>
       </div>
 
       <div className="flex justify-center items-center">
         <p className="text-gray-400">
           Didn't get the code?{" "}
-          <span className="text-primary font-bold hover:underline    cursor-pointer">
+          <button disabled={isLoading} className={`text-primary font-bold hover:underline disabled:text-gray-400 cursor-pointer`} onClick={resendOtp} >
             Resend code
-          </span>
+          </button>
         </p>
       </div>
       <div className="flex justify-center items-center mb-4">

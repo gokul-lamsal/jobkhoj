@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   FaAngleRight,
   FaArrowRight,
@@ -11,10 +11,11 @@ import { FiClock, FiDollarSign } from "react-icons/fi";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { badgeType, gradients } from "../../components/helpers/ColorAndBadge";
-import { MdOutlineAddLocationAlt, MdOutlineLocationOn } from "react-icons/md";
+import { MdLogout, MdOutlineAddLocationAlt, MdOutlineLocationOn } from "react-icons/md";
 import Badge from "../../components/global/Badge";
 import { LuBuilding, LuUserRound } from "react-icons/lu";
 import { SeekerResume } from "./SeekerProfile";
+import { AuthContext } from "../../context/AuthContext";
 
 export const StatsCard = ({
   bg = "",
@@ -45,6 +46,7 @@ function SeekerDashBoard() {
     if (splitUrl.length < 2) return url;
     return splitUrl[splitUrl.length - 1];
   };
+  const { logout } = useContext(AuthContext)
 
   const [jobInfo, setJobInfo] = useState({
     jobs: [
@@ -387,8 +389,8 @@ function SeekerDashBoard() {
 
         {/* start of the left side (Quick actions section)  */}
 
-        <div className=" flex flex-col gap-6 w-[25rem]">
-          <div className="flex flex-col gap-4 border border-gray-300 rounded-2xl px-4 py-6">
+        <div className=" flex flex-col gap-6 w-[25rem] ">
+          <div className="flex flex-col gap-4 border border-gray-300 rounded-2xl px-4 py-6 bg-white">
             <h1 className="text-xl font-bold">Quick actions</h1>
             <Link to={"/seeker/saved"}>
               <div className="flex items-center border border-gray-300 cursor-pointer rounded-xl px-3 py-4 gap-4">
@@ -428,11 +430,23 @@ function SeekerDashBoard() {
                 </div>
               </div>
             </Link>
+            <button onClick={logout}>
+              <div className="flex items-center border cursor-pointer border-gray-300 rounded-xl px-3 py-4 gap-4">
+                <span className="inline-flex p-2 rounded-lg bg-red-200">
+                  <MdLogout size={20} color="red" />
+                </span>
+
+                <div className="flex flex-1 items-center justify-between">
+                  <p className="font-semibold">Log out</p>
+                  <FaAngleRight size={20} />
+                </div>
+              </div>
+            </button>
           </div>
 
           {/* start of the notification section  */}
 
-          <div className="flex flex-col gap-1 border border-gray-300 rounded-2xl px-4 py-6">
+          <div className="flex flex-col gap-1 border border-gray-300 rounded-2xl px-4 py-6 bg-white">
             <div className="flex justify-between items-center">
               <div className="flex gap-4">
                 <h1 className="text-xl font-bold">Notification</h1>
@@ -471,7 +485,7 @@ function SeekerDashBoard() {
           {/* Resume part beginning */}
 
           <div>
-          <SeekerResume/>
+            <SeekerResume />
           </div>
         </div>
       </section>
