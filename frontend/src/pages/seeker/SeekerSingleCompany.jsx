@@ -57,7 +57,7 @@ const SeekerSingleCompany = () => {
 
   const iconMap = {
     "full time": { bg: "bg-green-100", color: "text-green-600" },
-    internship: { bg: "bg-red-100", color: "text-red-600" },
+    "internship": { bg: "bg-red-100", color: "text-red-600" },
     "part time": { bg: "bg-indigo-100", color: "text-indigo-600" },
   };
   const hiringTypes = Object.entries(

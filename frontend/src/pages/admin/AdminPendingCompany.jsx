@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Badge from "../../components/global/Badge";
 import {
   badgeType,
@@ -13,54 +13,32 @@ import { onlyUrl } from "../../components/helpers/CompanyCard";
 import { FaLink } from "react-icons/fa";
 import Pagination from "../../components/global/Pagination";
 import Modal from "../../components/helpers/Modal";
+import Loader from "../../components/helpers/Loader";
+import ErrorLoader from "../../components/helpers/ErrorLoader";
+import api from "../../components/api/api";
 
 const AdminPendingCompany = () => {
-  const [companyInfo, setCompanyInfo] = useState([
-    {
-      id: 1,
-      initials: "SH",
-      companyName: "StartUp Hub",
-      email: "founder@startuphub.com",
-      location: "Pokhara, Nepal",
-      website: "https://startuphub.com",
-      date: "10 Oct 2026",
-      status: "pending",
-      accentcolor: "indigo",
-    },
-    {
-      id: 2,
-      initials: "CN",
-      companyName: "CloudNine Tech",
-      email: "hr@cloudnine.io",
-      location: "Pokhara, Nepal",
-      website: "https://cloudnine.io",
-      date: "09 Oct 2026",
-      status: "pending",
-      accentcolor: "green",
-    },
-    {
-      id: 3,
-      initials: "PS",
-      companyName: "Pixel Studio",
-      email: "team@pixelstudio.co",
-      location: "Bhaktapur, Nepal",
-      website: "https://pixelstudio.co",
-      date: "08 Oct 2026",
-      status: "pending",
-      accentcolor: "blue",
-    },
-    {
-      id: 4,
-      initials: "HD",
-      companyName: "Himalayan Data",
-      email: "jobs@himalayandata.com",
-      location: "Kathmandu, Nepal",
-      website: "https://himalayandata.com",
-      date: "06 Oct 2026",
-      status: "pending",
-      accentcolor: "pink",
-    },
-  ]);
+ 
+  const [pendingCompanies, setPendingCompanies] = useState(null)
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+
+        const res = await api.get("/api/admin/companies/pending?page=1&limit=5")
+        setPendingCompanies(res.data.data);
+      } catch (err) {
+
+      } finally {
+        setLoading(false)
+      }
+
+    }
+    fetchData()
+  }, [])
+  if (loading) return <Loader />
+  if (!pendingCompanies) return <ErrorLoader />
+
   return (
     <div>
       <div className="flex justify-between">
@@ -71,7 +49,7 @@ const AdminPendingCompany = () => {
           </p>
         </div>
         <div className="h-10 mt-2">
-          <Badge text={"4 waiting"} type={"warning"} />
+          <Badge text={`${pendingCompanies.length} waiting`} type={"warning"} />
         </div>
       </div>
 
@@ -90,22 +68,22 @@ const AdminPendingCompany = () => {
             </tr>
           </thead>
           <tbody className="bg-white">
-            {companyInfo.map((company) => {
+            {pendingCompanies.map((company) => {
               return (
                 <tr key={company.id}>
                   <td className=" py-4.5 px-5 font-semibold">
                     <div className="flex gap-3 ">
                       <div
-                        className={`h-10 w-10 rounded-xl flex items-center justify-center text-white font-bold text-sm bg-linear-to-b ${gradients[company.accentcolor]}`}
+                        className={`h-10 w-10 rounded-xl flex items-center justify-center text-white font-bold text-sm bg-linear-to-b ${gradients["blue"]}`}
                       >
-                        {company.initials}
+                       SH
                       </div>
                       <div className="flex flex-col ">
                         <h3 className="font-bold -mt-0.5 ">
-                          {company.companyName}
+                          {company.name}
                         </h3>
                         <span className=" text-[13px]  -mt-0.5 font-semibold text-gray-400">
-                          {company.email}
+                          {company.user.email}
                         </span>
                       </div>
                     </div>
@@ -114,29 +92,17 @@ const AdminPendingCompany = () => {
                     {company.location}
                   </td>
                   <td className=" py-4.5 px-5 ">
-                     <a href={company.website} target="_blank" rel="noopener noreferrer">
-                                        <div className='text-purple-500 hover:underline flex items-center gap-1.5 text-[15px] font-semibold'>
-                                            <FaLink />
-                                            {onlyUrl(company.website)}
-                                        </div>
-                                    </a>
+                    <a href={company.website} target="_blank" rel="noopener noreferrer">
+                      <div className='text-purple-500 hover:underline flex items-center gap-1.5 text-[15px] font-semibold'>
+                        <FaLink />
+                        {onlyUrl(company.website)}
+                      </div>
+                    </a>
                   </td>
-                  <td className=" py-4.5 px-5 font-semibold">{company.date}</td>
+                  <td className=" py-4.5 px-5 font-semibold">{company.createdAt}</td>
                   <td className=" py-4.5 px-5 font-semibold">
                     <div className="flex gap-3 justify-end">
-                      <Link>
-                        <Button
-                          type="button"
-                          text={
-                            <>
-                              <LuEye className="mr-1" />
-                              <p>Review</p>
-                            </>
-                          }
-                          btnType="secondary"
-                          classname="text-gray-600!"
-                        />
-                      </Link>
+                      
                       <div className="h-9 w-24">
                         <Button
                           type="button"
@@ -178,8 +144,8 @@ const AdminPendingCompany = () => {
           <Pagination totalPages={22} />
         </div>
 
-        </div>
-        {/* <Modal title={"Reject startup job?"} message={"The company will not be able to post jobs. The owner will see the status as Rejected."}/> */}
+      </div>
+      {/* <Modal title={"Reject startup job?"} message={"The company will not be able to post jobs. The owner will see the status as Rejected."}/> */}
     </div>
   );
 };
