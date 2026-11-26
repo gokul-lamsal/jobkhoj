@@ -71,17 +71,17 @@ section {
 }
 
 /* amber: Part time, Pending, Admin */
-.badge-warning {
+.badge-warning,.badge-PENDING {
   @apply bg-amber-100 text-amber-700;
 }
 
 /* green: Contract, Accepted */
-.badge-success {
+.badge-success , .badge-APPROVED{
   @apply bg-emerald-100 text-emerald-700;
 }
 
 /* red: Rejected */
-.badge-danger {
+.badge-danger,.badge-REJECTED {
   @apply bg-rose-100 text-rose-700;
 }
 
