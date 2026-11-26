@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCurrencyDollar } from "react-icons/bs";
 import { FiBriefcase, FiPhone, FiPlus, FiSend, FiUser } from "react-icons/fi";
 import { IoLocationOutline } from "react-icons/io5";
@@ -8,36 +8,74 @@ import PostedJobCard from "../../components/helpers/PostedJobCard";
 import { FaExclamationCircle } from "react-icons/fa";
 import Button from "../../components/global/Button";
 import Tag from "../../components/global/Tag";
+import ErrorLoader from "../../components/helpers/ErrorLoader";
+import Loader from "../../components/helpers/Loader";
+import api from "../../components/api/api";
+import { toast } from "react-toastify";
 
 function CompanyPostJob() {
-  const postJobInit = {
-    title: "Type a title",
-    company: "TechCorp Pvt Ltd",
-    location: "Lalitpur, Nepal",
-    salary: "Enter salary",
-    type: "FULL_TIME",
-    skills: ["React", "Node js", "MySql", "Tailwind CSS", "Python", "C#"],
-    date: new Date().toISOString(),
+  const init = {
+    title: "",
+    description: "",
+    location: "",
+    salary: "",
+    type: "INTERNSHIP",
+    skills: ["CSS", "JavaScript", "Tailwind"],
+    deadline: new Date().toISOString(),
   };
-  const profileDetails = {
-    name: "John doe",
-    email: "john@student.com",
-    phone: "9812345678",
-    bio: "Professional John Doe looking for growth opportunities. Final year computer science student who enjoys building web apps.",
-    location: "Kathmandu, Nepal",
-    skills: ["React", "Node js", "MySql", "Tailwind CSS"],
-  };
-  const [data, setData] = useState(postJobInit);
+  const [data, setData] = useState(init);
   const [selectedType, setSelectedType] = useState(null);
+  const [company, setCompany] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [btnloading, setBtnLoading] = useState(false);
+
+  const [salary, setSalary] = useState({
+    minSalary: "",
+    maxSalary: "",
+  });
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await api.get(`/api/companies/my`);
+        console.log(res);
+
+        setCompany(res.data.data);
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+  if (loading) return <Loader />;
+  if (!company) return <ErrorLoader />;
   const handleChange = (e) => {
     setData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
+    const finalData = `NPR ${Number(salary.minSalary) / 1000}k - ${Number(salary.maxSalary) / 1000}k`;
+    const tempData = {
+      ...data,
+      salary: finalData,
+      skills: data.skills.join(", "),
+    };
+    console.log(tempData);
+
+    try {
+      setBtnLoading(true);
+      await api.post("/api/jobs", tempData);
+      toast.success("Job posted successfully.");
+    } catch (err) {
+      toast.error("Please try again!");
+    } finally {
+      setData(init);
+      setBtnLoading(false);
+    }
   };
 
   return (
@@ -69,7 +107,7 @@ function CompanyPostJob() {
                       </label>
                       <div className="flex h-11 items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
                         <p>
-                          <FiBriefcase />
+                          <FiBriefcase color="gray" />
                         </p>
 
                         <input
@@ -79,6 +117,7 @@ function CompanyPostJob() {
                           placeholder="Frontend Developer"
                           className="outline-none w-full"
                           onChange={handleChange}
+                          value={data.title}
                         />
                       </div>
                     </div>
@@ -90,7 +129,7 @@ function CompanyPostJob() {
                         </label>
                         <div className="flex h-11  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
                           <p>
-                            <IoLocationOutline />
+                            <IoLocationOutline color="gray" />
                           </p>
 
                           <input
@@ -100,6 +139,7 @@ function CompanyPostJob() {
                             placeholder="Lalitpur, Nepal"
                             className="outline-none w-full"
                             onChange={handleChange}
+                            value={data.location}
                           />
                         </div>
                       </div>
@@ -134,20 +174,45 @@ function CompanyPostJob() {
                         <label htmlFor="salary">
                           Salary <span className="text-red-500">*</span>
                         </label>
-                        <div className="flex h-11  items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
-                          <p>
-                            <BsCurrencyDollar />
-                          </p>
+                        <div className="flex h-11 items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
+                          <div className="flex gap-1 items-center">
+                            <p>
+                              <BsCurrencyDollar color="gray" />
+                            </p>
+                            <input
+                              type="text"
+                              placeholder="Min-Salary"
+                              value={salary.minSalary}
+                              className="outline-none w-[50%]"
+                              onChange={(e) =>
+                                setSalary({
+                                  ...salary,
+                                  minSalary: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
+                          <div>
+                            <span className="h-6 w-0.2 border border-gray-300"></span>
+                          </div>
 
-                          <input
-                            type="text"
-                            required
-                            name="salary"
-                            id="salary"
-                            onChange={handleChange}
-                            placeholder="NPR 30k-70k"
-                            className="outline-none w-full"
-                          />
+                          <div className="flex gap-1 items-center">
+                            <p>
+                              <BsCurrencyDollar color="gray" />
+                            </p>
+                            <input
+                              type="text"
+                              placeholder="Max-Salary"
+                              value={salary.maxSalary}
+                              className="outline-none w-[50%]"
+                              onChange={(e) =>
+                                setSalary({
+                                  ...salary,
+                                  maxSalary: e.target.value,
+                                })
+                              }
+                            />
+                          </div>
                         </div>
                         <p className="text-sm text-gray-400">
                           Optional. Text is fine.
@@ -164,14 +229,16 @@ function CompanyPostJob() {
                             type="date"
                             name="date"
                             id="date"
-                            value={data.date ? data.date.split("T")[0] : ""}
+                            value={
+                              data.deadline ? data.deadline.split("T")[0] : ""
+                            }
                             onChange={(e) => {
                               const isoDate = e.target.value
                                 ? new Date(e.target.value).toISOString()
                                 : "";
-                              setData({ ...data, date: isoDate });
+                              setData({ ...data, deadline: isoDate });
                             }}
-                            className="outline-none w-full"
+                            className="outline-none w-full "
                           />
                         </div>
 
@@ -185,6 +252,8 @@ function CompanyPostJob() {
                       </label>
                       <div className="flex justify-center items-center gap-2 border border-purple-600 rounded-md p-2 focus-within:ring-4 focus-within:ring-purple-100 ">
                         <textarea
+                          onChange={handleChange}
+                          value={data.description}
                           name="description"
                           id="description"
                           className="outline-none w-full h-[8rem] resize-none"
@@ -200,7 +269,7 @@ function CompanyPostJob() {
               <div>
                 <h1 className="font-semibold">Required skills</h1>
                 <div className="flex items-center gap-2.5 mt-2">
-                  {profileDetails.skills.map((s, i) => {
+                  {data.skills.map((s, i) => {
                     return <Tag key={s} tag={s} />;
                   })}
                   <button>
@@ -224,6 +293,7 @@ function CompanyPostJob() {
             </div>
             <div>
               <Button
+                isLoading={btnloading}
                 text={
                   <>
                     {" "}
@@ -246,8 +316,8 @@ function CompanyPostJob() {
               {data && (
                 <PostedJobCard
                   title={data.title}
-                  company={data.company}
-                  companyInitials={data.companyInitials}
+                  company={company.name}
+                  companyInitials={"FD"}
                   logoColor={data.logoColor}
                   location={data.location}
                   salary={data.salary}

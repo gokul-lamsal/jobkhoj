@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaRegEye } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { FiUser } from "react-icons/fi";
 import { IoLockClosedOutline } from "react-icons/io5";
@@ -11,19 +11,20 @@ import api from "../../components/api/api";
 import { toast } from "react-toastify";
 
 const RegisterPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [showPass, setShowPass] = useState(false);
   const [form, setForm] = useState({
     role: "SEEKER",
     email: "",
     password: "",
   });
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const validationInit = {
     isError: false,
     email: "",
-    password: ""
-  }
-  const [validationMsg, setValidationMsg] = useState(validationInit)
+    password: "",
+  };
+  const [validationMsg, setValidationMsg] = useState(validationInit);
   const chooseRole = [
     {
       title: "Job Seeker",
@@ -45,11 +46,11 @@ const RegisterPage = () => {
     }));
   };
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      setIsLoading(true)
-      setValidationMsg(validationInit)
-      const res = await api.post("/api/auth/register", form)
+      setIsLoading(true);
+      setValidationMsg(validationInit);
+      const res = await api.post("/api/auth/register", form);
       if (res.data.success == true) {
         navigate(`/confirm?email=${encodeURIComponent(form.email)}`, {
           state: { fromRegister: true },
@@ -57,28 +58,29 @@ const RegisterPage = () => {
         });
       }
     } catch (err) {
-      const errMsg = err.response?.data
+      const errMsg = err.response?.data;
       if (!err.response) {
         toast.error("server error");
-      }
-      else if (!errMsg.success && errMsg.message === 'Validation failed.') {
+      } else if (!errMsg.success && errMsg.message === "Validation failed.") {
         const fieldErrors = {};
 
-        errMsg.errors.forEach(e => {
+        errMsg.errors.forEach((e) => {
           fieldErrors[e.path] = "*" + e.msg;
-        })
+        });
         setValidationMsg({ ...fieldErrors, isError: true });
       } else if (errMsg.message === "Email already registered.") {
-        setValidationMsg({ ...validationInit, isError: true, email: "Email already registered."})
-      }
-      else {
+        setValidationMsg({
+          ...validationInit,
+          isError: true,
+          email: "Email already registered.",
+        });
+      } else {
         toast.error("Please try again.");
       }
-
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
   return (
     <>
       <div>
@@ -141,11 +143,18 @@ const RegisterPage = () => {
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-1">
-        <label htmlFor="Email" className="text-[12px] font-bold flex items-center gap-1.5">
+        <label
+          htmlFor="Email"
+          className="text-[12px] font-bold flex items-center gap-1.5"
+        >
           {" "}
           Email address
           <div>
-            <p className={`text-[12px] ${validationMsg.isError ? "text-red-500 " : "text-gray-500"} `}>{validationMsg.email}</p>
+            <p
+              className={`text-[12px] ${validationMsg.isError ? "text-red-500 " : "text-gray-500"} `}
+            >
+              {validationMsg.email}
+            </p>
           </div>
         </label>
         <div className="border border-purple-600 flex gap-2 p-2 rounded-md items-center">
@@ -163,11 +172,18 @@ const RegisterPage = () => {
           />
         </div>
 
-        <label htmlFor="Email" className="text-[12px] font-bold flex items-center gap-1.5">
+        <label
+          htmlFor="Email"
+          className="text-[12px] font-bold flex items-center gap-1.5"
+        >
           {" "}
           Password
           <div>
-            <p className={`text-[12px] ${validationMsg.isError ? "text-red-500 " : "text-gray-500"} `}>{validationMsg.password}</p>
+            <p
+              className={`text-[12px] ${validationMsg.isError ? "text-red-500 " : "text-gray-500"} `}
+            >
+              {validationMsg.password}
+            </p>
           </div>
         </label>
         <div className="border border-purple-600 flex gap-2 p-2 rounded-md items-center mb-4">
@@ -175,7 +191,7 @@ const RegisterPage = () => {
             <IoLockClosedOutline color="gray" />
           </p>
           <input
-            type="password"
+            type={showPass ? "text" : "password"}
             name="password"
             onChange={handleChange}
             value={form.password}
@@ -183,8 +199,17 @@ const RegisterPage = () => {
             placeholder="●●●●●●●●"
             className="text-sm outline-none grow"
           />
-          <span className=" text-gray-400 cursor-pointer">
-            <FaRegEye color="gray" />
+          <span
+            className=" text-gray-400 cursor-pointer"
+            onClick={() => {
+              setShowPass((prev) => !prev);
+            }}
+          >
+            {showPass ? (
+              <FaRegEyeSlash color="gray" />
+            ) : (
+              <FaRegEye color="gray" />
+            )}
           </span>
         </div>
 

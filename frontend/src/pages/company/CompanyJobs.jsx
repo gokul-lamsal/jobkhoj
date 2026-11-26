@@ -81,7 +81,7 @@ const CompanyJobs = () => {
           </p>
         </div>
         <div className="h-10">
-          <Link to={`/seeker/browse`}>
+          <Link to={`/employer/post-job`}>
             <Button
               type="button"
               btnType="primary"
