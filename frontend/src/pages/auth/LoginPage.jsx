@@ -1,52 +1,51 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaRegEye } from "react-icons/fa";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { IoLockClosedOutline } from "react-icons/io5";
 import { MdOutlineMail } from "react-icons/md";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/global/Button";
-import api from "../../components/api/api"
+import api from "../../components/api/api";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../context/AuthContext";
 import { RoleDashBoard } from "../../components/auth/RoleProtectedRoute";
 
 const LoginPage = () => {
-  const { login } = useContext(AuthContext)
+  const { login } = useContext(AuthContext);
   const location = useLocation();
-
-  const navigate = useNavigate()
+  const [showPass, setShowPass] = useState(false);
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
-    password: ""
+    password: "",
   });
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
-   
-    e.preventDefault()
+    e.preventDefault();
     try {
-      setIsLoading(true)
-      const loginUser = await api.post("/api/auth/login", form)
-      toast.success("Login success")
-      const { user, token } = loginUser.data.data
+      setIsLoading(true);
+      const loginUser = await api.post("/api/auth/login", form);
+      toast.success("Login success");
+      const { user, token } = loginUser.data.data;
       login(user, token);
-      navigate(RoleDashBoard[user.role], { replace: true })
-
+      navigate(RoleDashBoard[user.role], { replace: true });
     } catch (err) {
-      toast.error(err?.response?.data?.message)
+      toast.error(err?.response?.data?.message);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
   useEffect(() => {
     if (location.state?.ProtectedLogin) {
-      toast.info("Please login to access this page.",{toastId:"Required login"});
+      toast.info("Please login to access this page.", {
+        toastId: "Required login",
+      });
     }
-   
   }, [location.state?.ProtectedLogin]);
   return (
     <>
@@ -94,16 +93,24 @@ const LoginPage = () => {
           </p>
           <input
             onChange={handleChange}
-
-            type="password"
+            type={showPass ? "text" : "password"}
             name="password"
             value={form.password}
             id="password"
             placeholder="●●●●●●●●"
             className="text-sm outline-none w-full "
           />
-          <span className="absolute right-4 text-gray-400 cursor-pointer">
-            <FaRegEye color="gray" />
+          <span
+            className="absolute right-4 text-gray-400 cursor-pointer"
+            onClick={() => {
+              setShowPass((prev) => !prev);
+            }}
+          >
+            {showPass ? (
+              <FaRegEyeSlash color="gray" />
+            ) : (
+              <FaRegEye color="gray" />
+            )}
           </span>
         </div>
 
