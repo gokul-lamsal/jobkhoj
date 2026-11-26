@@ -43,7 +43,7 @@ const CompanyJobs = () => {
   }, []);
 
   if (loading) return <Loader />;
-  if (!jobInfo) return <ErrorLoader />;
+  if (!jobInfo) return <ErrorLoader  message="Please create your profile first." btnText="Create Profile" redirectTo="/employer/profile"/>;
   const stats = [
     {
       label: "Active jobs",
