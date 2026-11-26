@@ -11,6 +11,8 @@ import api from "../../components/api/api";
 import { toast } from "react-toastify";
 
 const CompanyProfile = () => {
+  const [newProfile,setNewProfile] = useState(false);
+  const noProfileInit = { name: "", website: "", location: "", description: "" };
   const [file, setFile] = useState(null);
   const [img, setImg] = useState(null);
   const [companyProfileInfo, setCompanyProfileInfo] = useState(null);
@@ -26,17 +28,23 @@ const CompanyProfile = () => {
   const [loading, setLoading] = useState(true);
   const [btnLoading, setBtnLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await api.get("/api/companies/my");
+  const fetchData = async () => {
+    try {
+      const res = await api.get("/api/companies/my");
 
-        setCompanyProfileInfo(res.data.data);
-      } catch (err) {
-      } finally {
-        setLoading(false);
+      setCompanyProfileInfo(res.data.data);
+      setNewProfile(false)
+    } catch (err) {
+      if (err.response.status === 404) {
+      setCompanyProfileInfo(noProfileInit);
+      setNewProfile(true);
+
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchData();
   }, []);
   if (loading) return <Loader />;
@@ -59,12 +67,28 @@ const CompanyProfile = () => {
         description,
       });
       setCompanyProfileInfo(res.data.data);
-      toast.success("Company profile updated successfully.")
+      toast.success("Company profile updated successfully.");
     } catch {
+      toast.warning("Please try again later");
     } finally {
       setBtnLoading(false);
     }
   };
+  const createProfile = async(e)=>{
+    e.preventDefault();
+    try{
+
+      await api.post("/api/companies",companyProfileInfo);
+      toast.success("Company Profile created successfully.")
+      fetchData()
+    }
+    catch(err){
+      toast.warning("Please try again later.");
+    }
+  
+  
+
+  }
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between">
@@ -75,27 +99,37 @@ const CompanyProfile = () => {
               This is shown to job seekers on your company page.
             </p>
           </div>
-          <div>
+          {
+            !(newProfile) && (
+                       <div>
             <Badge
               type={companyProfileInfo.status}
               text={companyProfileInfo.status}
             />
           </div>
+            )
+          }
+
         </div>
       </div>
-      {!companyProfileInfo.status === "APPROVED" && (
+      {(companyProfileInfo.status === "PENDING" || newProfile) && (
         <div className="flex flex-col gap-4 bg-yellow-100 rounded-xl p-4 shadow-sm">
           <div className="flex gap-2">
             <span>
               <FaRegClock size={20} color="orange" />
             </span>
             <div className="flex flex-col">
-              <p className="text-sm font-semibold text-orange-600">
-                Your company is waiting for admin approval.
+              <p className="text-sm font-semibold text-orange-600"> 
+                {
+                  newProfile? ("Please fill up your company information."):("Your company is waiting for admin approval.")
+                }
               </p>
               <p className="text-sm text-orange-600">
-                You can edit your profile now. You will be able to post jobs
-                once an admin approves your company. We will notify you.
+                {
+                  newProfile?("You can create your profile here. You will be notified once an admin approves your company"):
+                  ("You can edit your profile now. You will be able to post jobs once an admin approves your company. We will notify you.")
+                }
+                
               </p>
             </div>
           </div>
@@ -103,13 +137,12 @@ const CompanyProfile = () => {
       )}
 
       <div className="flex  mt-2 gap-6">
-       
         <div className="flex flex-col gap-6 w-full">
           <div className="border bg-white border-gray-300 rounded-2xl shadow-sm ">
             <div className="bg-white rounded-2xl px-5 py-6 flex flex-col justify-center gap-3">
               <h1 className="font-bold text-lg">Company details</h1>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={!newProfile?handleSubmit:createProfile}>
                 <div className="flex gap-5">
                   <div className="flex flex-col gap-2 w-full">
                     <div className="flex flex-col w-full gap-2">
@@ -125,7 +158,7 @@ const CompanyProfile = () => {
                           type="text"
                           name="name"
                           id="companyDetail"
-                          placeholder="TechCorp Pvt Ltd"
+                          placeholder="Company Name"
                           className="outline-none w-full"
                           value={companyProfileInfo.name}
                           onChange={handleChange}
@@ -203,7 +236,7 @@ const CompanyProfile = () => {
                   <div>
                     <Button
                       type="submit"
-                      text={"Save change"}
+                      text={!newProfile?"Save change":"Submit profile"}
                       isLoading={btnLoading}
                     />
                   </div>
