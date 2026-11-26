@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Badge from "../../components/global/Badge";
 import {
-  badgeType,
+  formattedDate,
+  getInitials,
   gradients,
-  statusBadge,
 } from "../../components/helpers/ColorAndBadge";
-import { Link } from "react-router-dom";
 import Button from "../../components/global/Button";
-import { LuEye } from "react-icons/lu";
 import { FiCheck, FiPhone, FiX } from "react-icons/fi";
 import { onlyUrl } from "../../components/helpers/CompanyCard";
 import { FaLink } from "react-icons/fa";
@@ -16,29 +14,77 @@ import Modal from "../../components/helpers/Modal";
 import Loader from "../../components/helpers/Loader";
 import ErrorLoader from "../../components/helpers/ErrorLoader";
 import api from "../../components/api/api";
+import { toast } from "react-toastify";
 
 const AdminPendingCompany = () => {
- 
+
   const [pendingCompanies, setPendingCompanies] = useState(null)
   const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
+  const [btnLoading, setBtnLoading] = useState(false)
+  const [showModal, setShowModal] = useState({
+    show: false,
+    title: "",
+    message: "",
+    positive: true,
+    id: null,
+    action: null, // "approve" | "reject"
+  })
+  const fetchData = async () => {
+    try {
 
-        const res = await api.get("/api/admin/companies/pending?page=1&limit=5")
-        setPendingCompanies(res.data.data);
-      } catch (err) {
+      const res = await api.get("/api/admin/companies/pending?page=1&limit=5")
+      setPendingCompanies(res.data.data);
+    } catch (err) {
 
-      } finally {
-        setLoading(false)
-      }
-
+    } finally {
+      setLoading(false)
     }
+
+  }
+  useEffect(() => {
+
     fetchData()
   }, [])
   if (loading) return <Loader />
   if (!pendingCompanies) return <ErrorLoader />
+  const rejectCompany = (id) => {
+    setShowModal({
+      show: true,
+      title: "Reject startup job?",
+      message: "The company will not be able to post jobs. The owner will see the status as Rejected.",
+      positive: false,
+      id,
+      action: "reject",
+    })
+  }
+  const acceptCompany = (id) => {
+    setShowModal({
+      show: true,
+      title: "Accept startup job?",
+      message: "The company will  be able to post jobs. The owner will see the status as Accepted.",
+      positive: true,
+      id,
+      action: "approve",
+    })
+  }
 
+  // Runs when the modal's "Yes" button is clicked.
+  const handleConfirm = async () => {
+    const { id, action } = showModal
+    if (!id || !action) return
+
+    try {
+      setBtnLoading(true)
+      await api.put(`/api/admin/companies/${id}/${action}`)
+      toast.success(action === "approve" ? "Approved company" : "Rejected company")
+      setShowModal((prev) => ({ ...prev, show: false }))
+      fetchData()
+    } catch (err) {
+      toast.error("Something went wrong")
+    } finally {
+      setBtnLoading(false)
+    }
+  }
   return (
     <div>
       <div className="flex justify-between">
@@ -76,7 +122,7 @@ const AdminPendingCompany = () => {
                       <div
                         className={`h-10 w-10 rounded-xl flex items-center justify-center text-white font-bold text-sm bg-linear-to-b ${gradients["blue"]}`}
                       >
-                       SH
+                        {getInitials(company.name)}
                       </div>
                       <div className="flex flex-col ">
                         <h3 className="font-bold -mt-0.5 ">
@@ -99,10 +145,10 @@ const AdminPendingCompany = () => {
                       </div>
                     </a>
                   </td>
-                  <td className=" py-4.5 px-5 font-semibold">{company.createdAt}</td>
+                  <td className=" py-4.5 px-5 font-semibold">{formattedDate(company.createdAt)}</td>
                   <td className=" py-4.5 px-5 font-semibold">
                     <div className="flex gap-3 justify-end">
-                      
+
                       <div className="h-9 w-24">
                         <Button
                           type="button"
@@ -112,7 +158,9 @@ const AdminPendingCompany = () => {
                               Accept
                             </>
                           }
-                          classname="inline-flex items-center justify-center gap-1.5 border border-emerald-200 bg-emerald-50! text-sm font-medium text-emerald-700! hover:border-emerald-300 hover:bg-emerald-100!"
+                          onClick={() => acceptCompany(company.id)}
+                          isLoading={btnLoading}
+                          classname="inline-flex items-center justify-center gap-1.5 border border-emerald-200 bg-emerald-50! disabled:border-0 text-sm font-medium text-emerald-700! hover:border-emerald-300 hover:bg-emerald-100!"
                         />
                       </div>
                       <div className="h-9 w-24">
@@ -124,7 +172,10 @@ const AdminPendingCompany = () => {
                               Reject
                             </>
                           }
-                          classname="inline-flex items-center justify-center gap-1.5 border border-rose-200 bg-rose-50! text-sm font-medium text-rose-700! hover:border-rose-300 hover:bg-rose-100!"
+                          onClick={() => rejectCompany(company.id)}
+                          isLoading={btnLoading}
+
+                          classname="inline-flex items-center justify-center gap-1.5 border border-rose-200 bg-rose-50! disabled:border-0 text-sm font-medium text-rose-700! hover:border-rose-300 hover:bg-rose-100!"
                         />
                       </div>
                     </div>
@@ -137,15 +188,28 @@ const AdminPendingCompany = () => {
       </div>
 
       <div className="border border-t-0 justify-between   flex gap-3 border-gray-300  py-4.5 px-5 bg-white rounded-b-2xl">
-        <div className="text-gray-400">
-          Showing 1 to 4 of 4 companies
-        </div>
-        <div>
-          <Pagination totalPages={22} />
-        </div>
+
+        <Pagination shown={8} pagination={{
+          "pagination": {
+            "page": 1,
+            "limit": 10,
+            "total": 12,
+            "totalPages": 2
+          }
+        }} />
 
       </div>
-      {/* <Modal title={"Reject startup job?"} message={"The company will not be able to post jobs. The owner will see the status as Rejected."}/> */}
+      {
+        showModal.show &&
+        <Modal
+          title={showModal.title}
+          positive={showModal.positive}
+          message={showModal.message}
+          onAccept={handleConfirm}
+          isLoading={btnLoading}
+          close={() => setShowModal((prev) => ({ ...prev, show: false }))}
+        />
+      }
     </div>
   );
 };

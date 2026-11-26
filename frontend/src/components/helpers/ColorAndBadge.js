@@ -38,7 +38,20 @@ export const formattedDate = (deadline) => {
   });
 };
 export const getInitials = (title) => {
-  if (!title) return "FD";
-  const splitTitle = title.split(" ");
-  return (splitTitle[0][0]).toUpperCase() + (splitTitle[1][0]).toUpperCase();
+  if (!title || !title.trim()) return "FD";
+
+  const words = title.trim().split(/\s+/);
+
+  if (words.length >= 2) {
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+
+
+  const caps = words[0].match(/[A-Z]/g);
+  if (caps && caps.length >= 2) return (caps[0] + caps[1]).toUpperCase();
+
+  return words[0].slice(0, 2).toUpperCase();
 };
+
+const gradientList = Object.values(gradients);
+
